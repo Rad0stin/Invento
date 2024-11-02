@@ -16,5 +16,18 @@ namespace Invento
         {
             InitializeComponent();
         }
+
+        private void close_Click(object sender, EventArgs e)
+        {
+          Application.Exit();
+        }
+
+        private void register_label_Click(object sender, EventArgs e)
+        {
+            RegisterForm regForm = new RegisterForm();
+            regForm.Show();
+
+            this.Hide();
+        }
     }
 }
