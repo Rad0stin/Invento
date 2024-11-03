@@ -47,13 +47,58 @@ namespace Invento
                     {
                         connect.Open();
 
-                        string insertData = "Insert into users (username, password, role, status, date)  + " +
-                            "VALUEs(@usern, @pass, @role, @status, @date)";
+                        string checkUsername = "SELECT * FROM users WHERE USERNAME = @usern";
 
-                        using (SqlCommand cmd = new SqlCommand(insertData, connect)) 
+                        using (SqlCommand cmd = new SqlCommand(checkUsername, connect))
                         {
                             cmd.Parameters.AddWithValue("@usern", register_username.Text.Trim());
-                        }
+
+                            SqlDataAdapter adapter = new SqlDataAdapter();
+                            DataTable table = new DataTable();
+                            adapter.Fill(table);
+
+                            if (table.Rows.Count > 0)
+                            {
+                                MessageBox.Show(register_username.Text.Trim()
+                                    + "is already taken", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                            else if (register_password.Text.Length < 8) 
+                            {
+                                MessageBox.Show("Invalid Password, at least 8 characters",
+                                    "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                            else if (register_password.Text.Trim() != register_cPassword.Text.Trim())
+                            {
+                                MessageBox.Show("Password does not match",
+                                    "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                            else
+                            {
+                                string insertData = "Insert into users (username, password, role, status, date)  + " +
+                            "VALUEs(@usern, @pass, @role, @status, @date)";
+
+                                using (SqlCommand insertD = new SqlCommand(insertData, connect))
+                                {
+                                    insertD.Parameters.AddWithValue("@usern", register_username.Text.Trim());
+                                    insertD.Parameters.AddWithValue("@pass", register_password.Text.Trim());
+                                    insertD.Parameters.AddWithValue("@role", "Cashier");
+                                    insertD.Parameters.AddWithValue("@status", "Approval");
+
+                                    DateTime today = DateTime.Today;
+                                    insertD.Parameters.AddWithValue("@date", today);
+
+                                    insertD.ExecuteNonQuery();
+
+                                    MessageBox.Show("Registered Succesfully!",
+                                    "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                                    Form1 loginform = new Form1(); 
+                                    loginform.Show();
+
+                                    this.Hide();
+                                }
+                            }
+                        } 
                     }
                     catch (Exception ex)
                     {
