@@ -39,6 +39,7 @@
             this.login_password = new System.Windows.Forms.TextBox();
             this.login_username = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.login_showPass = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -62,6 +63,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Honeydew;
+            this.panel1.Controls.Add(this.login_showPass);
             this.panel1.Controls.Add(this.pictureBox3);
             this.panel1.Controls.Add(this.pictureBox2);
             this.panel1.Controls.Add(this.pictureBox1);
@@ -136,7 +138,7 @@
             this.login_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.login_btn.Font = new System.Drawing.Font("Microsoft YaHei UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.login_btn.ForeColor = System.Drawing.Color.Honeydew;
-            this.login_btn.Location = new System.Drawing.Point(136, 255);
+            this.login_btn.Location = new System.Drawing.Point(136, 273);
             this.login_btn.Name = "login_btn";
             this.login_btn.Size = new System.Drawing.Size(86, 38);
             this.login_btn.TabIndex = 4;
@@ -170,6 +172,18 @@
             this.label1.Size = new System.Drawing.Size(145, 25);
             this.label1.TabIndex = 0;
             this.label1.Text = "Login Account";
+            // 
+            // login_showPass
+            // 
+            this.login_showPass.AutoSize = true;
+            this.login_showPass.Font = new System.Drawing.Font("Microsoft YaHei UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.login_showPass.Location = new System.Drawing.Point(141, 238);
+            this.login_showPass.Name = "login_showPass";
+            this.login_showPass.Size = new System.Drawing.Size(124, 23);
+            this.login_showPass.TabIndex = 2;
+            this.login_showPass.Text = "Show Password";
+            this.login_showPass.UseVisualStyleBackColor = true;
+            this.login_showPass.CheckedChanged += new System.EventHandler(this.login_showPass_CheckedChanged);
             // 
             // Form1
             // 
@@ -205,6 +219,7 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.CheckBox login_showPass;
     }
 }
 

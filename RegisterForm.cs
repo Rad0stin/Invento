@@ -53,7 +53,7 @@ namespace Invento
                         {
                             cmd.Parameters.AddWithValue("@usern", register_username.Text.Trim());
 
-                            SqlDataAdapter adapter = new SqlDataAdapter();
+                            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                             DataTable table = new DataTable();
                             adapter.Fill(table);
 
@@ -102,12 +102,12 @@ namespace Invento
                     }
                     catch (Exception ex)
                     {
-
-                        throw;
+                        MessageBox.Show("Conecction failed" + ex,
+                                    "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     finally 
                     {
-
+                        connect.Close();    
                     }
                 }
             }
@@ -123,6 +123,12 @@ namespace Invento
             {
                 return false;
             }
+        }
+
+        private void register_showPass_CheckedChanged(object sender, EventArgs e)
+        {
+            register_password.PasswordChar = register_showPass.Checked ? '\0' : '*';
+            register_cPassword.PasswordChar = register_showPass.Checked ? '\0' : '*';
         }
     }
 }

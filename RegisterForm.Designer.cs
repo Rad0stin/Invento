@@ -41,6 +41,7 @@
             this.register_username = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.close = new System.Windows.Forms.Button();
+            this.register_showPass = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -51,6 +52,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Honeydew;
+            this.panel1.Controls.Add(this.register_showPass);
             this.panel1.Controls.Add(this.pictureBox4);
             this.panel1.Controls.Add(this.register_cPassword);
             this.panel1.Controls.Add(this.pictureBox3);
@@ -123,7 +125,7 @@
             this.login_label.Cursor = System.Windows.Forms.Cursors.Hand;
             this.login_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.login_label.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.login_label.Location = new System.Drawing.Point(203, 346);
+            this.login_label.Location = new System.Drawing.Point(203, 355);
             this.login_label.Name = "login_label";
             this.login_label.Size = new System.Drawing.Size(64, 16);
             this.login_label.TabIndex = 6;
@@ -134,7 +136,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(53, 346);
+            this.label2.Location = new System.Drawing.Point(53, 355);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(144, 16);
             this.label2.TabIndex = 5;
@@ -146,7 +148,7 @@
             this.register_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.register_btn.Font = new System.Drawing.Font("Microsoft YaHei UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.register_btn.ForeColor = System.Drawing.Color.Honeydew;
-            this.register_btn.Location = new System.Drawing.Point(136, 293);
+            this.register_btn.Location = new System.Drawing.Point(121, 314);
             this.register_btn.Name = "register_btn";
             this.register_btn.Size = new System.Drawing.Size(101, 38);
             this.register_btn.TabIndex = 4;
@@ -195,6 +197,18 @@
             this.close.UseVisualStyleBackColor = false;
             this.close.Click += new System.EventHandler(this.close_Click);
             // 
+            // register_showPass
+            // 
+            this.register_showPass.AutoSize = true;
+            this.register_showPass.Font = new System.Drawing.Font("Microsoft YaHei UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.register_showPass.Location = new System.Drawing.Point(143, 284);
+            this.register_showPass.Name = "register_showPass";
+            this.register_showPass.Size = new System.Drawing.Size(124, 23);
+            this.register_showPass.TabIndex = 4;
+            this.register_showPass.Text = "Show Password";
+            this.register_showPass.UseVisualStyleBackColor = true;
+            this.register_showPass.CheckedChanged += new System.EventHandler(this.register_showPass_CheckedChanged);
+            // 
             // RegisterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -232,5 +246,6 @@
         private System.Windows.Forms.Button close;
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.TextBox register_cPassword;
+        private System.Windows.Forms.CheckBox register_showPass;
     }
 }
