@@ -9,3 +9,5 @@
 )
 
 SELECT * FROM users
+
+INSERT INTO users(username, password, role, status, date) VALUES('admin123', 'admin123', 'Admin', 'Active', '2024-09-11')

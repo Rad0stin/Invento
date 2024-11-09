@@ -14,7 +14,7 @@ namespace Invento
 {
     public partial class RegisterForm : Form
     {
-        SqlConnection connect =  new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Radostin\Documents\invento.mdf;Integrated Security=True;Connect Timeout=30");
+        SqlConnection connect =  new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Radostin\Documents\invento.mdf;Integrated Security=True;Connect Timeout=30;Encrypt=False");
         public RegisterForm()
         {
             InitializeComponent();
@@ -74,8 +74,7 @@ namespace Invento
                             }
                             else
                             {
-                                string insertData = "Insert into users (username, password, role, status, date)  + " +
-                            "VALUEs(@usern, @pass, @role, @status, @date)";
+                                string insertData = "INSERT INTO users (username, password, role, status, date) VALUES (@usern, @pass, @role, @status, @date)";
 
                                 using (SqlCommand insertD = new SqlCommand(insertData, connect))
                                 {
