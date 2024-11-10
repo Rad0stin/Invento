@@ -73,6 +73,10 @@ namespace Invento
                         if (table.Rows.Count > 0)
                         {
                             MessageBox.Show("Login Succesfully!", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            MainForm mForm = new MainForm();
+                            mForm.Show();
+                            this.Hide();
                         }
                         else
                         {
