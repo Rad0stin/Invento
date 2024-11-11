@@ -270,9 +270,9 @@
             this.label9.ForeColor = System.Drawing.Color.White;
             this.label9.Location = new System.Drawing.Point(98, 20);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(18, 20);
+            this.label9.Size = new System.Drawing.Size(49, 20);
             this.label9.TabIndex = 12;
-            this.label9.Text = "0";
+            this.label9.Text = "$0.00";
             // 
             // AdminDashboard
             // 
