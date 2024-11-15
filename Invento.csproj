@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminAddUsers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminAddUsers.Designer.cs">
+      <DependentUpon>AdminAddUsers.cs</DependentUpon>
+    </Compile>
     <Compile Include="AdminDashboard.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -72,6 +78,9 @@
     <Compile Include="RegisterForm.Designer.cs">
       <DependentUpon>RegisterForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="AdminAddUsers.resx">
+      <DependentUpon>AdminAddUsers.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AdminDashboard.resx">
       <DependentUpon>AdminDashboard.cs</DependentUpon>
     </EmbeddedResource>
@@ -118,6 +127,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\teamwork.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\financial-statement.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\multiple-users-silhouette.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\money.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
