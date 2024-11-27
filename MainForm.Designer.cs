@@ -40,13 +40,14 @@
             this.button1 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.adminDashboard1 = new Invento.AdminDashboard();
+            this.adminAddUser1 = new Invento.AdminAddUser();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -222,6 +223,16 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "Welcome,";
             // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.adminAddUser1);
+            this.panel3.Controls.Add(this.adminDashboard1);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(240, 45);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(934, 668);
+            this.panel3.TabIndex = 2;
+            // 
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
@@ -233,21 +244,19 @@
             this.pictureBox1.TabIndex = 8;
             this.pictureBox1.TabStop = false;
             // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.adminDashboard1);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(240, 45);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(934, 668);
-            this.panel3.TabIndex = 2;
-            // 
             // adminDashboard1
             // 
             this.adminDashboard1.Location = new System.Drawing.Point(0, 0);
             this.adminDashboard1.Name = "adminDashboard1";
             this.adminDashboard1.Size = new System.Drawing.Size(934, 668);
             this.adminDashboard1.TabIndex = 0;
+            // 
+            // adminAddUser1
+            // 
+            this.adminAddUser1.Location = new System.Drawing.Point(-3, 0);
+            this.adminAddUser1.Name = "adminAddUser1";
+            this.adminAddUser1.Size = new System.Drawing.Size(934, 668);
+            this.adminAddUser1.TabIndex = 1;
             // 
             // MainForm
             // 
@@ -265,8 +274,8 @@
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -288,5 +297,6 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Panel panel3;
         private AdminDashboard adminDashboard1;
+        private AdminAddUser adminAddUser1;
     }
 }

@@ -46,11 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdminAddUsers.cs">
-      <SubType>Form</SubType>
+    <Compile Include="AdminAddUser.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="AdminAddUsers.Designer.cs">
-      <DependentUpon>AdminAddUsers.cs</DependentUpon>
+    <Compile Include="AdminAddUser.Designer.cs">
+      <DependentUpon>AdminAddUser.cs</DependentUpon>
     </Compile>
     <Compile Include="AdminDashboard.cs">
       <SubType>UserControl</SubType>
@@ -78,8 +78,8 @@
     <Compile Include="RegisterForm.Designer.cs">
       <DependentUpon>RegisterForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="AdminAddUsers.resx">
-      <DependentUpon>AdminAddUsers.cs</DependentUpon>
+    <EmbeddedResource Include="AdminAddUser.resx">
+      <DependentUpon>AdminAddUser.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AdminDashboard.resx">
       <DependentUpon>AdminDashboard.cs</DependentUpon>

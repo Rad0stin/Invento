@@ -12,10 +12,10 @@ using System.Data.SqlClient;
 
 namespace Invento
 {
-    public partial class AdminAddUsers : Form
+    public partial class AdminAddUser : UserControl
     {
-        SqlConnection connect = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Radostin\Documents\invento.mdf;Integrated Security=True;Connect Timeout=30;Encrypt=False");
-        public AdminAddUsers()
+        SqlConnection connect = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Radostin\Documents\invento.mdf;Integrated Security=True;Connect Timeout=30;");
+        public AdminAddUser()
         {
             InitializeComponent();
         }
@@ -35,7 +35,7 @@ namespace Invento
                     {
                         connect.Open();
 
-                        string checkUsername = "SELECT * FROM user WHERE username = @usern";
+                        string checkUsername = "SELECT * FROM users WHERE username = @usern";
 
                         using (SqlCommand cmd = new SqlCommand(checkUsername, connect))
                         {
@@ -47,13 +47,13 @@ namespace Invento
 
                             if (table.Rows.Count > 0)
                             {
-                                MessageBox.Show(addUsers_username.Text.Trim() 
+                                MessageBox.Show(addUsers_username.Text.Trim()
                                     + "is already used", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                             else
                             {
                                 string insertData = "INSERT INTO users (username, password, role, status, date) VALUES(@usern, @pass, @role, @status, @date)";
-                                using (SqlCommand insertD = new SqlCommand(insertData, connect)) 
+                                using (SqlCommand insertD = new SqlCommand(insertData, connect))
                                 {
                                     insertD.Parameters.AddWithValue("@usern", addUsers_username.Text.Trim());
                                     insertD.Parameters.AddWithValue("@pass", addUsers_password.Text.Trim());
@@ -64,22 +64,28 @@ namespace Invento
                                     insertD.Parameters.AddWithValue("@date", today);
 
                                     insertD.ExecuteNonQuery();
-                                    
+
                                     MessageBox.Show("Added Succesfully", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 }
                             }
                         }
                     }
+                    catch (SqlException ex)
+                    {
+                        // Handle the specific SQL exception
+                        MessageBox.Show($"SQL Error: {ex.Message}\nError Number: {ex.Number}\nError State: {ex.State}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Connection failed: " + ex, "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        // Handle any other general exceptions
+                        MessageBox.Show($"General Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                    finally 
+                    finally
                     {
                         connect.Close();
                     }
                 }
-            }  
+            }
         }
 
         public bool checkConnection()
