@@ -64,8 +64,10 @@ namespace Invento
                                     insertD.Parameters.AddWithValue("@date", today);
 
                                     insertD.ExecuteNonQuery();
+                                    clearFields();
 
                                     MessageBox.Show("Added Succesfully", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                                 }
                             }
                         }
@@ -97,6 +99,83 @@ namespace Invento
             else
             {
                 return false;
+            }
+        }
+
+        public void clearFields()
+        {
+            addUsers_username.Text = "";
+            addUsers_password.Text = "";
+            addUsers_role.SelectedIndex = -1;
+            addUsers_status.SelectedIndex = -1;
+        }
+        private void addUsers_clearBtn_Click(object sender, EventArgs e)
+        {
+            clearFields();
+        }
+
+        private void addUsers_updateBtn_Click(object sender, EventArgs e)
+        {
+            if (addUsers_username.Text == "" || addUsers_password.Text == "" || addUsers_role.SelectedIndex == -1
+                || addUsers_status.SelectedIndex == -1)
+            {
+                MessageBox.Show("Empty Fields", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                if (checkConnection())
+                {
+                    try
+                    {
+                        connect.Open();
+
+                        string checkUsername = "SELECT * FROM users WHERE username = @usern";
+
+                        using (SqlCommand cmd = new SqlCommand(checkUsername, connect))
+                        {
+                            cmd.Parameters.AddWithValue("@usern", addUsers_username.Text.Trim());
+
+                            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                            DataTable table = new DataTable();
+                            adapter.Fill(table);
+
+                            if (table.Rows.Count > 0)
+                            {
+                                MessageBox.Show(addUsers_username.Text.Trim()
+                                    + "is already used", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                            else
+                            {
+                                string updateData = "UPDATE users SET username = @usern, password = @pass, role = @role, status = @status WHERE id = @id";     
+                            }
+                        }
+                    }
+                    catch (SqlException ex)
+                    {
+                        // Handle the specific SQL exception
+                        MessageBox.Show($"SQL Error: {ex.Message}\nError Number: {ex.Number}\nError State: {ex.State}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle any other general exceptions
+                        MessageBox.Show($"General Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    finally
+                    {
+                        connect.Close();
+                    }
+                }
+            }
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex != -1)
+            {
+                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+
+                int id = (int)row.Cells[0].Value;
+                int
             }
         }
     }
