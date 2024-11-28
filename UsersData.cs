@@ -39,11 +39,13 @@ namespace Invento
                         uData.Password = reader["password"].ToString();
                         uData.Role = reader["role"].ToString();
                         uData.Status = reader["status"].ToString();
+                        uData.Date = reader["date"].ToString();
 
                         listData.Add(uData);
                     } 
                 }
             }
+            return listData;
         }
     }
 }

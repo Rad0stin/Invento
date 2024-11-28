@@ -82,6 +82,7 @@
             this.addUsers_removeBtn.TabIndex = 10;
             this.addUsers_removeBtn.Text = "Remove";
             this.addUsers_removeBtn.UseVisualStyleBackColor = false;
+            this.addUsers_removeBtn.Click += new System.EventHandler(this.addUsers_removeBtn_Click);
             // 
             // addUsers_updateBtn
             // 
