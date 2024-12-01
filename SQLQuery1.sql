@@ -11,3 +11,12 @@
 SELECT * FROM users
 
 INSERT INTO users(username, password, role, status, date) VALUES('admin123', 'admin123', 'Admin', 'Active', '2024-09-11')
+
+CREATE TABLE categories 
+(
+   id int PRIMARY KEY IDENTITY(1,1),
+   category VARCHAR(MAX) NULL, 
+   date DATE NULL
+)
+
+SELECT * FROM categories
