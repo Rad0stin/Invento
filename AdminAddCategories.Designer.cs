@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.addCategories_clearBtn = new System.Windows.Forms.Button();
             this.addCategories_removeBtn = new System.Windows.Forms.Button();
@@ -73,6 +73,7 @@
             this.addCategories_clearBtn.TabIndex = 11;
             this.addCategories_clearBtn.Text = "Clear";
             this.addCategories_clearBtn.UseVisualStyleBackColor = false;
+            this.addCategories_clearBtn.Click += new System.EventHandler(this.addCategories_clearBtn_Click);
             // 
             // addCategories_removeBtn
             // 
@@ -89,6 +90,7 @@
             this.addCategories_removeBtn.TabIndex = 10;
             this.addCategories_removeBtn.Text = "Remove";
             this.addCategories_removeBtn.UseVisualStyleBackColor = false;
+            this.addCategories_removeBtn.Click += new System.EventHandler(this.addCategories_removeBtn_Click);
             // 
             // addCategories_updateBtn
             // 
@@ -105,6 +107,7 @@
             this.addCategories_updateBtn.TabIndex = 9;
             this.addCategories_updateBtn.Text = "Update";
             this.addCategories_updateBtn.UseVisualStyleBackColor = false;
+            this.addCategories_updateBtn.Click += new System.EventHandler(this.addCategories_updateBtn_Click);
             // 
             // addCategories_addBtn
             // 
@@ -156,14 +159,14 @@
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.LightSeaGreen;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft YaHei UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.LightSeaGreen;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft YaHei UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(33, 63);
             this.dataGridView1.Name = "dataGridView1";
@@ -171,6 +174,7 @@
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.Size = new System.Drawing.Size(548, 566);
             this.dataGridView1.TabIndex = 13;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
             // label5
             // 

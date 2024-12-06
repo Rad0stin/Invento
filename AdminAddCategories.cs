@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Windows.Forms;
 
 namespace Invento
 {
@@ -70,6 +65,7 @@ namespace Invento
                                     insertD.Parameters.AddWithValue("@date", today);
 
                                     insertD.ExecuteNonQuery();
+                                    clearFields();
                                     displayCategoriesData();
 
                                     MessageBox.Show("Added succesfully", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -98,6 +94,113 @@ namespace Invento
             else
             {
                 return false;
+            }
+        }
+
+        public void clearFields()
+        {
+            addCategories_category.Text = "";
+        }
+        private void addCategories_clearBtn_Click(object sender, EventArgs e)
+        {
+            clearFields();
+        }
+
+        private int getID = 0;
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex != -1)
+            {
+                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+
+                getID = (int)row.Cells[0].Value;
+
+                addCategories_category.Text = row.Cells[1].Value.ToString();
+            }
+        }
+
+        private void addCategories_updateBtn_Click(object sender, EventArgs e)
+        {
+            if (addCategories_category.Text == "")
+            {
+                MessageBox.Show("Empty Fields", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                if (MessageBox.Show("Are you sure you want to update Cat ID: " + getID + "?", "Confirmation Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    if (checkConnection())
+                    {
+                        try
+                        {
+                            connect.Open();
+
+                            string updateData = "UPDATE categories SET category = @cat WHERE id = @id";
+
+                            using (SqlCommand updateD = new SqlCommand(updateData, connect))
+                            {
+                                updateD.Parameters.AddWithValue("@cat", addCategories_category.Text.Trim());
+                                updateD.Parameters.AddWithValue("@id", getID);
+
+                                updateD.ExecuteNonQuery();
+                                clearFields();
+                                displayCategoriesData();
+
+                                MessageBox.Show("Updated succesfully", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"An unexpected error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        finally
+                        {
+                            connect.Close();
+                        }
+                    }
+                }
+            }
+        }
+
+        private void addCategories_removeBtn_Click(object sender, EventArgs e)
+        {
+            if (addCategories_category.Text == "")
+            {
+                MessageBox.Show("Empty Fields", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                if (MessageBox.Show("Are you sure you want to Delete Cat ID: " + getID + "?", "Confirmation Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    if (checkConnection())
+                    {
+                        try
+                        {
+                            connect.Open();
+
+                            string removeData = "DELETE FROM categories WHERE id = @id";
+
+                            using (SqlCommand deleteD = new SqlCommand(removeData, connect))
+                            {
+                                deleteD.Parameters.AddWithValue("@id", getID);
+
+                                deleteD.ExecuteNonQuery();
+                                clearFields();
+                                displayCategoriesData();
+
+                                MessageBox.Show("Deleted succesfully", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"An unexpected error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        finally
+                        {
+                            connect.Close();
+                        }
+                    }
+                }
             }
         }
     }
