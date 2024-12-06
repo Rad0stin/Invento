@@ -30,9 +30,9 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.addUsers_clearBtn = new System.Windows.Forms.Button();
-            this.addUsers_removeBtn = new System.Windows.Forms.Button();
-            this.addUsers_updateBtn = new System.Windows.Forms.Button();
+            this.addCategories_clearBtn = new System.Windows.Forms.Button();
+            this.addCategories_removeBtn = new System.Windows.Forms.Button();
+            this.addCategories_updateBtn = new System.Windows.Forms.Button();
             this.addCategories_addBtn = new System.Windows.Forms.Button();
             this.addCategories_category = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -47,9 +47,9 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
-            this.panel1.Controls.Add(this.addUsers_clearBtn);
-            this.panel1.Controls.Add(this.addUsers_removeBtn);
-            this.panel1.Controls.Add(this.addUsers_updateBtn);
+            this.panel1.Controls.Add(this.addCategories_clearBtn);
+            this.panel1.Controls.Add(this.addCategories_removeBtn);
+            this.panel1.Controls.Add(this.addCategories_updateBtn);
             this.panel1.Controls.Add(this.addCategories_addBtn);
             this.panel1.Controls.Add(this.addCategories_category);
             this.panel1.Controls.Add(this.label1);
@@ -58,53 +58,53 @@
             this.panel1.Size = new System.Drawing.Size(275, 644);
             this.panel1.TabIndex = 4;
             // 
-            // addUsers_clearBtn
+            // addCategories_clearBtn
             // 
-            this.addUsers_clearBtn.BackColor = System.Drawing.Color.LightSeaGreen;
-            this.addUsers_clearBtn.FlatAppearance.CheckedBackColor = System.Drawing.Color.MediumTurquoise;
-            this.addUsers_clearBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.MediumTurquoise;
-            this.addUsers_clearBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumTurquoise;
-            this.addUsers_clearBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.addUsers_clearBtn.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addUsers_clearBtn.ForeColor = System.Drawing.Color.White;
-            this.addUsers_clearBtn.Location = new System.Drawing.Point(150, 176);
-            this.addUsers_clearBtn.Name = "addUsers_clearBtn";
-            this.addUsers_clearBtn.Size = new System.Drawing.Size(109, 36);
-            this.addUsers_clearBtn.TabIndex = 11;
-            this.addUsers_clearBtn.Text = "Clear";
-            this.addUsers_clearBtn.UseVisualStyleBackColor = false;
+            this.addCategories_clearBtn.BackColor = System.Drawing.Color.LightSeaGreen;
+            this.addCategories_clearBtn.FlatAppearance.CheckedBackColor = System.Drawing.Color.MediumTurquoise;
+            this.addCategories_clearBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.MediumTurquoise;
+            this.addCategories_clearBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumTurquoise;
+            this.addCategories_clearBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.addCategories_clearBtn.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.addCategories_clearBtn.ForeColor = System.Drawing.Color.White;
+            this.addCategories_clearBtn.Location = new System.Drawing.Point(150, 176);
+            this.addCategories_clearBtn.Name = "addCategories_clearBtn";
+            this.addCategories_clearBtn.Size = new System.Drawing.Size(109, 36);
+            this.addCategories_clearBtn.TabIndex = 11;
+            this.addCategories_clearBtn.Text = "Clear";
+            this.addCategories_clearBtn.UseVisualStyleBackColor = false;
             // 
-            // addUsers_removeBtn
+            // addCategories_removeBtn
             // 
-            this.addUsers_removeBtn.BackColor = System.Drawing.Color.LightSeaGreen;
-            this.addUsers_removeBtn.FlatAppearance.CheckedBackColor = System.Drawing.Color.MediumTurquoise;
-            this.addUsers_removeBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.MediumTurquoise;
-            this.addUsers_removeBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumTurquoise;
-            this.addUsers_removeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.addUsers_removeBtn.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addUsers_removeBtn.ForeColor = System.Drawing.Color.White;
-            this.addUsers_removeBtn.Location = new System.Drawing.Point(15, 176);
-            this.addUsers_removeBtn.Name = "addUsers_removeBtn";
-            this.addUsers_removeBtn.Size = new System.Drawing.Size(109, 36);
-            this.addUsers_removeBtn.TabIndex = 10;
-            this.addUsers_removeBtn.Text = "Remove";
-            this.addUsers_removeBtn.UseVisualStyleBackColor = false;
+            this.addCategories_removeBtn.BackColor = System.Drawing.Color.LightSeaGreen;
+            this.addCategories_removeBtn.FlatAppearance.CheckedBackColor = System.Drawing.Color.MediumTurquoise;
+            this.addCategories_removeBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.MediumTurquoise;
+            this.addCategories_removeBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumTurquoise;
+            this.addCategories_removeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.addCategories_removeBtn.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.addCategories_removeBtn.ForeColor = System.Drawing.Color.White;
+            this.addCategories_removeBtn.Location = new System.Drawing.Point(15, 176);
+            this.addCategories_removeBtn.Name = "addCategories_removeBtn";
+            this.addCategories_removeBtn.Size = new System.Drawing.Size(109, 36);
+            this.addCategories_removeBtn.TabIndex = 10;
+            this.addCategories_removeBtn.Text = "Remove";
+            this.addCategories_removeBtn.UseVisualStyleBackColor = false;
             // 
-            // addUsers_updateBtn
+            // addCategories_updateBtn
             // 
-            this.addUsers_updateBtn.BackColor = System.Drawing.Color.LightSeaGreen;
-            this.addUsers_updateBtn.FlatAppearance.CheckedBackColor = System.Drawing.Color.MediumTurquoise;
-            this.addUsers_updateBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.MediumTurquoise;
-            this.addUsers_updateBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumTurquoise;
-            this.addUsers_updateBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.addUsers_updateBtn.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addUsers_updateBtn.ForeColor = System.Drawing.Color.White;
-            this.addUsers_updateBtn.Location = new System.Drawing.Point(150, 125);
-            this.addUsers_updateBtn.Name = "addUsers_updateBtn";
-            this.addUsers_updateBtn.Size = new System.Drawing.Size(109, 36);
-            this.addUsers_updateBtn.TabIndex = 9;
-            this.addUsers_updateBtn.Text = "Update";
-            this.addUsers_updateBtn.UseVisualStyleBackColor = false;
+            this.addCategories_updateBtn.BackColor = System.Drawing.Color.LightSeaGreen;
+            this.addCategories_updateBtn.FlatAppearance.CheckedBackColor = System.Drawing.Color.MediumTurquoise;
+            this.addCategories_updateBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.MediumTurquoise;
+            this.addCategories_updateBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumTurquoise;
+            this.addCategories_updateBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.addCategories_updateBtn.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.addCategories_updateBtn.ForeColor = System.Drawing.Color.White;
+            this.addCategories_updateBtn.Location = new System.Drawing.Point(150, 125);
+            this.addCategories_updateBtn.Name = "addCategories_updateBtn";
+            this.addCategories_updateBtn.Size = new System.Drawing.Size(109, 36);
+            this.addCategories_updateBtn.TabIndex = 9;
+            this.addCategories_updateBtn.Text = "Update";
+            this.addCategories_updateBtn.UseVisualStyleBackColor = false;
             // 
             // addCategories_addBtn
             // 
@@ -202,9 +202,9 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button addUsers_clearBtn;
-        private System.Windows.Forms.Button addUsers_removeBtn;
-        private System.Windows.Forms.Button addUsers_updateBtn;
+        private System.Windows.Forms.Button addCategories_clearBtn;
+        private System.Windows.Forms.Button addCategories_removeBtn;
+        private System.Windows.Forms.Button addCategories_updateBtn;
         private System.Windows.Forms.Button addCategories_addBtn;
         private System.Windows.Forms.TextBox addCategories_category;
         private System.Windows.Forms.Label label1;
