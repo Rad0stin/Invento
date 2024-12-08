@@ -52,6 +52,12 @@
     <Compile Include="AdminAddCategories.Designer.cs">
       <DependentUpon>AdminAddCategories.cs</DependentUpon>
     </Compile>
+    <Compile Include="AdminAddProducts.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AdminAddProducts.Designer.cs">
+      <DependentUpon>AdminAddProducts.cs</DependentUpon>
+    </Compile>
     <Compile Include="AdminAddUser.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -88,6 +94,9 @@
     <Compile Include="UsersData.cs" />
     <EmbeddedResource Include="AdminAddCategories.resx">
       <DependentUpon>AdminAddCategories.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdminAddProducts.resx">
+      <DependentUpon>AdminAddProducts.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AdminAddUser.resx">
       <DependentUpon>AdminAddUser.cs</DependentUpon>
