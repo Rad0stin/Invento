@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddProductsData.cs" />
     <Compile Include="AdminAddCategories.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -156,6 +157,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\money.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Product_Directory\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
