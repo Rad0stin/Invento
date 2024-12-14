@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.IO;
+using System.Windows.Forms;
 
 namespace Invento
 {
@@ -20,6 +16,16 @@ namespace Invento
             InitializeComponent();
 
             displayCategries();
+
+            displayAllProducts();
+        }
+
+        public void displayAllProducts()
+        {
+            AddProductsData apData = new AddProductsData();
+            List<AddProductsData> listData = apData.AllProductsData();
+
+            dataGridView1.DataSource = listData;
         }
 
         public bool emptyFields()
@@ -30,7 +36,7 @@ namespace Invento
             {
                 return true;
             }
-            else 
+            else
             {
                 return false;
             }
@@ -38,7 +44,7 @@ namespace Invento
 
         public void displayCategries()
         {
-            if (checkConnection()) 
+            if (checkConnection())
             {
                 try
                 {
@@ -50,7 +56,7 @@ namespace Invento
                     {
                         SqlDataReader reader = cmd.ExecuteReader();
 
-                        if (reader.HasRows) 
+                        if (reader.HasRows)
                         {
                             while (reader.Read())
                             {
@@ -63,7 +69,7 @@ namespace Invento
                 {
 
                 }
-                finally 
+                finally
                 {
                     connect.Close();
                 }
@@ -135,6 +141,7 @@ namespace Invento
 
                                     insertD.ExecuteNonQuery();
                                     clearFields();
+                                    displayAllProducts();
 
                                     MessageBox.Show("Product added succesfully", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 }
@@ -200,6 +207,134 @@ namespace Invento
         private void addProducts_clearBtn_Click(object sender, EventArgs e)
         {
             clearFields();
+        }
+
+        private int getID = 0;
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex != -1)
+            {
+                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+
+                getID = (int)row.Cells[0].Value;
+
+                addProducts_prodID.Text = row.Cells[1].Value.ToString();
+                addProducts_prodName.Text = row.Cells[2].Value.ToString();
+                addProducts_category.Text = row.Cells[3].Value.ToString();
+                addProducts_price.Text = row.Cells[4].Value.ToString();
+                addProducts_stock.Text = row.Cells[5].Value.ToString();
+
+                string imagepath = row.Cells[6].Value.ToString();
+
+                try
+                {
+                    if (imagepath != null)
+                    {
+                        addProducts_imageView.Image = Image.FromFile(imagepath);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error Image: " + ex, "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                addProducts_status.Text = row.Cells[7].Value.ToString();
+
+            }
+        }
+
+        private void addProducts_updateBtn_Click(object sender, EventArgs e)
+        {
+            if (emptyFields())
+            {
+                MessageBox.Show("Empty Fields", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                if (MessageBox.Show("Are you sure you want to update Product ID: "
+                    + addProducts_prodID.Text.Trim() + "?", "Confirmation Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    if (checkConnection())
+                    {
+                        try
+                        {
+                            connect.Open();
+
+                            string updateData = "UPDATE  products SET prod_id = @prodID, prod_name = @prodName, category = @cat, price = @price, stock = @stock, status = @status WHERE id = @id";
+
+                            using (SqlCommand updateD = new SqlCommand(updateData, connect))
+                            {
+                                updateD.Parameters.AddWithValue("@prodID", addProducts_prodID.Text.Trim());
+                                updateD.Parameters.AddWithValue("@prodName", addProducts_prodName.Text.Trim());
+                                updateD.Parameters.AddWithValue("@cat", addProducts_category.SelectedItem);
+                                updateD.Parameters.AddWithValue("@price", addProducts_price.Text.Trim());
+                                updateD.Parameters.AddWithValue("@stock", addProducts_stock.Text.Trim());
+                                updateD.Parameters.AddWithValue("@status", addProducts_status.SelectedItem);
+                                updateD.Parameters.AddWithValue("@id", getID);
+
+                                updateD.ExecuteNonQuery();
+                                clearFields();
+                                displayAllProducts();
+
+                                MessageBox.Show("Updated succesfully", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Connection failed: " + ex, "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        finally
+                        {
+                            connect.Close();
+                        }
+                    }
+                }
+            }
+        }
+
+        private void addProducts_removeBtn_Click(object sender, EventArgs e)
+        {
+            if (emptyFields())
+            {
+                MessageBox.Show("Empty Fields", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                if (MessageBox.Show("Are you sure you want to DELETE Product ID: "
+                    + addProducts_prodID.Text.Trim() + "?", "Confirmation Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    if (checkConnection())
+                    {
+                        try
+                        {
+                            connect.Open();
+
+                            string deleteData = "DELETE FROM products WHERE id = @id";
+
+                            using (SqlCommand deleteD = new SqlCommand(deleteData, connect))
+                            {
+                                
+                                deleteD.Parameters.AddWithValue("@id", getID);
+
+                                deleteD.ExecuteNonQuery();
+                                clearFields();
+                                displayAllProducts();
+
+                                MessageBox.Show("Deleted succesfully", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Connection failed: " + ex, "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        finally
+                        {
+                            connect.Close();
+                        }
+                    }
+                }
+            }
         }
     }
 }
