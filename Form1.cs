@@ -8,7 +8,6 @@ using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data;
 using System.Data.SqlClient;
 using System.Net.Http.Headers;
 
@@ -59,24 +58,44 @@ namespace Invento
                 {
                     connect.Open();
 
-                    string selectData = "SELECT * FROM users WHERE username = @usern AND password = @pass";
+                    string selectData = "SELECT COUNT(*) FROM users WHERE username = @usern AND password = @pass";
 
                     using (SqlCommand cmd = new SqlCommand(selectData, connect))
                     {
                         cmd.Parameters.AddWithValue("@usern", login_username.Text.Trim());
                         cmd.Parameters.AddWithValue("@pass", login_password.Text.Trim());
 
-                        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                        DataTable table = new DataTable();
-                        adapter.Fill(table);
+                        int rowCount = (int)cmd.ExecuteScalar();
 
-                        if (table.Rows.Count > 0)
+                       
+                        if (rowCount > 0)
                         {
-                            MessageBox.Show("Login Succesfully!", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            string selectRole = "SELECT role FROM users WHERE username = @usern and password = @pass";
 
-                            MainForm mForm = new MainForm();
-                            mForm.Show();
-                            this.Hide();
+                            using (SqlCommand getRole = new SqlCommand(selectRole, connect))
+                            {
+                                getRole.Parameters.AddWithValue("@usern", login_username.Text.Trim());
+                                getRole.Parameters.AddWithValue("@pass", login_password.Text.Trim());
+
+                                string userRole = getRole.ExecuteScalar() as string;
+
+                                MessageBox.Show("Login Succesfully!", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                                if (userRole == "Admin")
+                                {
+                                    MainForm mForm = new MainForm();
+                                    mForm.Show();
+
+                                    this.Hide();
+                                }
+                                else if (userRole == "Cashier")
+                                {
+                                    CashierMainForm cmForm = new CashierMainForm();
+                                    cmForm.Show();
+
+                                    this.Hide();
+                                } 
+                            }
                         }
                         else
                         {

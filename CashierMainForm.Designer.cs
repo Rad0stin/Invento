@@ -32,17 +32,18 @@
             this.label1 = new System.Windows.Forms.Label();
             this.close = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.button6 = new System.Windows.Forms.Button();
+            this.Order = new System.Windows.Forms.Button();
+            this.logout_btn = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.Order = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.adminDashboard1 = new Invento.AdminDashboard();
             this.adminAddProducts1 = new Invento.AdminAddProducts();
+            this.adminDashboard1 = new Invento.AdminDashboard();
+            this.cashierOrder1 = new Invento.CashierOrder();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -87,7 +88,7 @@
             // 
             this.panel2.BackColor = System.Drawing.Color.LightSeaGreen;
             this.panel2.Controls.Add(this.Order);
-            this.panel2.Controls.Add(this.button6);
+            this.panel2.Controls.Add(this.logout_btn);
             this.panel2.Controls.Add(this.button5);
             this.panel2.Controls.Add(this.button3);
             this.panel2.Controls.Add(this.button1);
@@ -100,22 +101,39 @@
             this.panel2.Size = new System.Drawing.Size(240, 668);
             this.panel2.TabIndex = 2;
             // 
-            // button6
+            // Order
             // 
-            this.button6.BackColor = System.Drawing.Color.MediumTurquoise;
-            this.button6.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.button6.FlatAppearance.BorderSize = 0;
-            this.button6.FlatAppearance.MouseDownBackColor = System.Drawing.Color.MediumTurquoise;
-            this.button6.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumTurquoise;
-            this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button6.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button6.ForeColor = System.Drawing.Color.White;
-            this.button6.Location = new System.Drawing.Point(16, 584);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(192, 33);
-            this.button6.TabIndex = 15;
-            this.button6.Text = "LogOut";
-            this.button6.UseVisualStyleBackColor = false;
+            this.Order.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.Order.FlatAppearance.BorderSize = 0;
+            this.Order.FlatAppearance.MouseDownBackColor = System.Drawing.Color.MediumTurquoise;
+            this.Order.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumTurquoise;
+            this.Order.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Order.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Order.ForeColor = System.Drawing.Color.White;
+            this.Order.Location = new System.Drawing.Point(16, 350);
+            this.Order.Name = "Order";
+            this.Order.Size = new System.Drawing.Size(192, 33);
+            this.Order.TabIndex = 16;
+            this.Order.Text = "Order";
+            this.Order.UseVisualStyleBackColor = true;
+            // 
+            // logout_btn
+            // 
+            this.logout_btn.BackColor = System.Drawing.Color.MediumTurquoise;
+            this.logout_btn.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.logout_btn.FlatAppearance.BorderSize = 0;
+            this.logout_btn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.MediumTurquoise;
+            this.logout_btn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumTurquoise;
+            this.logout_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.logout_btn.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.logout_btn.ForeColor = System.Drawing.Color.White;
+            this.logout_btn.Location = new System.Drawing.Point(16, 600);
+            this.logout_btn.Name = "logout_btn";
+            this.logout_btn.Size = new System.Drawing.Size(192, 33);
+            this.logout_btn.TabIndex = 15;
+            this.logout_btn.Text = "LogOut";
+            this.logout_btn.UseVisualStyleBackColor = false;
+            this.logout_btn.Click += new System.EventHandler(this.logout_btn_Click);
             // 
             // button5
             // 
@@ -198,24 +216,9 @@
             this.pictureBox1.TabIndex = 8;
             this.pictureBox1.TabStop = false;
             // 
-            // Order
-            // 
-            this.Order.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.Order.FlatAppearance.BorderSize = 0;
-            this.Order.FlatAppearance.MouseDownBackColor = System.Drawing.Color.MediumTurquoise;
-            this.Order.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumTurquoise;
-            this.Order.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Order.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Order.ForeColor = System.Drawing.Color.White;
-            this.Order.Location = new System.Drawing.Point(16, 350);
-            this.Order.Name = "Order";
-            this.Order.Size = new System.Drawing.Size(192, 33);
-            this.Order.TabIndex = 16;
-            this.Order.Text = "Order";
-            this.Order.UseVisualStyleBackColor = true;
-            // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.cashierOrder1);
             this.panel3.Controls.Add(this.adminAddProducts1);
             this.panel3.Controls.Add(this.adminDashboard1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -224,19 +227,26 @@
             this.panel3.Size = new System.Drawing.Size(941, 668);
             this.panel3.TabIndex = 3;
             // 
-            // adminDashboard1
-            // 
-            this.adminDashboard1.Location = new System.Drawing.Point(4, 3);
-            this.adminDashboard1.Name = "adminDashboard1";
-            this.adminDashboard1.Size = new System.Drawing.Size(934, 668);
-            this.adminDashboard1.TabIndex = 0;
-            // 
             // adminAddProducts1
             // 
             this.adminAddProducts1.Location = new System.Drawing.Point(0, 0);
             this.adminAddProducts1.Name = "adminAddProducts1";
             this.adminAddProducts1.Size = new System.Drawing.Size(941, 668);
             this.adminAddProducts1.TabIndex = 1;
+            // 
+            // adminDashboard1
+            // 
+            this.adminDashboard1.Location = new System.Drawing.Point(0, 0);
+            this.adminDashboard1.Name = "adminDashboard1";
+            this.adminDashboard1.Size = new System.Drawing.Size(934, 668);
+            this.adminDashboard1.TabIndex = 0;
+            // 
+            // cashierOrder1
+            // 
+            this.cashierOrder1.Location = new System.Drawing.Point(0, 0);
+            this.cashierOrder1.Name = "cashierOrder1";
+            this.cashierOrder1.Size = new System.Drawing.Size(941, 668);
+            this.cashierOrder1.TabIndex = 2;
             // 
             // CashierMainForm
             // 
@@ -267,7 +277,7 @@
         private System.Windows.Forms.Button close;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button Order;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button logout_btn;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button1;
@@ -277,5 +287,6 @@
         private System.Windows.Forms.Panel panel3;
         private AdminDashboard adminDashboard1;
         private AdminAddProducts adminAddProducts1;
+        private CashierOrder cashierOrder1;
     }
 }

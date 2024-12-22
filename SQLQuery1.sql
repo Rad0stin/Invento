@@ -8,9 +8,11 @@
  date DATE NULL
 )
 
+INSERT INTO users (username, password, role, status) VALUES('rado', 'test1234', 'Cashier', 'Active')
+
 SELECT * FROM users
 
-INSERT INTO users(username, password, role, status, date) VALUES('admin123', 'admin123', 'Admin', 'Active', '2024-09-11')
+INSERT INTO users(username, password, role, status, date) VALUES('admin', 'admin123', 'Admin', 'Active', '2024-09-11')
 
 CREATE TABLE categories 
 (
