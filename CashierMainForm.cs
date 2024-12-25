@@ -21,8 +21,8 @@ namespace Invento
         {
             if (MessageBox.Show("Are you sure you want to logout?", "Confirmation Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                Form1 form1 = new Form1();
-                form1.Show();
+                Form1 loginform = new Form1();
+                loginform.Show();
 
                 this.Hide();
             }

@@ -198,6 +198,7 @@
             this.cashierOrder_addBtn.TabIndex = 18;
             this.cashierOrder_addBtn.Text = "Add";
             this.cashierOrder_addBtn.UseVisualStyleBackColor = false;
+            this.cashierOrder_addBtn.Click += new System.EventHandler(this.cashierOrder_addBtn_Click);
             // 
             // cashierOrder_qty
             // 
@@ -265,6 +266,7 @@
             this.cashierOrder_prodID.Name = "cashierOrder_prodID";
             this.cashierOrder_prodID.Size = new System.Drawing.Size(143, 29);
             this.cashierOrder_prodID.TabIndex = 3;
+            this.cashierOrder_prodID.SelectedIndexChanged += new System.EventHandler(this.cashierOrder_prodID_SelectedIndexChanged);
             // 
             // label3
             // 
