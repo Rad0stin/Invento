@@ -23,6 +23,16 @@ namespace Invento
             displayAllAvailableProducts();
 
             displayAllCategories();
+
+            displayOrders();
+        }
+
+        public void displayOrders() 
+        {
+            OrdersData oData = new OrdersData();
+            List<OrdersData> listData = oData.allOrdersData();
+
+            dataGridView2.DataSource = listData;
         }
 
         public void displayAllAvailableProducts() 
@@ -239,6 +249,7 @@ namespace Invento
                     }
                 }
             }
+            displayOrders();
         }
 
         private int idGen;
