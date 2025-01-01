@@ -41,9 +41,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.cashierOrder1 = new Invento.CashierOrder();
             this.adminAddProducts1 = new Invento.AdminAddProducts();
             this.adminDashboard1 = new Invento.AdminDashboard();
-            this.cashierOrder1 = new Invento.CashierOrder();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -83,6 +83,7 @@
             this.close.TabIndex = 1;
             this.close.Text = "X";
             this.close.UseVisualStyleBackColor = false;
+            this.close.Click += new System.EventHandler(this.close_Click);
             // 
             // panel2
             // 
@@ -227,6 +228,13 @@
             this.panel3.Size = new System.Drawing.Size(941, 668);
             this.panel3.TabIndex = 3;
             // 
+            // cashierOrder1
+            // 
+            this.cashierOrder1.Location = new System.Drawing.Point(0, 0);
+            this.cashierOrder1.Name = "cashierOrder1";
+            this.cashierOrder1.Size = new System.Drawing.Size(941, 668);
+            this.cashierOrder1.TabIndex = 2;
+            // 
             // adminAddProducts1
             // 
             this.adminAddProducts1.Location = new System.Drawing.Point(0, 0);
@@ -240,13 +248,6 @@
             this.adminDashboard1.Name = "adminDashboard1";
             this.adminDashboard1.Size = new System.Drawing.Size(934, 668);
             this.adminDashboard1.TabIndex = 0;
-            // 
-            // cashierOrder1
-            // 
-            this.cashierOrder1.Location = new System.Drawing.Point(0, 0);
-            this.cashierOrder1.Name = "cashierOrder1";
-            this.cashierOrder1.Size = new System.Drawing.Size(941, 668);
-            this.cashierOrder1.TabIndex = 2;
             // 
             // CashierMainForm
             // 

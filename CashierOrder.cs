@@ -25,6 +25,8 @@ namespace Invento
             displayAllCategories();
 
             displayOrders();
+
+            displayTotalPrice();
         }
 
         public void displayOrders() 
@@ -179,6 +181,44 @@ namespace Invento
             }
         }
 
+        private float totalPrice = 0;
+        public void displayTotalPrice() 
+        {
+            IDGenerator();
+
+            if (checkConnection())
+            {
+                try
+                {
+                    connect.Open();
+
+                    string selectData = "SELECT SUM(total_price) FROM orders WHERE customer_id = @cID";
+
+                    using (SqlCommand cmd = new SqlCommand(selectData, connect))
+                    {
+                        cmd.Parameters.AddWithValue("@cID", idGen);
+
+                        object result = cmd.ExecuteScalar();
+
+                        if (result != DBNull.Value)
+                        {
+                            totalPrice = Convert.ToSingle(result);
+
+                            cashierOrder_totalPrice.Text = totalPrice.ToString("0.00");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Connection failed: " + ex, "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally 
+                {
+                    connect.Close();
+                }
+            }
+        }
+
         private void cashierOrder_addBtn_Click(object sender, EventArgs e)
         {
             IDGenerator();
@@ -250,6 +290,7 @@ namespace Invento
                 }
             }
             displayOrders();
+            displayTotalPrice();
         }
 
         private int idGen;
@@ -285,6 +326,83 @@ namespace Invento
                 }
 
             }
+        }
+
+        private void cashierOrder_removeBtn_Click(object sender, EventArgs e)
+        {
+            if (prodID == 0)
+            {
+                MessageBox.Show("Please select item first", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                if (MessageBox.Show("Are you sure you want to Delete ID: "
+                   + prodID + "?", "Confirmation Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    if (checkConnection())
+                    {
+                        try
+                        {
+                            connect.Open();
+
+                            string deleteData = "DELETE FROM orders WHERE id = @id";
+
+                            using (SqlCommand cmd = new SqlCommand(deleteData, connect))
+                            {
+
+                                cmd.Parameters.AddWithValue("@id", prodID);
+
+                                cmd.ExecuteNonQuery();
+
+                                MessageBox.Show("Deleted succesfully", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Connection failed: " + ex, "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        finally 
+                        {
+                            connect.Close();
+                        }
+                    }
+                }
+            }
+            displayOrders();
+            displayTotalPrice();
+        }
+
+        private int prodID = 0;
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+          
+        }
+
+        private void dataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            
+                DataGridViewRow row = dataGridView2.Rows[e.RowIndex];
+
+                prodID = (int)row.Cells[0].Value;
+            
+        }
+
+        public void clearFields() 
+        {
+            cashierOrder_category.SelectedIndex = -1;
+            cashierOrder_prodID.SelectedIndex = -1;
+            cashierOrder_prodName.Text = "";
+            cashierOrder_price.Text = "";
+            cashierOrder_qty.Value = 0;
+        }
+        private void cashierOrder_clearBtn_Click(object sender, EventArgs e)
+        {
+            clearFields();
+        }
+
+        private void cashierOrder_payOrders_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

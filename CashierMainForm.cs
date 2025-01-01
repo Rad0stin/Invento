@@ -27,5 +27,14 @@ namespace Invento
                 this.Hide();
             }
         }
+
+        private void close_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to close?", "Confirmation Message", MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                Application.Exit();
+            }
+        }
     }
 }

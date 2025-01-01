@@ -14,7 +14,7 @@ namespace Invento
       {
         SqlConnection connect = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Radostin\Documents\invento.mdf;Integrated Security=True;Connect Timeout=30;");
 
-
+        public int ID { set; get; }
         public string CID { set; get; }
         public string PID { set; get; }
         public string PName { set; get; }
@@ -70,6 +70,8 @@ namespace Invento
                         while (reader.Read()) 
                         {
                             OrdersData oData = new OrdersData();
+
+                            oData.ID = (int)reader["id"];
                             oData.CID = reader["customer_id"].ToString();
                             oData.PID = reader["prod_id"].ToString();
                             oData.PName = reader["prod_name"].ToString();
