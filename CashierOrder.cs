@@ -29,7 +29,7 @@ namespace Invento
             displayTotalPrice();
         }
 
-        public void displayOrders() 
+        public void displayOrders()
         {
             OrdersData oData = new OrdersData();
             List<OrdersData> listData = oData.allOrdersData();
@@ -37,7 +37,7 @@ namespace Invento
             dataGridView2.DataSource = listData;
         }
 
-        public void displayAllAvailableProducts() 
+        public void displayAllAvailableProducts()
         {
             AddProductsData apData = new AddProductsData();
             List<AddProductsData> listdata = apData.allAvailableProducts();
@@ -57,7 +57,7 @@ namespace Invento
             }
         }
 
-        public void displayAllCategories() 
+        public void displayAllCategories()
         {
             if (checkConnection())
             {
@@ -69,7 +69,7 @@ namespace Invento
 
                     using (SqlCommand cmd = new SqlCommand(selectData, connect))
                     {
-                        using (SqlDataReader reader = cmd.ExecuteReader()) 
+                        using (SqlDataReader reader = cmd.ExecuteReader())
                         {
                             cashierOrder_category.Items.Clear();
 
@@ -92,7 +92,7 @@ namespace Invento
             }
         }
 
-      
+
         private void cashierOrder_category_SelectedIndexChanged(object sender, EventArgs e)
         {
             cashierOrder_prodID.SelectedIndex = -1;
@@ -102,7 +102,7 @@ namespace Invento
 
             string selectedValue = cashierOrder_category.SelectedItem as string;
 
-            if (selectedValue != null) 
+            if (selectedValue != null)
             {
                 if (checkConnection())
                 {
@@ -130,7 +130,7 @@ namespace Invento
                     {
                         MessageBox.Show("Connection failed: " + ex, "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                    finally 
+                    finally
                     {
                         connect.Close();
                     }
@@ -173,7 +173,7 @@ namespace Invento
                     {
                         MessageBox.Show("Connection failed: " + ex, "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                    finally 
+                    finally
                     {
                         connect.Close();
                     }
@@ -182,7 +182,7 @@ namespace Invento
         }
 
         private float totalPrice = 0;
-        public void displayTotalPrice() 
+        public void displayTotalPrice()
         {
             IDGenerator();
 
@@ -212,7 +212,7 @@ namespace Invento
                 {
                     MessageBox.Show("Connection failed: " + ex, "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                finally 
+                finally
                 {
                     connect.Close();
                 }
@@ -243,7 +243,7 @@ namespace Invento
                         {
                             getOrder.Parameters.AddWithValue("@prodID", cashierOrder_prodID.SelectedItem);
 
-                            using (SqlDataReader reader = getOrder.ExecuteReader()) 
+                            using (SqlDataReader reader = getOrder.ExecuteReader())
                             {
                                 if (reader.Read())
                                 {
@@ -273,7 +273,7 @@ namespace Invento
 
                             cmd.Parameters.AddWithValue("@totalprice", totalP);
 
-                            DateTime today = DateTime.Today;    
+                            DateTime today = DateTime.Today;
                             cmd.Parameters.AddWithValue("@date", today);
 
                             cmd.ExecuteNonQuery();
@@ -314,7 +314,7 @@ namespace Invento
                         {
                             idGen = 1;
                         }
-                        else 
+                        else
                         {
                             idGen = temp + 1;
                         }
@@ -361,7 +361,7 @@ namespace Invento
                         {
                             MessageBox.Show("Connection failed: " + ex, "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
-                        finally 
+                        finally
                         {
                             connect.Close();
                         }
@@ -375,19 +375,19 @@ namespace Invento
         private int prodID = 0;
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-          
+
         }
 
         private void dataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            
-                DataGridViewRow row = dataGridView2.Rows[e.RowIndex];
 
-                prodID = (int)row.Cells[0].Value;
-            
+            DataGridViewRow row = dataGridView2.Rows[e.RowIndex];
+
+            prodID = (int)row.Cells[0].Value;
+
         }
 
-        public void clearFields() 
+        public void clearFields()
         {
             cashierOrder_category.SelectedIndex = -1;
             cashierOrder_prodID.SelectedIndex = -1;
@@ -402,7 +402,85 @@ namespace Invento
 
         private void cashierOrder_payOrders_Click(object sender, EventArgs e)
         {
+            IDGenerator();
 
+            if (cashierOrder_amount.Text == "" || dataGridView2.Rows.Count < 0)
+            {
+                MessageBox.Show("No orders/empty fields", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else 
+            {
+                if (MessageBox.Show("Are you sure you want to pay orders" , "Confirmation Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    if (checkConnection())
+                    {
+                        try
+                        {
+                            connect.Open();
+
+                            string insertData = "INSERT INTO customers (customer_id, total_price, amount, change, order_date)" +
+                                "VALUES(@cID,  @totalPrice, @amount, @change, @date)";
+
+                            using (SqlCommand cmd = new SqlCommand(insertData, connect))
+                            {
+                                cmd.Parameters.AddWithValue("@cID", idGen);
+                                cmd.Parameters.AddWithValue("@totalPrice", cashierOrder_totalPrice.Text);
+                                cmd.Parameters.AddWithValue("@amount", cashierOrder_amount.Text);
+                                cmd.Parameters.AddWithValue("@change", cashierOrder_change.Text);
+
+                                DateTime today = DateTime.Now;
+                                cmd.Parameters.AddWithValue("@date", today);
+
+                                cmd.ExecuteNonQuery();
+
+                                clearFields();
+
+                                MessageBox.Show("Paid succesfully", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Connection failed: " + ex, "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        finally
+                        {
+                            connect.Close();
+                        }
+                    }
+                }
+            }
+            displayTotalPrice();
+
+            cashierOrder_amount.Text = "";
+            cashierOrder_change.Text = "";
+        }
+
+        private void cashierOrder_amount_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                try
+                {
+                    float getAmount = Convert.ToSingle(cashierOrder_amount.Text);
+                    float getChange = (getAmount - totalPrice);
+
+                    if (getChange <= -1) 
+                    {
+                        cashierOrder_amount.Text = "";
+                        cashierOrder_change.Text = "";
+                    }
+                    else
+                    {
+                        cashierOrder_change.Text = getChange.ToString("0.00");
+                    }
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Something went wrong", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    cashierOrder_amount.Text = "";
+                    cashierOrder_change.Text = "";
+                }
+            }
         }
     }
 }
