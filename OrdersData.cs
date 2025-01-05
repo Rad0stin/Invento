@@ -22,7 +22,6 @@ namespace Invento
         public string OrigPrice { set; get; }
         public string QTY { set; get; }
         public string TotalPrice { set; get; }
-        public string Date { set; get; }
 
         public List<OrdersData> allOrdersData() 
         {
@@ -79,7 +78,6 @@ namespace Invento
                             oData.OrigPrice = reader["orig_price"].ToString();
                             oData.QTY = reader["qty"].ToString();
                             oData.TotalPrice = reader["total_price"].ToString();
-                            oData.Date = reader["order_date"].ToString();
 
                             listData.Add(oData);
                         }
