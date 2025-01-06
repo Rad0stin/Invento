@@ -16,10 +16,20 @@ namespace Invento
         {
             InitializeComponent();
 
-            dispalyCustomers();
+            displayCustomers();
         }
 
-        public void dispalyCustomers() 
+        public void refreshData()
+        {
+            if (InvokeRequired)
+            {
+                Invoke((MethodInvoker)refreshData);
+                return;
+            }
+            displayCustomers();
+        }
+
+        public void displayCustomers() 
         {
             CustomersData cData = new CustomersData();
 

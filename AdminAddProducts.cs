@@ -20,6 +20,17 @@ namespace Invento
             displayAllProducts();
         }
 
+        public void refreshData()
+        {
+            if (InvokeRequired)
+            {
+                Invoke((MethodInvoker)refreshData);
+                return;
+            }
+            displayCategries();
+            displayAllProducts();
+        }
+
         public void displayAllProducts()
         {
             AddProductsData apData = new AddProductsData();

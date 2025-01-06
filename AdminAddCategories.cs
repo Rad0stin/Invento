@@ -17,6 +17,16 @@ namespace Invento
             displayCategoriesData();
         }
 
+        public void refreshData()
+        {
+            if (InvokeRequired)
+            {
+                Invoke((MethodInvoker)refreshData);
+                return;
+            }
+            displayCategoriesData();
+        }
+
         public void displayCategoriesData()
         {
             CategoriesData cData = new CategoriesData();

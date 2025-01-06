@@ -36,5 +36,61 @@ namespace Invento
                 Application.Exit();
             }
         }
+
+        private void dashboard_btn_Click(object sender, EventArgs e)
+        {
+            adminDashboard1.Visible = true;
+            adminAddProducts1.Visible = false;
+            cashierCustomersForm1.Visible = false;
+            cashierOrder1.Visible = false;
+
+            AdminDashboard adform = adminDashboard1 as AdminDashboard;
+            if (adform != null)
+            {
+                adform.refreshData();
+            }
+        }
+
+        private void addProducts_btn_Click(object sender, EventArgs e)
+        {
+            adminDashboard1.Visible = false;
+            adminAddProducts1.Visible = true;
+            cashierCustomersForm1.Visible = false;
+            cashierOrder1.Visible = false;
+
+            AdminAddProducts aapform = adminAddProducts1 as AdminAddProducts;
+            if (aapform != null)
+            {
+                aapform.refreshData();
+            }
+        }
+
+        private void customers_btn_Click(object sender, EventArgs e)
+        {
+            adminDashboard1.Visible = false;
+            adminAddProducts1.Visible = false;
+            cashierCustomersForm1.Visible = true;
+            cashierOrder1.Visible = false;
+
+            CashierCustomersForm ccfform = cashierCustomersForm1 as CashierCustomersForm;
+            if (ccfform != null)
+            {
+                ccfform.refreshData();
+            }
+        }
+
+        private void order_btn_Click(object sender, EventArgs e)
+        {
+            adminDashboard1.Visible = false;
+            adminAddProducts1.Visible = false;
+            cashierCustomersForm1.Visible = false;
+            cashierOrder1.Visible = true;
+
+            CashierOrder coform = cashierOrder1 as CashierOrder;
+            if (coform != null)
+            {
+                coform.refreshData();
+            }
+        }
     }
 }

@@ -26,6 +26,22 @@ namespace Invento
             displayAllCustomers();
 
             displayTodaysIncome();
+
+            displayTotalIncome();
+        }
+
+        public void refreshData() 
+        {
+            if (InvokeRequired)
+            {
+                Invoke((MethodInvoker)refreshData);
+                return;   
+            }
+            displayTodaysCustomers();
+            displayAllUsers();
+            displayAllCustomers();
+            displayTodaysIncome();
+            displayTotalIncome();
         }
 
         public void displayTodaysCustomers()
@@ -57,6 +73,7 @@ namespace Invento
                             int count = Convert.ToInt32(reader[0]);
                             dashboard_AU.Text = count.ToString();
                         }
+                        reader.Close();
                     }
                 }
                 catch (Exception ex)
@@ -90,6 +107,7 @@ namespace Invento
                             int count = Convert.ToInt32(reader[0]);
                             dashboard_AC.Text = count.ToString();
                         }
+                        reader.Close();
                     }
                 }
                 catch (Exception ex)
@@ -129,9 +147,44 @@ namespace Invento
                             if (value != DBNull.Value) 
                             {
                                 int count = Convert.ToInt32(reader[0]);
-                                dashboard_TI.Text = count.ToString("0.00");
-                            } 
+                                dashboard_TI.Text = "$" + count.ToString("0.00");
+                            }
+                            reader.Close();
                         }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Connection failed: " + ex, "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    connect.Close();
+                }
+            }
+        }
+
+        public void displayTotalIncome() 
+        {
+            if (checkConnection())
+            {
+                try
+                {
+                    connect.Open();
+
+                    string selectData = "SELECT SUM(total_price) FROM customers";
+
+                    using (SqlCommand cmd = new SqlCommand(selectData, connect))
+                    {
+
+                        SqlDataReader reader = cmd.ExecuteReader();
+
+                        if (reader.Read())
+                        {    
+                           int count = Convert.ToInt32(reader[0]);
+                           dashboard_totalIncome.Text = "$" + count.ToString("0.00");
+                        }
+                        reader.Close();
                     }
                 }
                 catch (Exception ex)

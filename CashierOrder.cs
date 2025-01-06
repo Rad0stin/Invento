@@ -30,6 +30,20 @@ namespace Invento
             displayTotalPrice();
         }
 
+        public void refreshData()
+        {
+            if (InvokeRequired)
+            {
+                Invoke((MethodInvoker)refreshData);
+                return;
+            }
+            displayAllAvailableProducts();
+
+            displayAllCategories();
+            displayOrders();
+            displayTotalPrice();
+        }
+
         public void displayOrders()
         {
             OrdersData oData = new OrdersData();
@@ -451,9 +465,6 @@ namespace Invento
                 }
             }
             displayTotalPrice();
-
-            cashierOrder_amount.Text = "";
-            cashierOrder_change.Text = "";
         }
 
         private void cashierOrder_amount_KeyDown(object sender, KeyEventArgs e)
@@ -498,6 +509,9 @@ namespace Invento
 
                 printPreviewDialog1.Document = printDocument1;
                 printPreviewDialog1.ShowDialog();
+
+                cashierOrder_amount.Text = "";
+                cashierOrder_change.Text = "";
             }
         }
 
