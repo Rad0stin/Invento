@@ -72,3 +72,4 @@ EXEC sp_rename 'customers.ustomer_id', 'customer_id', 'COLUMN';
 ALTER TABLE customers
 DROP COLUMN prod_id
 
+SELECT COUNT(id) FROM customers

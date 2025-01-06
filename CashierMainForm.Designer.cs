@@ -41,6 +41,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.adminDashboard2 = new Invento.AdminDashboard();
+            this.cashierCustomersForm1 = new Invento.CashierCustomersForm();
             this.cashierOrder1 = new Invento.CashierOrder();
             this.adminAddProducts1 = new Invento.AdminAddProducts();
             this.adminDashboard1 = new Invento.AdminDashboard();
@@ -191,9 +193,9 @@
             this.label3.ForeColor = System.Drawing.Color.White;
             this.label3.Location = new System.Drawing.Point(93, 121);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(57, 20);
+            this.label3.Size = new System.Drawing.Size(42, 20);
             this.label3.TabIndex = 9;
-            this.label3.Text = "Admin";
+            this.label3.Text = "User";
             // 
             // label2
             // 
@@ -219,6 +221,8 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.adminDashboard2);
+            this.panel3.Controls.Add(this.cashierCustomersForm1);
             this.panel3.Controls.Add(this.cashierOrder1);
             this.panel3.Controls.Add(this.adminAddProducts1);
             this.panel3.Controls.Add(this.adminDashboard1);
@@ -227,6 +231,20 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(941, 668);
             this.panel3.TabIndex = 3;
+            // 
+            // adminDashboard2
+            // 
+            this.adminDashboard2.Location = new System.Drawing.Point(-3, 0);
+            this.adminDashboard2.Name = "adminDashboard2";
+            this.adminDashboard2.Size = new System.Drawing.Size(946, 668);
+            this.adminDashboard2.TabIndex = 4;
+            // 
+            // cashierCustomersForm1
+            // 
+            this.cashierCustomersForm1.Location = new System.Drawing.Point(-3, 0);
+            this.cashierCustomersForm1.Name = "cashierCustomersForm1";
+            this.cashierCustomersForm1.Size = new System.Drawing.Size(941, 668);
+            this.cashierCustomersForm1.TabIndex = 3;
             // 
             // cashierOrder1
             // 
@@ -289,5 +307,7 @@
         private AdminDashboard adminDashboard1;
         private AdminAddProducts adminAddProducts1;
         private CashierOrder cashierOrder1;
+        private CashierCustomersForm cashierCustomersForm1;
+        private AdminDashboard adminDashboard2;
     }
 }
