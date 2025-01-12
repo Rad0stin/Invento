@@ -32,6 +32,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.close = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.settings_btn = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.addProducts_btn = new System.Windows.Forms.Button();
             this.customers_btn = new System.Windows.Forms.Button();
@@ -40,7 +41,7 @@
             this.dashboard_btn = new System.Windows.Forms.Button();
             this.user_username = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pictureBoxProfile = new System.Windows.Forms.PictureBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.adminDashboard1 = new Invento.AdminDashboard();
             this.adminAddUser1 = new Invento.AdminAddUser();
@@ -49,7 +50,7 @@
             this.cashierCustomersForm1 = new Invento.CashierCustomersForm();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).BeginInit();
             this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -91,6 +92,7 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.LightSeaGreen;
+            this.panel2.Controls.Add(this.settings_btn);
             this.panel2.Controls.Add(this.button6);
             this.panel2.Controls.Add(this.addProducts_btn);
             this.panel2.Controls.Add(this.customers_btn);
@@ -99,12 +101,28 @@
             this.panel2.Controls.Add(this.dashboard_btn);
             this.panel2.Controls.Add(this.user_username);
             this.panel2.Controls.Add(this.label2);
-            this.panel2.Controls.Add(this.pictureBox1);
+            this.panel2.Controls.Add(this.pictureBoxProfile);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel2.Location = new System.Drawing.Point(0, 45);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(240, 668);
             this.panel2.TabIndex = 1;
+            // 
+            // settings_btn
+            // 
+            this.settings_btn.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.settings_btn.FlatAppearance.BorderSize = 0;
+            this.settings_btn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.MediumTurquoise;
+            this.settings_btn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumTurquoise;
+            this.settings_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.settings_btn.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.settings_btn.ForeColor = System.Drawing.Color.White;
+            this.settings_btn.Location = new System.Drawing.Point(16, 479);
+            this.settings_btn.Name = "settings_btn";
+            this.settings_btn.Size = new System.Drawing.Size(192, 33);
+            this.settings_btn.TabIndex = 18;
+            this.settings_btn.Text = "Settings";
+            this.settings_btn.UseVisualStyleBackColor = true;
             // 
             // button6
             // 
@@ -231,16 +249,16 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "Welcome,";
             // 
-            // pictureBox1
+            // pictureBoxProfile
             // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Image = global::Invento.Properties.Resources.user;
-            this.pictureBox1.Location = new System.Drawing.Point(70, 19);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(80, 80);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 8;
-            this.pictureBox1.TabStop = false;
+            this.pictureBoxProfile.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBoxProfile.Image = global::Invento.Properties.Resources.user;
+            this.pictureBoxProfile.Location = new System.Drawing.Point(70, 19);
+            this.pictureBoxProfile.Name = "pictureBoxProfile";
+            this.pictureBoxProfile.Size = new System.Drawing.Size(80, 80);
+            this.pictureBoxProfile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxProfile.TabIndex = 8;
+            this.pictureBoxProfile.TabStop = false;
             // 
             // panel3
             // 
@@ -306,7 +324,7 @@
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).EndInit();
             this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -320,7 +338,7 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label user_username;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pictureBoxProfile;
         private System.Windows.Forms.Button addUsers_btn;
         private System.Windows.Forms.Button dashboard_btn;
         private System.Windows.Forms.Button button6;
@@ -333,5 +351,6 @@
         private AdminAddUser adminAddUser1;
         private AdminAddCategories adminAddCategories1;
         private AdminAddProducts adminAddProducts1;
+        private System.Windows.Forms.Button settings_btn;
     }
 }

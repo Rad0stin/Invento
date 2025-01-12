@@ -61,6 +61,9 @@ namespace Invento
                 {
                     connect.Open();
 
+                    // Clear existing items first
+                    addProducts_category.Items.Clear();
+
                     string selectData = "SELECT * FROM categories";
 
                     using (SqlCommand cmd = new SqlCommand(selectData, connect))
@@ -78,7 +81,7 @@ namespace Invento
                 }
                 catch (Exception ex)
                 {
-
+                    MessageBox.Show("Connection failed: " + ex, "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 finally
                 {

@@ -11,6 +11,7 @@ using System.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.Diagnostics;
 using System.Drawing.Printing;
+using System.Drawing.Drawing2D;
 
 namespace Invento
 {
@@ -423,9 +424,9 @@ namespace Invento
             {
                 MessageBox.Show("No orders/empty fields", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            else 
+            else
             {
-                if (MessageBox.Show("Are you sure you want to pay orders" , "Confirmation Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                if (MessageBox.Show("Are you sure you want to pay orders", "Confirmation Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     if (checkConnection())
                     {
@@ -476,7 +477,7 @@ namespace Invento
                     float getAmount = Convert.ToSingle(cashierOrder_amount.Text);
                     float getChange = (getAmount - totalPrice);
 
-                    if (getChange <= -1) 
+                    if (getChange <= -1)
                     {
                         cashierOrder_amount.Text = "";
                         cashierOrder_change.Text = "";
@@ -522,81 +523,188 @@ namespace Invento
 
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            displayTotalPrice();
-
+            // Initialize variables
             float y = 0;
-            int count = 0;
-            int colWidth = 108;
-            int headerMargin = 5;
-            int tableMargin = 5;
+            int rowIndex = 0;
+            float leftMargin = e.MarginBounds.Left + 40; // Increased margin for better appearance
+            float rightMargin = e.MarginBounds.Right - 40;
+            float width = rightMargin - leftMargin;
 
-            Font font = new Font("Times New Roman", 12);
-            Font bold = new Font("Times New Roman", 12, FontStyle.Bold);
-            Font headerFont = new Font("Times New Roman", 16, FontStyle.Bold);
-            Font labelFont = new Font("Times New Roman", 14);
+            // Define fonts
+            Font logoFont = new Font("Arial", 24, FontStyle.Bold);
+            Font titleFont = new Font("Arial", 14, FontStyle.Bold);
+            Font headerFont = new Font("Arial", 10, FontStyle.Bold);
+            Font normalFont = new Font("Arial", 9);
+            Font itemFont = new Font("Courier New", 9);
+            Font totalFont = new Font("Arial", 11, FontStyle.Bold);
+            Font footerFont = new Font("Arial", 8);
 
-            float margin = e.MarginBounds.Top;
+            // Alignment
+            StringFormat centerAlign = new StringFormat() { Alignment = StringAlignment.Center };
+            StringFormat rightAlign = new StringFormat() { Alignment = StringAlignment.Far };
+            StringFormat leftAlign = new StringFormat() { Alignment = StringAlignment.Near };
 
-            StringFormat alignCenter = new StringFormat();
-            alignCenter.Alignment = StringAlignment.Center;
-            alignCenter.LineAlignment = StringAlignment.Center;
+            // Colors
+            Brush darkGray = new SolidBrush(Color.FromArgb(64, 64, 64));
+            Brush mediumGray = new SolidBrush(Color.FromArgb(128, 128, 128));
 
-            string headerText = "Invento";
-            y = (margin + count * headerFont.GetHeight(e.Graphics) + headerMargin);
-            e.Graphics.DrawString(headerText, headerFont, Brushes.Black, e.MarginBounds.Left
-                + (dataGridView2.ColumnCount / 2) * colWidth, y, alignCenter);
+            // Logo and Header section
+            y += 20; // Top padding
+            e.Graphics.DrawString("INVENTO", logoFont, Brushes.Black, leftMargin + (width / 2), y, centerAlign);
+            y += logoFont.GetHeight(e.Graphics);
 
-            count++;
+            e.Graphics.DrawString("Inventory Management System", normalFont, mediumGray, leftMargin + (width / 2), y, centerAlign);
+            y += normalFont.GetHeight(e.Graphics) + 5;
 
-            y += tableMargin;
+            // Store info
+            string[] storeInfo = {
+        "123 Main Street, City, State 12345",
+        "Tel: (555) 123-4567 | Email: contact@invento.com",
+        "www.invento.com"
+    };
 
-            string[] header = {"ID", "CID", "PID", "Category", "OrigPrice", "QTY", "TotalPrice" };
-
-            for (int q = 0; q < header.Length; q++)
+            foreach (string info in storeInfo)
             {
-                y = margin + count * bold.GetHeight(e.Graphics) + tableMargin;
-                e.Graphics.DrawString(header[q], bold, Brushes.Black, e.MarginBounds.Left + q * colWidth, y, alignCenter);
+                e.Graphics.DrawString(info, footerFont, mediumGray, leftMargin + (width / 2), y, centerAlign);
+                y += footerFont.GetHeight(e.Graphics);
             }
-            count++;
+            y += 10;
 
-            float rSpace = e.MarginBounds.Bottom - y;
-
-            while (rowIndex < dataGridView2.Rows.Count) 
+            // Separator line
+            using (Pen blackPen = new Pen(Color.Black, 1))
             {
-                DataGridViewRow row = dataGridView2.Rows[rowIndex];
+                e.Graphics.DrawLine(blackPen, leftMargin, y, rightMargin, y);
+            }
+            y += 10;
 
-                for (int q = 0; q < dataGridView2.Columns.Count; q++)
-                {
-                    object cellValue = row.Cells[q].Value;
-                    string cell = (cellValue != null) ? cellValue.ToString() : string.Empty;
+            // Receipt details in two columns
+            float columnWidth = (width - 20) / 2;
 
-                    y = margin + count * font.GetHeight(e.Graphics) + tableMargin;
-                    e.Graphics.DrawString(cell, font, Brushes.Black, e.MarginBounds.Left + q * colWidth, y, alignCenter);
-                }
-                count++;
-                rowIndex++;
+            // Left column
+            e.Graphics.DrawString("Receipt #:", headerFont, darkGray, leftMargin, y);
+            e.Graphics.DrawString(idGen.ToString(), normalFont, Brushes.Black, leftMargin + 70, y);
 
-                if (y + font.GetHeight(e.Graphics) > e.MarginBounds.Bottom)
+            // Right column
+            e.Graphics.DrawString("Date:", headerFont, darkGray, leftMargin + columnWidth, y);
+            e.Graphics.DrawString(DateTime.Now.ToString("MM/dd/yyyy HH:mm"), normalFont, Brushes.Black, leftMargin + columnWidth + 50, y);
+
+            y += headerFont.GetHeight(e.Graphics) + 15;
+
+            // Separator line before items
+            using (Pen grayPen = new Pen(mediumGray, 0.5f))
+            {
+                e.Graphics.DrawLine(grayPen, leftMargin, y, rightMargin, y);
+            }
+            y += 10;
+
+            // Items header
+            using (Pen grayPen = new Pen(Color.Gray, 0.5f))
+            {
+                e.Graphics.DrawLine(grayPen, leftMargin, y, rightMargin, y);
+                y += 5;
+
+                // Column headers
+                float col1 = leftMargin;
+                float col2 = leftMargin + width * 0.4f;
+                float col3 = leftMargin + width * 0.6f;
+                float col4 = leftMargin + width * 0.8f;
+
+                e.Graphics.DrawString("Item", headerFont, darkGray, col1, y);
+                e.Graphics.DrawString("Price", headerFont, darkGray, col2, y, rightAlign);
+                e.Graphics.DrawString("Qty", headerFont, darkGray, col3, y, rightAlign);
+                e.Graphics.DrawString("Total", headerFont, darkGray, col4, y, rightAlign);
+
+                y += headerFont.GetHeight(e.Graphics) + 5;
+                e.Graphics.DrawLine(grayPen, leftMargin, y, rightMargin, y);
+                y += 5;
+            }
+
+            // Separator line after header
+            using (Pen grayPen = new Pen(mediumGray, 0.5f))
+            {
+                e.Graphics.DrawLine(grayPen, leftMargin, y, rightMargin, y);
+            }
+            y += 10;
+
+            // Items
+            foreach (DataGridViewRow row in dataGridView2.Rows)
+            {
+                if (y + itemFont.GetHeight(e.Graphics) > e.MarginBounds.Bottom - 150)
                 {
                     e.HasMorePages = true;
                     return;
                 }
+
+                float col1 = leftMargin;
+                float col2 = leftMargin + width * 0.4f;
+                float col3 = leftMargin + width * 0.6f;
+                float col4 = leftMargin + width * 0.8f;
+
+                // Get correct values from the OrdersData columns
+                string itemName = row.Cells["PName"].Value.ToString();
+                decimal origPrice = decimal.Parse(row.Cells["OrigPrice"].Value.ToString());
+                int qty = int.Parse(row.Cells["QTY"].Value.ToString());
+                decimal total = decimal.Parse(row.Cells["TotalPrice"].Value.ToString());
+
+                e.Graphics.DrawString(itemName, itemFont, darkGray, col1, y);
+                e.Graphics.DrawString(origPrice.ToString("C"), itemFont, darkGray, col2, y, rightAlign);
+                e.Graphics.DrawString(qty.ToString(), itemFont, darkGray, col3, y, rightAlign);
+                e.Graphics.DrawString(total.ToString("C"), itemFont, darkGray, col4, y, rightAlign);
+
+                y += itemFont.GetHeight(e.Graphics) + 5;
             }
-            int labelMargin = (int)Math.Min(rSpace, 200);
 
-            DateTime today = DateTime.Now;
+            // Separator line before totals
+            y += 5;
+            using (Pen blackPen = new Pen(Color.Black, 1))
+            {
+                e.Graphics.DrawLine(blackPen, leftMargin, y, rightMargin, y);
+            }
+            y += 15;
 
-            float labelX = e.MarginBounds.Right - e.Graphics.MeasureString("---------------", labelFont).Width;
+            // Totals section with right alignment
+            float totalsX = rightMargin - 150;
+            float labelsX = rightMargin - 240;
 
-            y = e.MarginBounds.Bottom - labelMargin - labelFont.GetHeight(e.Graphics);
-            e.Graphics.DrawString("Total Price: \t$" + totalPrice + "\nAmount: \t$" + cashierOrder_amount.Text.Trim()
-                + "\n\t\t-----\nChange: \t$" + cashierOrder_change.Text.Trim(), labelFont, Brushes.Black, labelX, y);
+            string[] totalLabels = { "Subtotal:", "Amount Paid:", "Change:" };
+            float[] totalValues = {
+        Convert.ToSingle(cashierOrder_totalPrice.Text),
+        Convert.ToSingle(cashierOrder_amount.Text),
+        Convert.ToSingle(cashierOrder_change.Text)
+    };
 
-            labelMargin = (int)Math.Min(rSpace, -40);
+            for (int i = 0; i < totalLabels.Length; i++)
+            {
+                e.Graphics.DrawString(totalLabels[i], totalFont, darkGray, labelsX, y, rightAlign);
+                e.Graphics.DrawString(totalValues[i].ToString("C2"), totalFont, Brushes.Black, rightMargin, y, rightAlign);
+                y += totalFont.GetHeight(e.Graphics) + (i == totalLabels.Length - 1 ? 15 : 5);
+            }
 
-            string labelText = today.ToString();
-            y = e.MarginBounds.Bottom - labelMargin - labelFont.GetHeight(e.Graphics);
-            e.Graphics.DrawString(labelText, labelFont, Brushes.Black, e.MarginBounds.Right - e.Graphics.MeasureString("---------", labelFont).Width, y);
+            // Footer
+            y = e.MarginBounds.Bottom - 60;
+
+            // Separator line
+            using (Pen grayPen = new Pen(mediumGray, 0.5f))
+            {
+                e.Graphics.DrawString("Thank you for your business!", headerFont, darkGray, leftMargin + (width / 2), y, centerAlign);
+                y += headerFont.GetHeight(e.Graphics) + 10;
+
+                e.Graphics.DrawLine(grayPen, leftMargin, y, rightMargin, y);
+                y += 10;
+            }
+
+            // Footer text
+            string[] footerText = {
+        "All prices include applicable taxes",
+        "Returns accepted within 30 days with receipt",
+        "Follow us on social media @InventoSystem"
+    };
+
+            foreach (string text in footerText)
+            {
+                e.Graphics.DrawString(text, footerFont, mediumGray, leftMargin + (width / 2), y, centerAlign);
+                y += footerFont.GetHeight(e.Graphics);
+            }
         }
     }
 }

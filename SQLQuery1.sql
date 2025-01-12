@@ -73,3 +73,11 @@ ALTER TABLE customers
 DROP COLUMN prod_id
 
 SELECT COUNT(id) FROM customers
+
+UPDATE users 
+SET password = '$2a$11$k7R3xZqwzUCVTqLNrhx9yOYXrulrjgkSMLBXE/h9FBw4YGtGpjKPK'
+WHERE username = 'admin';
+
+UPDATE users 
+SET password = '$2a$11$BXXGgoY8UnJfkUQ3H0ET8.Q/bL9D9WGHBrRxn4kxuUZxgqoVFkXny'
+WHERE username = 'rado';

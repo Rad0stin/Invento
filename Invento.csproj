@@ -12,6 +12,8 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,8 +35,45 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BCrypt.Net-Next, Version=4.0.3.0, Culture=neutral, PublicKeyToken=1e11be04b6288443, processorArchitecture=MSIL">
+      <HintPath>packages\BCrypt.Net-Next.4.0.3\lib\net48\BCrypt.Net-Next.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="SkiaSharp, Version=2.88.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>packages\SkiaSharp.2.88.8\lib\net462\SkiaSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core" />
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Resources.Extensions, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Resources.Extensions.8.0.0\lib\net462\System.Resources.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encodings.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Text.Encodings.Web.8.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=8.0.0.4, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Text.Json.8.0.4\lib\net462\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,98 +85,98 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddProductsData.cs" />
-    <Compile Include="AdminAddCategories.cs">
+    <Compile Include="Products\AddProductsData.cs" />
+    <Compile Include="Categories\AdminAddCategories.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="AdminAddCategories.Designer.cs">
+    <Compile Include="Categories\AdminAddCategories.Designer.cs">
       <DependentUpon>AdminAddCategories.cs</DependentUpon>
     </Compile>
-    <Compile Include="AdminAddProducts.cs">
+    <Compile Include="Products\AdminAddProducts.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="AdminAddProducts.Designer.cs">
+    <Compile Include="Products\AdminAddProducts.Designer.cs">
       <DependentUpon>AdminAddProducts.cs</DependentUpon>
     </Compile>
-    <Compile Include="AdminAddUser.cs">
+    <Compile Include="Users\AdminAddUser.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="AdminAddUser.Designer.cs">
+    <Compile Include="Users\AdminAddUser.Designer.cs">
       <DependentUpon>AdminAddUser.cs</DependentUpon>
     </Compile>
-    <Compile Include="AdminDashboard.cs">
+    <Compile Include="Users\AdminDashboard.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="AdminDashboard.Designer.cs">
+    <Compile Include="Users\AdminDashboard.Designer.cs">
       <DependentUpon>AdminDashboard.cs</DependentUpon>
     </Compile>
-    <Compile Include="CashierCustomersForm.cs">
+    <Compile Include="Users\CashierCustomersForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CashierCustomersForm.Designer.cs">
+    <Compile Include="Users\CashierCustomersForm.Designer.cs">
       <DependentUpon>CashierCustomersForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CashierMainForm.cs">
+    <Compile Include="Main\CashierMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CashierMainForm.Designer.cs">
+    <Compile Include="Main\CashierMainForm.Designer.cs">
       <DependentUpon>CashierMainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CashierOrder.cs">
+    <Compile Include="Products\CashierOrder.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CashierOrder.Designer.cs">
+    <Compile Include="Products\CashierOrder.Designer.cs">
       <DependentUpon>CashierOrder.cs</DependentUpon>
     </Compile>
-    <Compile Include="CategoriesData.cs" />
-    <Compile Include="CustomersData.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="Categories\CategoriesData.cs" />
+    <Compile Include="Users\CustomersData.cs" />
+    <Compile Include="Auth\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
+    <Compile Include="Auth\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs">
+    <Compile Include="Main\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="Main\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="OrdersData.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Products\OrdersData.cs" />
+    <Compile Include="Main\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RegisterForm.cs">
+    <Compile Include="Auth\RegisterForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RegisterForm.Designer.cs">
+    <Compile Include="Auth\RegisterForm.Designer.cs">
       <DependentUpon>RegisterForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UsersData.cs" />
-    <EmbeddedResource Include="AdminAddCategories.resx">
+    <Compile Include="Users\UsersData.cs" />
+    <EmbeddedResource Include="Categories\AdminAddCategories.resx">
       <DependentUpon>AdminAddCategories.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AdminAddProducts.resx">
+    <EmbeddedResource Include="Products\AdminAddProducts.resx">
       <DependentUpon>AdminAddProducts.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AdminAddUser.resx">
+    <EmbeddedResource Include="Users\AdminAddUser.resx">
       <DependentUpon>AdminAddUser.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AdminDashboard.resx">
+    <EmbeddedResource Include="Users\AdminDashboard.resx">
       <DependentUpon>AdminDashboard.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CashierCustomersForm.resx">
+    <EmbeddedResource Include="Users\CashierCustomersForm.resx">
       <DependentUpon>CashierCustomersForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CashierMainForm.resx">
+    <EmbeddedResource Include="Main\CashierMainForm.resx">
       <DependentUpon>CashierMainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CashierOrder.resx">
+    <EmbeddedResource Include="Products\CashierOrder.resx">
       <DependentUpon>CashierOrder.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
+    <EmbeddedResource Include="Auth\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="Main\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -150,9 +189,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="RegisterForm.resx">
+    <EmbeddedResource Include="Auth\RegisterForm.resx">
       <DependentUpon>RegisterForm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -191,4 +231,15 @@
     <Folder Include="Product_Directory\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="packages\SkiaSharp.NativeAssets.macOS.2.88.8\build\net462\SkiaSharp.NativeAssets.macOS.targets" Condition="Exists('packages\SkiaSharp.NativeAssets.macOS.2.88.8\build\net462\SkiaSharp.NativeAssets.macOS.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\SkiaSharp.NativeAssets.macOS.2.88.8\build\net462\SkiaSharp.NativeAssets.macOS.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\SkiaSharp.NativeAssets.macOS.2.88.8\build\net462\SkiaSharp.NativeAssets.macOS.targets'))" />
+    <Error Condition="!Exists('packages\SkiaSharp.NativeAssets.Win32.2.88.8\build\net462\SkiaSharp.NativeAssets.Win32.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\SkiaSharp.NativeAssets.Win32.2.88.8\build\net462\SkiaSharp.NativeAssets.Win32.targets'))" />
+    <Error Condition="!Exists('packages\SkiaSharp.NativeAssets.Linux.NoDependencies.2.88.8\build\net462\SkiaSharp.NativeAssets.Linux.NoDependencies.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\SkiaSharp.NativeAssets.Linux.NoDependencies.2.88.8\build\net462\SkiaSharp.NativeAssets.Linux.NoDependencies.targets'))" />
+  </Target>
+  <Import Project="packages\SkiaSharp.NativeAssets.Win32.2.88.8\build\net462\SkiaSharp.NativeAssets.Win32.targets" Condition="Exists('packages\SkiaSharp.NativeAssets.Win32.2.88.8\build\net462\SkiaSharp.NativeAssets.Win32.targets')" />
+  <Import Project="packages\SkiaSharp.NativeAssets.Linux.NoDependencies.2.88.8\build\net462\SkiaSharp.NativeAssets.Linux.NoDependencies.targets" Condition="Exists('packages\SkiaSharp.NativeAssets.Linux.NoDependencies.2.88.8\build\net462\SkiaSharp.NativeAssets.Linux.NoDependencies.targets')" />
 </Project>
