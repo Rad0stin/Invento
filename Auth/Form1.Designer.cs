@@ -31,15 +31,15 @@
             this.close = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.login_showPass = new System.Windows.Forms.CheckBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.register_label = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.login_btn = new System.Windows.Forms.Button();
             this.login_password = new System.Windows.Forms.TextBox();
             this.login_username = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -82,13 +82,44 @@
             // 
             this.login_showPass.AutoSize = true;
             this.login_showPass.Font = new System.Drawing.Font("Microsoft YaHei UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.login_showPass.Location = new System.Drawing.Point(141, 238);
+            this.login_showPass.Location = new System.Drawing.Point(96, 244);
             this.login_showPass.Name = "login_showPass";
             this.login_showPass.Size = new System.Drawing.Size(124, 23);
             this.login_showPass.TabIndex = 2;
             this.login_showPass.Text = "Show Password";
             this.login_showPass.UseVisualStyleBackColor = true;
             this.login_showPass.CheckedChanged += new System.EventHandler(this.login_showPass_CheckedChanged);
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Image = global::Invento.Properties.Resources._lock;
+            this.pictureBox3.Location = new System.Drawing.Point(41, 207);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(26, 26);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox3.TabIndex = 8;
+            this.pictureBox3.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = global::Invento.Properties.Resources.account;
+            this.pictureBox2.Location = new System.Drawing.Point(41, 158);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(26, 26);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 2;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.Image = global::Invento.Properties.Resources.user;
+            this.pictureBox1.Location = new System.Drawing.Point(136, 17);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(80, 80);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 7;
+            this.pictureBox1.TabStop = false;
             // 
             // register_label
             // 
@@ -107,7 +138,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(78, 323);
+            this.label2.Location = new System.Drawing.Point(66, 323);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(125, 16);
             this.label2.TabIndex = 5;
@@ -148,42 +179,11 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft YaHei UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(106, 110);
+            this.label1.Location = new System.Drawing.Point(120, 110);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(145, 25);
             this.label1.TabIndex = 0;
             this.label1.Text = "Login Account";
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.Image = global::Invento.Properties.Resources._lock;
-            this.pictureBox3.Location = new System.Drawing.Point(41, 207);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(26, 26);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox3.TabIndex = 8;
-            this.pictureBox3.TabStop = false;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = global::Invento.Properties.Resources.account;
-            this.pictureBox2.Location = new System.Drawing.Point(41, 158);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(26, 26);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox2.TabIndex = 2;
-            this.pictureBox2.TabStop = false;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Image = global::Invento.Properties.Resources.user;
-            this.pictureBox1.Location = new System.Drawing.Point(142, 15);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(80, 80);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 7;
-            this.pictureBox1.TabStop = false;
             // 
             // Form1
             // 

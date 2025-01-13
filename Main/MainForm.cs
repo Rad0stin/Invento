@@ -12,10 +12,116 @@ namespace Invento
 {
     public partial class MainForm : Form
     {
+        [System.Runtime.InteropServices.DllImport("Gdi32.dll")]
+        private static extern IntPtr CreateRoundRectRgn(int nLeftRect, int nTopRect,
+            int nRightRect, int nBottomRect, int nWidthEllipse, int nHeightEllipse);
+
         public MainForm()
         {
             InitializeComponent();
+
+            ApplyModernStyle();
         }
+
+        private void ApplyModernStyle()
+        {
+            // Form properties
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.StartPosition = FormStartPosition.CenterScreen;
+
+            // Round corners for the main form
+            this.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, this.Width, this.Height, 20, 20));
+
+            // Style all navigation buttons
+            StyleNavigationButton(dashboard_btn);
+            StyleNavigationButton(addUsers_btn);
+            StyleNavigationButton(addCategories_btn);
+            StyleNavigationButton(addProducts_btn);
+            StyleNavigationButton(customers_btn);
+            StyleNavigationButton(settings_btn);
+            StyleLogoutButton(button6); // Logout button
+
+            // Style the close button
+            if (close != null)
+            {
+                close.FlatStyle = FlatStyle.Flat;
+                close.FlatAppearance.BorderSize = 0;
+                close.BackColor = Color.Firebrick;
+                close.ForeColor = Color.White;
+                close.Text = "×";
+                close.Font = new Font("Arial", 14, FontStyle.Bold);
+                close.Size = new Size(30, 30);
+                close.Cursor = Cursors.Hand;
+                close.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, close.Width, close.Height, 15, 15));
+
+                // Hover effects
+                close.MouseEnter += (s, e) => {
+                    close.BackColor = Color.DarkRed;
+                };
+                close.MouseLeave += (s, e) => {
+                    close.BackColor = Color.Firebrick;
+                };
+            }
+        }
+
+        private void StyleNavigationButton(Button button)
+        {
+            if (button != null)
+            {
+                button.FlatStyle = FlatStyle.Flat;
+                button.FlatAppearance.BorderSize = 0;
+                button.BackColor = Color.Transparent;
+                button.ForeColor = Color.White;
+                button.Font = new Font("Segoe UI", 12, FontStyle.Regular);
+                button.Cursor = Cursors.Hand;
+                button.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, button.Width, button.Height, 15, 15));
+
+                // Hover effects
+                button.MouseEnter += (s, e) => {
+                    button.BackColor = Color.FromArgb(26, 170, 159); // Slightly lighter than teal
+                    button.ForeColor = Color.White;
+                };
+                button.MouseLeave += (s, e) => {
+                    button.BackColor = Color.Transparent;
+                    button.ForeColor = Color.White;
+                };
+
+                // Click effect
+                button.Click += (s, e) => {
+                    foreach (Control ctrl in button.Parent.Controls)
+                    {
+                        if (ctrl is Button btn && btn != close && btn != button6)
+                        {
+                            btn.BackColor = Color.Transparent;
+                        }
+                    }
+                    button.BackColor = Color.FromArgb(26, 170, 159);
+                };
+            }
+        }
+
+        private void StyleLogoutButton(Button button)
+        {
+            if (button != null)
+            {
+                button.FlatStyle = FlatStyle.Flat;
+                button.FlatAppearance.BorderSize = 0;
+                button.BackColor = Color.FromArgb(26, 170, 159);
+                button.ForeColor = Color.White;
+                button.Font = new Font("Segoe UI", 12, FontStyle.Regular);
+                button.Cursor = Cursors.Hand;
+                button.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, button.Width, button.Height, 15, 15));
+
+                // Hover effects
+                button.MouseEnter += (s, e) => {
+                    button.BackColor = Color.FromArgb(22, 145, 136); // Darker shade
+                };
+                button.MouseLeave += (s, e) => {
+                    button.BackColor = Color.FromArgb(26, 170, 159);
+                };
+            }
+        }
+
 
         private void close_Click(object sender, EventArgs e)
         {
