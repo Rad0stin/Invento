@@ -416,6 +416,7 @@ namespace Invento
             clearFields();
         }
 
+
         private void cashierOrder_payOrders_Click(object sender, EventArgs e)
         {
             IDGenerator();
