@@ -235,7 +235,8 @@ namespace Invento
             }
         }
 
-        private void cashierOrder_addBtn_Click(object sender, EventArgs e)
+       
+       private void cashierOrder_addBtn_Click(object sender, EventArgs e)
         {
             IDGenerator();
 
@@ -251,6 +252,28 @@ namespace Invento
                     try
                     {
                         connect.Open();
+
+                        // First check if we have enough stock
+                        string checkStock = "SELECT stock FROM products WHERE prod_id = @prodID";
+                        int currentStock = 0;
+
+                        using (SqlCommand stockCmd = new SqlCommand(checkStock, connect))
+                        {
+                            stockCmd.Parameters.AddWithValue("@prodID", cashierOrder_prodID.SelectedItem);
+                            object result = stockCmd.ExecuteScalar();
+                            if (result != null && result != DBNull.Value)
+                            {
+                                currentStock = Convert.ToInt32(result);
+                            }
+                        }
+
+                        // Check if requested quantity exceeds available stock
+                        if ((int)cashierOrder_qty.Value > currentStock)
+                        {
+                            MessageBox.Show($"Not enough stock available! Current stock: {currentStock}",
+                                "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
 
                         float getprice = 0;
                         string selectOrder = "SELECT * FROM products WHERE prod_id = @prodID";
@@ -339,8 +362,10 @@ namespace Invento
                     {
                         idGen = 1;
                     }
-                }
 
+                    // Set the current customer ID in OrdersData
+                    OrdersData.SetCurrentCustomerId(idGen);
+                }
             }
         }
 
@@ -424,49 +449,107 @@ namespace Invento
             if (cashierOrder_amount.Text == "" || dataGridView2.Rows.Count < 0)
             {
                 MessageBox.Show("No orders/empty fields", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
-            else
+
+            if (MessageBox.Show("Are you sure you want to pay orders", "Confirmation Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
             {
-                if (MessageBox.Show("Are you sure you want to pay orders", "Confirmation Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                return;
+            }
+
+            if (!checkConnection())
+            {
+                return;
+            }
+
+            try
+            {
+                connect.Open();
+
+                // First update stock quantities for all ordered products
+                foreach (DataGridViewRow row in dataGridView2.Rows)
                 {
-                    if (checkConnection())
+                    if (row.Cells["PID"].Value == null) continue;
+
+                    string productId = row.Cells["PID"].Value.ToString();
+                    int orderedQuantity = Convert.ToInt32(row.Cells["QTY"].Value);
+
+                    // Get current stock
+                    string getStockQuery = "SELECT stock FROM products WHERE prod_id = @prodID";
+                    int currentStock = 0;
+
+                    using (SqlCommand getStock = new SqlCommand(getStockQuery, connect))
                     {
-                        try
+                        getStock.Parameters.AddWithValue("@prodID", productId);
+                        object result = getStock.ExecuteScalar();
+                        if (result != null && result != DBNull.Value)
                         {
-                            connect.Open();
-
-                            string insertData = "INSERT INTO customers (customer_id, total_price, amount, change, order_date)" +
-                                "VALUES(@cID,  @totalPrice, @amount, @change, @date)";
-
-                            using (SqlCommand cmd = new SqlCommand(insertData, connect))
-                            {
-                                cmd.Parameters.AddWithValue("@cID", idGen);
-                                cmd.Parameters.AddWithValue("@totalPrice", cashierOrder_totalPrice.Text);
-                                cmd.Parameters.AddWithValue("@amount", cashierOrder_amount.Text);
-                                cmd.Parameters.AddWithValue("@change", cashierOrder_change.Text);
-
-                                DateTime today = DateTime.Now;
-                                cmd.Parameters.AddWithValue("@date", today);
-
-                                cmd.ExecuteNonQuery();
-
-                                clearFields();
-
-                                MessageBox.Show("Paid succesfully", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("Connection failed: " + ex, "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                        finally
-                        {
-                            connect.Close();
+                            currentStock = Convert.ToInt32(result);
                         }
                     }
+
+                    // Update stock
+                    string updateStockQuery = "UPDATE products SET stock = @newStock WHERE prod_id = @prodID";
+                    using (SqlCommand updateStock = new SqlCommand(updateStockQuery, connect))
+                    {
+                        int newStock = currentStock - orderedQuantity;
+                        if (newStock < 0)
+                        {
+                            MessageBox.Show($"Insufficient stock for product {productId}!", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+
+                        updateStock.Parameters.AddWithValue("@newStock", newStock);
+                        updateStock.Parameters.AddWithValue("@prodID", productId);
+                        updateStock.ExecuteNonQuery();
+                    }
+                }
+
+                // Now process the payment
+                string insertData = @"INSERT INTO customers (customer_id, total_price, amount, change, order_date)
+                            VALUES(@cID, @totalPrice, @amount, @change, @date)";
+
+                using (SqlCommand cmd = new SqlCommand(insertData, connect))
+                {
+                    cmd.Parameters.AddWithValue("@cID", idGen);
+                    cmd.Parameters.AddWithValue("@totalPrice", cashierOrder_totalPrice.Text);
+                    cmd.Parameters.AddWithValue("@amount", cashierOrder_amount.Text);
+                    cmd.Parameters.AddWithValue("@change", cashierOrder_change.Text);
+                    cmd.Parameters.AddWithValue("@date", DateTime.Now);
+
+                    cmd.ExecuteNonQuery();
+
+                    // Clear the orders for this customer after successful payment
+                    string clearOrders = "DELETE FROM orders WHERE customer_id = @customerID";
+                    using (SqlCommand clearCmd = new SqlCommand(clearOrders, connect))
+                    {
+                        clearCmd.Parameters.AddWithValue("@customerID", idGen);
+                        clearCmd.ExecuteNonQuery();
+                    }
+
+                    // Reset all displays and fields
+                    clearFields();
+                    cashierOrder_amount.Text = "";
+                    cashierOrder_change.Text = "";
+                    cashierOrder_totalPrice.Text = "0.00";
+
+                    MessageBox.Show("Paid successfully", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Refresh the displays
+                    displayAllAvailableProducts();
+                    OrdersData.SetCurrentCustomerId(-1); // Reset the current customer ID
+                    displayOrders();
+                    displayTotalPrice();
                 }
             }
-            displayTotalPrice();
+            catch (Exception ex)
+            {
+                MessageBox.Show("Connection failed: " + ex, "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                connect.Close();
+            }
         }
 
         private void cashierOrder_amount_KeyDown(object sender, KeyEventArgs e)
