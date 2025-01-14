@@ -527,19 +527,10 @@ namespace Invento
                         clearCmd.ExecuteNonQuery();
                     }
 
-                    // Reset all displays and fields
-                    clearFields();
-                    cashierOrder_amount.Text = "";
-                    cashierOrder_change.Text = "";
-                    cashierOrder_totalPrice.Text = "0.00";
-
                     MessageBox.Show("Paid successfully", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     // Refresh the displays
                     displayAllAvailableProducts();
-                    OrdersData.SetCurrentCustomerId(-1); // Reset the current customer ID
-                    displayOrders();
-                    displayTotalPrice();
                 }
             }
             catch (Exception ex)
@@ -595,8 +586,16 @@ namespace Invento
                 printPreviewDialog1.Document = printDocument1;
                 printPreviewDialog1.ShowDialog();
 
+                // Clear all fields after showing receipt
                 cashierOrder_amount.Text = "";
                 cashierOrder_change.Text = "";
+                cashierOrder_totalPrice.Text = "0.00";
+                clearFields();
+
+                // Clear the orders grid
+                OrdersData.SetCurrentCustomerId(-1);
+                displayOrders();
+                displayTotalPrice();
             }
         }
 

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Runtime.Remoting.Contexts;
+using System.Drawing.Drawing2D;
 
 namespace Invento
 {
@@ -28,7 +29,113 @@ namespace Invento
             displayTodaysIncome();
 
             displayTotalIncome();
+
+            ApplyProfessionalGridStyle();
         }
+
+        private void ApplyProfessionalGridStyle()
+        {
+            // Professional color scheme
+            Color primaryColor = Color.LightSeaGreen;
+            Color headerColor = Color.LightSeaGreen;  // Changed to LightSeaGreen as requested
+            Color alternateRowColor = Color.FromArgb(240, 248, 248);  // Very light teal tint
+            Color borderColor = Color.FromArgb(200, 223, 223);  // Subtle grid lines
+
+            // Main DataGridView properties
+            dataGridView1.BorderStyle = BorderStyle.None;
+            dataGridView1.BackgroundColor = Color.White;
+            dataGridView1.EnableHeadersVisualStyles = false;
+            dataGridView1.GridColor = borderColor;
+            dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dataGridView1.RowHeadersVisible = false;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+            // Header styling
+            dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = headerColor;
+            dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dataGridView1.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI Semibold", 10.5F);
+            dataGridView1.ColumnHeadersDefaultCellStyle.Padding = new Padding(8, 0, 8, 0);
+            dataGridView1.ColumnHeadersHeight = 45;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+
+            // Cell styling
+            dataGridView1.DefaultCellStyle.BackColor = Color.White;
+            dataGridView1.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
+            dataGridView1.DefaultCellStyle.ForeColor = Color.FromArgb(64, 64, 64);
+            dataGridView1.DefaultCellStyle.Padding = new Padding(8, 0, 8, 0);
+            dataGridView1.DefaultCellStyle.SelectionBackColor = Color.White;  // Remove selection color effect
+            dataGridView1.DefaultCellStyle.SelectionForeColor = Color.FromArgb(64, 64, 64);  // Keep text color consistent
+
+            // Alternating row style
+            dataGridView1.AlternatingRowsDefaultCellStyle.BackColor = alternateRowColor;
+            dataGridView1.AlternatingRowsDefaultCellStyle.Font = new Font("Segoe UI", 10F);
+            dataGridView1.AlternatingRowsDefaultCellStyle.ForeColor = Color.FromArgb(64, 64, 64);
+            dataGridView1.AlternatingRowsDefaultCellStyle.SelectionBackColor = alternateRowColor;  // Keep consistent with row color
+            dataGridView1.AlternatingRowsDefaultCellStyle.SelectionForeColor = Color.FromArgb(64, 64, 64);  // Keep text color consistent
+
+            // Row height
+            dataGridView1.RowTemplate.Height = 40;
+
+            // Add hover effect only
+            dataGridView1.CellMouseEnter += new DataGridViewCellEventHandler(DataGridView1_CellMouseEnter);
+            dataGridView1.CellMouseLeave += new DataGridViewCellEventHandler(DataGridView1_CellMouseLeave);
+
+            // Optional: Add smooth scrolling
+            dataGridView1.ScrollBars = ScrollBars.Both;
+
+            // Adjust column headers if needed
+            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            {
+                column.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+                column.SortMode = DataGridViewColumnSortMode.Automatic;
+            }
+        }
+
+        // Hover effect handlers
+        private void DataGridView1_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+                row.DefaultCellStyle.BackColor = Color.FromArgb(230, 244, 244);  // Light hover effect
+            }
+        }
+
+        private void DataGridView1_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+                row.DefaultCellStyle.BackColor = e.RowIndex % 2 == 0
+                    ? Color.White
+                    : Color.FromArgb(240, 248, 248);  // Reset to original color
+            }
+        }
+
+        // Add this to your form to create a custom border effect
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+
+            // Create subtle shadow effect around the DataGridView
+            Rectangle rect = dataGridView1.Bounds;
+            rect.Inflate(3, 3);
+
+            using (Graphics g = e.Graphics)
+            {
+                // Draw a subtle shadow
+                for (int i = 0; i < 3; i++)
+                {
+                    using (Pen shadowPen = new Pen(Color.FromArgb(10, 0, 0, 0)))
+                    {
+                        g.DrawRectangle(shadowPen, rect);
+                        rect.Inflate(-1, -1);
+                    }
+                }
+            }
+        }
+
 
         public void refreshData() 
         {
