@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.addCategories_clearBtn = new System.Windows.Forms.Button();
             this.addCategories_removeBtn = new System.Windows.Forms.Button();
@@ -67,7 +67,7 @@
             this.addCategories_clearBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addCategories_clearBtn.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.addCategories_clearBtn.ForeColor = System.Drawing.Color.White;
-            this.addCategories_clearBtn.Location = new System.Drawing.Point(150, 176);
+            this.addCategories_clearBtn.Location = new System.Drawing.Point(150, 192);
             this.addCategories_clearBtn.Name = "addCategories_clearBtn";
             this.addCategories_clearBtn.Size = new System.Drawing.Size(109, 36);
             this.addCategories_clearBtn.TabIndex = 11;
@@ -84,7 +84,7 @@
             this.addCategories_removeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addCategories_removeBtn.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.addCategories_removeBtn.ForeColor = System.Drawing.Color.White;
-            this.addCategories_removeBtn.Location = new System.Drawing.Point(15, 176);
+            this.addCategories_removeBtn.Location = new System.Drawing.Point(15, 192);
             this.addCategories_removeBtn.Name = "addCategories_removeBtn";
             this.addCategories_removeBtn.Size = new System.Drawing.Size(109, 36);
             this.addCategories_removeBtn.TabIndex = 10;
@@ -101,7 +101,7 @@
             this.addCategories_updateBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addCategories_updateBtn.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.addCategories_updateBtn.ForeColor = System.Drawing.Color.White;
-            this.addCategories_updateBtn.Location = new System.Drawing.Point(150, 125);
+            this.addCategories_updateBtn.Location = new System.Drawing.Point(150, 141);
             this.addCategories_updateBtn.Name = "addCategories_updateBtn";
             this.addCategories_updateBtn.Size = new System.Drawing.Size(109, 36);
             this.addCategories_updateBtn.TabIndex = 9;
@@ -118,7 +118,7 @@
             this.addCategories_addBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addCategories_addBtn.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.addCategories_addBtn.ForeColor = System.Drawing.Color.White;
-            this.addCategories_addBtn.Location = new System.Drawing.Point(15, 125);
+            this.addCategories_addBtn.Location = new System.Drawing.Point(15, 141);
             this.addCategories_addBtn.Name = "addCategories_addBtn";
             this.addCategories_addBtn.Size = new System.Drawing.Size(109, 36);
             this.addCategories_addBtn.TabIndex = 8;
@@ -129,7 +129,7 @@
             // addCategories_category
             // 
             this.addCategories_category.Font = new System.Drawing.Font("Microsoft YaHei UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addCategories_category.Location = new System.Drawing.Point(15, 51);
+            this.addCategories_category.Location = new System.Drawing.Point(15, 74);
             this.addCategories_category.Name = "addCategories_category";
             this.addCategories_category.Size = new System.Drawing.Size(244, 32);
             this.addCategories_category.TabIndex = 1;
@@ -159,14 +159,14 @@
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.LightSeaGreen;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft YaHei UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.LightSeaGreen;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft YaHei UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(33, 63);
             this.dataGridView1.Name = "dataGridView1";

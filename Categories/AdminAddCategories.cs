@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Invento
@@ -15,6 +16,134 @@ namespace Invento
             InitializeComponent();
 
             displayCategoriesData();
+
+            AdminCategoriesStyle.ApplyCategoriesStyle(this);
+        }
+
+        public class AdminCategoriesStyle
+        {
+            // Color scheme
+            private static readonly Color PrimaryColor = Color.LightSeaGreen;
+            private static readonly Color BackgroundColor = Color.FromArgb(245, 247, 250);
+            private static readonly Color TextBoxColor = Color.FromArgb(240, 242, 245);
+            private static readonly Color HeaderColor = Color.LightSeaGreen;
+            private static readonly Color AlternateRowColor = Color.FromArgb(240, 248, 248);
+            private static readonly Color BorderColor = Color.FromArgb(200, 223, 223);
+            private static readonly Color TextColor = Color.Black;
+
+            public static void ApplyCategoriesStyle(AdminAddCategories categoriesControl)
+            {
+                // Style the Categories DataGridView
+                var dgv = categoriesControl.dataGridView1;
+                dgv.BorderStyle = BorderStyle.None;
+                dgv.BackgroundColor = Color.White;
+                dgv.EnableHeadersVisualStyles = false;
+                dgv.GridColor = BorderColor;
+                dgv.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+                dgv.RowHeadersVisible = false;
+                dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+                // Header styling
+                dgv.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+                dgv.ColumnHeadersDefaultCellStyle.BackColor = HeaderColor;
+                dgv.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+                dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI Semibold", 10.5F);
+                dgv.ColumnHeadersDefaultCellStyle.Padding = new Padding(8, 0, 8, 0);
+                dgv.ColumnHeadersHeight = 45;
+                dgv.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+
+                // Cell styling
+                dgv.DefaultCellStyle.BackColor = Color.White;
+                dgv.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
+                dgv.DefaultCellStyle.ForeColor = TextColor;
+                dgv.DefaultCellStyle.Padding = new Padding(8, 0, 8, 0);
+                dgv.DefaultCellStyle.SelectionBackColor = Color.FromArgb(230, 244, 244);
+                dgv.DefaultCellStyle.SelectionForeColor = TextColor;
+
+                // Alternating row style
+                dgv.AlternatingRowsDefaultCellStyle.BackColor = AlternateRowColor;
+                dgv.AlternatingRowsDefaultCellStyle.Font = new Font("Segoe UI", 10F);
+                dgv.AlternatingRowsDefaultCellStyle.ForeColor = TextColor;
+                dgv.AlternatingRowsDefaultCellStyle.SelectionBackColor = Color.FromArgb(230, 244, 244);
+                dgv.AlternatingRowsDefaultCellStyle.SelectionForeColor = TextColor;
+                dgv.RowTemplate.Height = 40;
+
+                // Style the Category TextBox
+                var textBox = categoriesControl.addCategories_category;
+                Panel container = new Panel
+                {
+                    Size = new Size(textBox.Width, textBox.Height + 10),
+                    Location = new Point(textBox.Location.X, textBox.Location.Y - 5),
+                    BackColor = TextBoxColor
+                };
+
+                if (textBox.Parent is Panel parentPanel)
+                {
+                    parentPanel.Controls.Add(container);
+                    container.BringToFront();
+                    textBox.Parent = container;
+                    textBox.Location = new Point(8, 5);
+                    textBox.Width = container.Width - 16;
+                }
+
+                container.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, container.Width, container.Height, 15, 15));
+                textBox.BackColor = TextBoxColor;
+                textBox.ForeColor = TextColor;
+                textBox.BorderStyle = BorderStyle.None;
+                textBox.Font = new Font("Segoe UI", 12);
+
+                // TextBox focus effects
+                textBox.GotFocus += (s, e) => {
+                    container.BackColor = Color.FromArgb(235, 237, 240);
+                    textBox.BackColor = Color.FromArgb(235, 237, 240);
+                };
+
+                textBox.LostFocus += (s, e) => {
+                    container.BackColor = TextBoxColor;
+                    textBox.BackColor = TextBoxColor;
+                };
+
+                // Style all buttons in the Categories control
+                StyleCategoryButton(categoriesControl.addCategories_addBtn, "Add");
+                StyleCategoryButton(categoriesControl.addCategories_updateBtn, "Update");
+                StyleCategoryButton(categoriesControl.addCategories_removeBtn, "Remove");
+                StyleCategoryButton(categoriesControl.addCategories_clearBtn, "Clear");
+
+                // Add hover effect for DataGridView
+                dgv.CellMouseEnter += (sender, e) => {
+                    if (e.RowIndex >= 0)
+                    {
+                        var row = dgv.Rows[e.RowIndex];
+                        row.DefaultCellStyle.BackColor = Color.FromArgb(230, 244, 244);
+                    }
+                };
+
+                dgv.CellMouseLeave += (sender, e) => {
+                    if (e.RowIndex >= 0)
+                    {
+                        var row = dgv.Rows[e.RowIndex];
+                        row.DefaultCellStyle.BackColor = e.RowIndex % 2 == 0
+                            ? Color.White
+                            : AlternateRowColor;
+                    }
+                };
+            }
+
+            private static void StyleCategoryButton(Button button, string type)
+            {
+                button.FlatStyle = FlatStyle.Flat;
+                button.ForeColor = Color.White;
+                button.Font = new Font("Segoe UI", 10.5F, FontStyle.Bold);
+                button.Cursor = Cursors.Hand;
+                button.FlatAppearance.BorderSize = 0;
+                button.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, button.Width, button.Height, 15, 15));
+                button.Padding = new Padding(10, 0, 10, 0);
+               
+            }
+
+            [System.Runtime.InteropServices.DllImport("Gdi32.dll")]
+            private static extern IntPtr CreateRoundRectRgn(int nLeftRect, int nTopRect,
+                int nRightRect, int nBottomRect, int nWidthEllipse, int nHeightEllipse);
         }
 
         public void refreshData()
