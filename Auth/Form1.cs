@@ -327,9 +327,6 @@ namespace Invento
                                 if (passwordMatches)
                                 {
                                     username = login_username.Text.Trim();
-                                    MessageBox.Show("Login Successfully!",
-                                        "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                                     if (role == "Admin")
                                     {
                                         MainForm mForm = new MainForm();
