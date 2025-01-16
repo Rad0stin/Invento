@@ -19,6 +19,9 @@ namespace Invento
         public CashierMainForm()
         {
             InitializeComponent();
+
+            user_username.Text = Form1.username;
+
             ApplyModernStyle();
         }
 

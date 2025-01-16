@@ -20,6 +20,8 @@ namespace Invento
         {
             InitializeComponent();
 
+            user_username.Text = Form1.username;
+
             ApplyModernStyle();
         }
 
@@ -40,6 +42,14 @@ namespace Invento
             StyleNavigationButton(customers_btn);
             StyleNavigationButton(settings_btn);
             StyleLogoutButton(button6); // Logout button
+
+            if (user_username != null)
+            {
+                user_username.ForeColor = Color.White;
+                user_username.Font = new Font("Segoe UI", 12);
+                user_username.BackColor = Color.Transparent;
+                user_username.TextAlign = ContentAlignment.MiddleLeft;
+            }
 
             // Style the close button
             if (close != null)
