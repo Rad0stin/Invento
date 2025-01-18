@@ -43,11 +43,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBoxProfile = new System.Windows.Forms.PictureBox();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.adminDashboard1 = new Invento.AdminDashboard();
-            this.adminAddUser1 = new Invento.AdminAddUser();
-            this.adminAddCategories1 = new Invento.AdminAddCategories();
-            this.adminAddProducts1 = new Invento.AdminAddProducts();
+            this.settings1 = new Invento.Settings();
             this.cashierCustomersForm1 = new Invento.CashierCustomersForm();
+            this.adminAddProducts1 = new Invento.AdminAddProducts();
+            this.adminAddCategories1 = new Invento.AdminAddCategories();
+            this.adminAddUser1 = new Invento.AdminAddUser();
+            this.adminDashboard1 = new Invento.AdminDashboard();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).BeginInit();
@@ -123,6 +124,7 @@
             this.settings_btn.TabIndex = 18;
             this.settings_btn.Text = "Settings";
             this.settings_btn.UseVisualStyleBackColor = true;
+            this.settings_btn.Click += new System.EventHandler(this.settings_btn_Click);
             // 
             // button6
             // 
@@ -267,46 +269,54 @@
             this.panel3.Controls.Add(this.adminAddCategories1);
             this.panel3.Controls.Add(this.adminAddProducts1);
             this.panel3.Controls.Add(this.cashierCustomersForm1);
+            this.panel3.Controls.Add(this.settings1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(240, 45);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(934, 668);
             this.panel3.TabIndex = 2;
             // 
-            // adminDashboard1
+            // settings1
             // 
-            this.adminDashboard1.Location = new System.Drawing.Point(0, 0);
-            this.adminDashboard1.Name = "adminDashboard1";
-            this.adminDashboard1.Size = new System.Drawing.Size(934, 668);
-            this.adminDashboard1.TabIndex = 4;
+            this.settings1.Location = new System.Drawing.Point(0, 0);
+            this.settings1.Name = "settings1";
+            this.settings1.Size = new System.Drawing.Size(934, 668);
+            this.settings1.TabIndex = 0;
             // 
-            // adminAddUser1
+            // cashierCustomersForm1
             // 
-            this.adminAddUser1.Location = new System.Drawing.Point(0, 0);
-            this.adminAddUser1.Name = "adminAddUser1";
-            this.adminAddUser1.Size = new System.Drawing.Size(934, 668);
-            this.adminAddUser1.TabIndex = 3;
-            // 
-            // adminAddCategories1
-            // 
-            this.adminAddCategories1.Location = new System.Drawing.Point(0, 0);
-            this.adminAddCategories1.Name = "adminAddCategories1";
-            this.adminAddCategories1.Size = new System.Drawing.Size(934, 668);
-            this.adminAddCategories1.TabIndex = 2;
+            this.cashierCustomersForm1.Location = new System.Drawing.Point(-7, 0);
+            this.cashierCustomersForm1.Name = "cashierCustomersForm1";
+            this.cashierCustomersForm1.Size = new System.Drawing.Size(941, 668);
+            this.cashierCustomersForm1.TabIndex = 1;
             // 
             // adminAddProducts1
             // 
             this.adminAddProducts1.Location = new System.Drawing.Point(0, 0);
             this.adminAddProducts1.Name = "adminAddProducts1";
             this.adminAddProducts1.Size = new System.Drawing.Size(934, 668);
-            this.adminAddProducts1.TabIndex = 1;
+            this.adminAddProducts1.TabIndex = 2;
             // 
-            // cashierCustomersForm1
+            // adminAddCategories1
             // 
-            this.cashierCustomersForm1.Location = new System.Drawing.Point(0, 0);
-            this.cashierCustomersForm1.Name = "cashierCustomersForm1";
-            this.cashierCustomersForm1.Size = new System.Drawing.Size(934, 668);
-            this.cashierCustomersForm1.TabIndex = 0;
+            this.adminAddCategories1.Location = new System.Drawing.Point(0, 0);
+            this.adminAddCategories1.Name = "adminAddCategories1";
+            this.adminAddCategories1.Size = new System.Drawing.Size(934, 668);
+            this.adminAddCategories1.TabIndex = 3;
+            // 
+            // adminAddUser1
+            // 
+            this.adminAddUser1.Location = new System.Drawing.Point(0, 0);
+            this.adminAddUser1.Name = "adminAddUser1";
+            this.adminAddUser1.Size = new System.Drawing.Size(934, 668);
+            this.adminAddUser1.TabIndex = 4;
+            // 
+            // adminDashboard1
+            // 
+            this.adminDashboard1.Location = new System.Drawing.Point(0, 0);
+            this.adminDashboard1.Name = "adminDashboard1";
+            this.adminDashboard1.Size = new System.Drawing.Size(934, 668);
+            this.adminDashboard1.TabIndex = 5;
             // 
             // MainForm
             // 
@@ -336,9 +346,9 @@
         private System.Windows.Forms.Button close;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Label user_username;
+        public System.Windows.Forms.Label user_username;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.PictureBox pictureBoxProfile;
+        public System.Windows.Forms.PictureBox pictureBoxProfile;
         private System.Windows.Forms.Button addUsers_btn;
         private System.Windows.Forms.Button dashboard_btn;
         private System.Windows.Forms.Button button6;
@@ -346,11 +356,12 @@
         private System.Windows.Forms.Button customers_btn;
         private System.Windows.Forms.Button addCategories_btn;
         private System.Windows.Forms.Panel panel3;
-        private CashierCustomersForm cashierCustomersForm1;
+        private System.Windows.Forms.Button settings_btn;
         private AdminDashboard adminDashboard1;
         private AdminAddUser adminAddUser1;
         private AdminAddCategories adminAddCategories1;
         private AdminAddProducts adminAddProducts1;
-        private System.Windows.Forms.Button settings_btn;
+        private CashierCustomersForm cashierCustomersForm1;
+        private Settings settings1;
     }
 }

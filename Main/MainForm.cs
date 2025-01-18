@@ -22,6 +22,8 @@ namespace Invento
 
             user_username.Text = Form1.username;
 
+            settings1.SetMainForm(this);
+
             ApplyModernStyle();
         }
 
@@ -226,6 +228,22 @@ namespace Invento
             if (ccfform != null)
             {
                 ccfform.refreshData();
+            }
+        }
+
+        private void settings_btn_Click(object sender, EventArgs e)
+        {
+            adminDashboard1.Visible = false;
+            adminAddUser1.Visible = false;
+            adminAddCategories1.Visible = false;
+            adminAddProducts1.Visible = false;
+            cashierCustomersForm1.Visible = false;
+            settings1.Visible = true;
+
+            Settings sform = settings1 as Settings;
+            if (sform != null)
+            {
+                sform.refreshData();
             }
         }
     }
