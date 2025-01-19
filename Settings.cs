@@ -7,10 +7,11 @@ using System.IO;
 
 namespace Invento
 {
+
     public partial class Settings : UserControl
     {
         SqlConnection connect = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Radostin\Documents\invento.mdf;Integrated Security=True;Connect Timeout=30;");
-        private MainForm mainForm;
+        private Form parentForm;
         private PictureBox currentPicture;
         private TextBox txtUsername;
         private TextBox txtCurrentPassword;
@@ -31,13 +32,13 @@ namespace Invento
             SetupCustomControls();
         }
 
-        public void SetMainForm(MainForm form)
+        public void SetParentForm(Form form)
         {
             if (form == null)
             {
-                throw new ArgumentNullException(nameof(form), "MainForm reference cannot be null");
+                throw new ArgumentNullException(nameof(form), "Parent form reference cannot be null");
             }
-            mainForm = form;
+            parentForm = form;
             LoadUserData();
         }
 
@@ -178,17 +179,8 @@ namespace Invento
                                     }
                                     currentPicture.Image = new Bitmap(image);
 
-                                    // Update MainForm profile picture
-                                    if (mainForm?.pictureBoxProfile != null)
-                                    {
-                                        if (mainForm.pictureBoxProfile.Image != null)
-                                        {
-                                            mainForm.pictureBoxProfile.Image.Dispose();
-                                        }
-                                        mainForm.pictureBoxProfile.Image = new Bitmap(image);
-                                        mainForm.pictureBoxProfile.SizeMode = PictureBoxSizeMode.Zoom;
-                                        mainForm.pictureBoxProfile.BackColor = Color.Transparent;
-                                    }
+                                    // Update parent form profile picture based on form type
+                                    UpdateParentFormPicture(new Bitmap(image));
                                 }
                             }
                         }
@@ -227,48 +219,39 @@ namespace Invento
                             }
                         }
 
-                        // Save image to database
                         SaveProfilePicture(imageData);
 
-                        // Update both PictureBoxes with the new image
                         using (var ms = new MemoryStream(imageData))
                         {
                             Image image = Image.FromStream(ms);
 
-                            // Update Settings control picture
                             if (currentPicture.Image != null)
                             {
                                 currentPicture.Image.Dispose();
                             }
                             currentPicture.Image = new Bitmap(image);
 
-                            // Update MainForm picture - ensure mainForm reference exists
-                            if (mainForm == null)
+                            if (parentForm == null)
                             {
-                                MessageBox.Show("Warning: MainForm reference not set. Profile picture may not update in main window.",
+                                MessageBox.Show("Warning: Parent form reference not set. Profile picture may not update in main window.",
                                     "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 return;
                             }
 
                             try
                             {
-                                // Update the main form's picture box
-                                if (mainForm.pictureBoxProfile != null)
+                                if (parentForm.InvokeRequired)
                                 {
-                                    // Use Invoke if needed to ensure thread safety
-                                    if (mainForm.InvokeRequired)
-                                    {
-                                        mainForm.Invoke(new Action(() => UpdateMainFormPicture(image)));
-                                    }
-                                    else
-                                    {
-                                        UpdateMainFormPicture(image);
-                                    }
+                                    parentForm.Invoke(new Action(() => UpdateParentFormPicture(image)));
+                                }
+                                else
+                                {
+                                    UpdateParentFormPicture(image);
                                 }
                             }
                             catch (Exception ex)
                             {
-                                MessageBox.Show($"Error updating main form picture: {ex.Message}",
+                                MessageBox.Show($"Error updating parent form picture: {ex.Message}",
                                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
@@ -282,15 +265,32 @@ namespace Invento
             }
         }
 
-        private void UpdateMainFormPicture(Image image)
+        private void UpdateParentFormPicture(Image image)
         {
-            if (mainForm.pictureBoxProfile.Image != null)
+            if (parentForm == null) return;
+
+            PictureBox profilePicture = null;
+
+            // Determine which form we're dealing with and get the appropriate PictureBox
+            if (parentForm is MainForm mainForm)
             {
-                mainForm.pictureBoxProfile.Image.Dispose();
+                profilePicture = mainForm.pictureBoxProfile;
             }
-            mainForm.pictureBoxProfile.Image = new Bitmap(image);
-            mainForm.pictureBoxProfile.SizeMode = PictureBoxSizeMode.Zoom;
-            mainForm.pictureBoxProfile.BackColor = Color.Transparent;
+            else if (parentForm is CashierMainForm cashierForm)
+            {
+                profilePicture = cashierForm.pictureBoxProfile;
+            }
+
+            if (profilePicture != null)
+            {
+                if (profilePicture.Image != null)
+                {
+                    profilePicture.Image.Dispose();
+                }
+                profilePicture.Image = new Bitmap(image);
+                profilePicture.SizeMode = PictureBoxSizeMode.Zoom;
+                profilePicture.BackColor = Color.Transparent;
+            }
         }
 
         private void SaveProfilePicture(byte[] imageData)
@@ -339,9 +339,14 @@ namespace Invento
                         MessageBox.Show("Username updated successfully!",
                             "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        if (mainForm?.user_username != null)
+                        // Update username label in parent form
+                        if (parentForm is MainForm mainForm && mainForm.user_username != null)
                         {
                             mainForm.user_username.Text = txtUsername.Text.Trim();
+                        }
+                        else if (parentForm is CashierMainForm cashierForm && cashierForm.user_username != null)
+                        {
+                            cashierForm.user_username.Text = txtUsername.Text.Trim();
                         }
 
                         Form1.username = txtUsername.Text.Trim();

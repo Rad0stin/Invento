@@ -32,6 +32,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.close = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.settings_btn = new System.Windows.Forms.Button();
             this.order_btn = new System.Windows.Forms.Button();
             this.logout_btn = new System.Windows.Forms.Button();
             this.addProducts_btn = new System.Windows.Forms.Button();
@@ -41,11 +42,11 @@
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBoxProfile = new System.Windows.Forms.PictureBox();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.settings_btn = new System.Windows.Forms.Button();
-            this.adminDashboard1 = new Invento.AdminDashboard();
-            this.adminAddProducts1 = new Invento.AdminAddProducts();
-            this.cashierCustomersForm1 = new Invento.CashierCustomersForm();
+            this.settings1 = new Invento.Settings();
             this.cashierOrder1 = new Invento.CashierOrder();
+            this.cashierCustomersForm1 = new Invento.CashierCustomersForm();
+            this.adminAddProducts1 = new Invento.AdminAddProducts();
+            this.adminDashboard1 = new Invento.AdminDashboard();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).BeginInit();
@@ -104,6 +105,23 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(240, 668);
             this.panel2.TabIndex = 2;
+            // 
+            // settings_btn
+            // 
+            this.settings_btn.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.settings_btn.FlatAppearance.BorderSize = 0;
+            this.settings_btn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.MediumTurquoise;
+            this.settings_btn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumTurquoise;
+            this.settings_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.settings_btn.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.settings_btn.ForeColor = System.Drawing.Color.White;
+            this.settings_btn.Location = new System.Drawing.Point(16, 409);
+            this.settings_btn.Name = "settings_btn";
+            this.settings_btn.Size = new System.Drawing.Size(192, 33);
+            this.settings_btn.TabIndex = 17;
+            this.settings_btn.Text = "Settings";
+            this.settings_btn.UseVisualStyleBackColor = true;
+            this.settings_btn.Click += new System.EventHandler(this.settings_btn_Click_1);
             // 
             // order_btn
             // 
@@ -230,55 +248,48 @@
             this.panel3.Controls.Add(this.adminAddProducts1);
             this.panel3.Controls.Add(this.cashierCustomersForm1);
             this.panel3.Controls.Add(this.cashierOrder1);
+            this.panel3.Controls.Add(this.settings1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(240, 45);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(941, 668);
             this.panel3.TabIndex = 3;
             // 
-            // settings_btn
+            // settings1
             // 
-            this.settings_btn.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.settings_btn.FlatAppearance.BorderSize = 0;
-            this.settings_btn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.MediumTurquoise;
-            this.settings_btn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumTurquoise;
-            this.settings_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.settings_btn.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.settings_btn.ForeColor = System.Drawing.Color.White;
-            this.settings_btn.Location = new System.Drawing.Point(16, 409);
-            this.settings_btn.Name = "settings_btn";
-            this.settings_btn.Size = new System.Drawing.Size(192, 33);
-            this.settings_btn.TabIndex = 17;
-            this.settings_btn.Text = "Settings";
-            this.settings_btn.UseVisualStyleBackColor = true;
+            this.settings1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
+            this.settings1.Location = new System.Drawing.Point(3, 0);
+            this.settings1.Name = "settings1";
+            this.settings1.Size = new System.Drawing.Size(934, 668);
+            this.settings1.TabIndex = 0;
             // 
-            // adminDashboard1
+            // cashierOrder1
             // 
-            this.adminDashboard1.Location = new System.Drawing.Point(0, 0);
-            this.adminDashboard1.Name = "adminDashboard1";
-            this.adminDashboard1.Size = new System.Drawing.Size(944, 668);
-            this.adminDashboard1.TabIndex = 3;
+            this.cashierOrder1.Location = new System.Drawing.Point(0, 0);
+            this.cashierOrder1.Name = "cashierOrder1";
+            this.cashierOrder1.Size = new System.Drawing.Size(941, 668);
+            this.cashierOrder1.TabIndex = 1;
+            // 
+            // cashierCustomersForm1
+            // 
+            this.cashierCustomersForm1.Location = new System.Drawing.Point(0, -3);
+            this.cashierCustomersForm1.Name = "cashierCustomersForm1";
+            this.cashierCustomersForm1.Size = new System.Drawing.Size(941, 668);
+            this.cashierCustomersForm1.TabIndex = 2;
             // 
             // adminAddProducts1
             // 
             this.adminAddProducts1.Location = new System.Drawing.Point(0, 0);
             this.adminAddProducts1.Name = "adminAddProducts1";
-            this.adminAddProducts1.Size = new System.Drawing.Size(941, 668);
-            this.adminAddProducts1.TabIndex = 2;
+            this.adminAddProducts1.Size = new System.Drawing.Size(934, 668);
+            this.adminAddProducts1.TabIndex = 3;
             // 
-            // cashierCustomersForm1
+            // adminDashboard1
             // 
-            this.cashierCustomersForm1.Location = new System.Drawing.Point(0, 0);
-            this.cashierCustomersForm1.Name = "cashierCustomersForm1";
-            this.cashierCustomersForm1.Size = new System.Drawing.Size(941, 668);
-            this.cashierCustomersForm1.TabIndex = 1;
-            // 
-            // cashierOrder1
-            // 
-            this.cashierOrder1.Location = new System.Drawing.Point(-3, 0);
-            this.cashierOrder1.Name = "cashierOrder1";
-            this.cashierOrder1.Size = new System.Drawing.Size(941, 668);
-            this.cashierOrder1.TabIndex = 0;
+            this.adminDashboard1.Location = new System.Drawing.Point(3, 0);
+            this.adminDashboard1.Name = "adminDashboard1";
+            this.adminDashboard1.Size = new System.Drawing.Size(934, 668);
+            this.adminDashboard1.TabIndex = 4;
             // 
             // CashierMainForm
             // 
@@ -313,14 +324,15 @@
         private System.Windows.Forms.Button addProducts_btn;
         private System.Windows.Forms.Button customers_btn;
         private System.Windows.Forms.Button dashboard_btn;
-        private System.Windows.Forms.Label user_username;
+        public System.Windows.Forms.Label user_username;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.PictureBox pictureBoxProfile;
+        public System.Windows.Forms.PictureBox pictureBoxProfile;
         private System.Windows.Forms.Panel panel3;
-        private CashierOrder cashierOrder1;
-        private CashierCustomersForm cashierCustomersForm1;
+        private System.Windows.Forms.Button settings_btn;
         private AdminDashboard adminDashboard1;
         private AdminAddProducts adminAddProducts1;
-        private System.Windows.Forms.Button settings_btn;
+        private CashierCustomersForm cashierCustomersForm1;
+        private CashierOrder cashierOrder1;
+        private Settings settings1;
     }
 }

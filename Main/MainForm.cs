@@ -22,7 +22,7 @@ namespace Invento
 
             user_username.Text = Form1.username;
 
-            settings1.SetMainForm(this);
+            settings1.SetParentForm(this);
 
             ApplyModernStyle();
         }

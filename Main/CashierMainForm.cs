@@ -22,6 +22,8 @@ namespace Invento
 
             user_username.Text = Form1.username;
 
+            settings1.SetParentForm(this);
+
             ApplyModernStyle();
         }
 
@@ -196,6 +198,22 @@ namespace Invento
             if (coform != null)
             {
                 coform.refreshData();
+            }
+        }
+        private void settings_btn_Click_1(object sender, EventArgs e)
+        {
+            adminDashboard1.Visible = false;
+            adminAddProducts1.Visible = false;
+            cashierCustomersForm1.Visible = false;
+            cashierOrder1.Visible = false;
+            settings1.Visible = true;
+
+            settings1.refreshData();
+
+            Settings sform = settings1 as Settings;
+            if (sform != null)
+            {
+                sform.refreshData();
             }
         }
     }
