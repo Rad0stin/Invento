@@ -25,6 +25,10 @@ namespace Invento
         private static readonly Color TextBoxColor = Color.FromArgb(240, 242, 245);
         private static readonly Color TextColor = Color.Black;
 
+        [System.Runtime.InteropServices.DllImport("Gdi32.dll")]
+        private static extern IntPtr CreateRoundRectRgn(int nLeftRect, int nTopRect,
+    int nRightRect, int nBottomRect, int nWidthEllipse, int nHeightEllipse);
+
         public Settings()
         {
             InitializeComponent();
@@ -44,106 +48,226 @@ namespace Invento
 
         private void SetupCustomControls()
         {
+            // Create a main container panel with padding and scroll
+            Panel mainPanel = new Panel
+            {
+                Dock = DockStyle.Fill,
+                AutoScroll = true,
+                BackColor = Color.FromArgb(245, 247, 250),
+                Padding = new Padding(30)
+            };
+            Controls.Add(mainPanel);
+
             // Profile Picture Section
-            Label lblProfilePicture = new Label();
-            lblProfilePicture.Text = "Profile";
-            lblProfilePicture.Location = new Point(20, 20);
-            lblProfilePicture.Font = new Font("Segoe UI", 12, FontStyle.Regular);
-            lblProfilePicture.ForeColor = Color.FromArgb(64, 64, 64);
+            Label lblProfilePicture = new Label
+            {
+                Text = "Profile Picture",
+                Location = new Point(0, 0),
+                Font = new Font("Segoe UI Semibold", 12F),
+                ForeColor = Color.Black,
+                AutoSize = true,
+                Padding = new Padding(0, 10, 0, 5)
+            };
 
-            currentPicture = new PictureBox();
-            currentPicture.Size = new Size(100, 100);
-            currentPicture.SizeMode = PictureBoxSizeMode.Zoom;  // Changed to Zoom for better aspect ratio
-            currentPicture.Location = new Point(20, 50);
-            currentPicture.BorderStyle = BorderStyle.None;
-            currentPicture.BackColor = Color.White;
+            currentPicture = new PictureBox
+            {
+                Size = new Size(150, 150),
+                Location = new Point(0, 50),
+                SizeMode = PictureBoxSizeMode.Zoom,
+                BackColor = Color.White
+            };
 
-            Button btnChangePicture = new Button();
-            btnChangePicture.Text = "Change Picture";
-            btnChangePicture.Location = new Point(20, 160);
-            btnChangePicture.Size = new Size(120, 35);
-            btnChangePicture.BackColor = Color.FromArgb(26, 170, 159);
-            btnChangePicture.ForeColor = Color.White;
-            btnChangePicture.FlatStyle = FlatStyle.Flat;
+            // Create rounded container for profile picture
+            Panel pictureContainer = new Panel
+            {
+                Size = new Size(currentPicture.Width, currentPicture.Height),
+                Location = currentPicture.Location,
+                BackColor = Color.White
+            };
+            pictureContainer.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, pictureContainer.Width, pictureContainer.Height, 15, 15));
+            mainPanel.Controls.Add(pictureContainer);
+            currentPicture.Parent = pictureContainer;
+            currentPicture.Location = new Point(0, 0);
+
+            btnChangePicture = new Button
+            {
+                Text = "Change Picture",
+                Location = new Point(0, 210),
+                Size = new Size(150, 40),
+                FlatStyle = FlatStyle.Flat,
+                BackColor = Color.LightSeaGreen,
+                ForeColor = Color.White,
+                Font = new Font("Segoe UI", 10.5F, FontStyle.Bold),
+                Cursor = Cursors.Hand
+            };
             btnChangePicture.FlatAppearance.BorderSize = 0;
-            btnChangePicture.Font = new Font("Segoe UI", 10);
+            btnChangePicture.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnChangePicture.Width, btnChangePicture.Height, 15, 15));
             btnChangePicture.Click += BtnChangePicture_Click;
 
             // Username Section
-            Label lblUsername = new Label();
-            lblUsername.Text = "Username";
-            lblUsername.Location = new Point(20, 170);
-            lblUsername.Font = new Font("Segoe UI", 12, FontStyle.Regular);
+            Label lblUsername = new Label
+            {
+                Text = "Username",
+                Location = new Point(0, 270),
+                Font = new Font("Segoe UI Semibold", 12F),
+                ForeColor = Color.Black,
+                AutoSize = true,
+                Padding = new Padding(0, 10, 0, 5)
+            };
 
-            txtUsername = new TextBox();
-            txtUsername.Location = new Point(20, 200);
-            txtUsername.Size = new Size(200, 30);
-            txtUsername.Font = new Font("Segoe UI", 11);
+            // Username TextBox with container
+            Panel usernameContainer = new Panel
+            {
+                Size = new Size(300, 45),
+                Location = new Point(0, 310),
+                BackColor = Color.FromArgb(240, 242, 245)
+            };
+            usernameContainer.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, usernameContainer.Width, usernameContainer.Height, 15, 15));
 
-            Button btnUpdateUsername = new Button();
-            btnUpdateUsername.Text = "Update Username";
-            btnUpdateUsername.Location = new Point(20, 240);
-            btnUpdateUsername.Size = new Size(120, 30);
-            btnUpdateUsername.Font = new Font("Segoe UI", 10);
+            txtUsername = new TextBox
+            {
+                Location = new Point(8, 12),
+                Size = new Size(284, 30),
+                BorderStyle = BorderStyle.None,
+                Font = new Font("Segoe UI", 12),
+                BackColor = Color.FromArgb(240, 242, 245)
+            };
+            usernameContainer.Controls.Add(txtUsername);
+
+            btnUpdateUsername = new Button
+            {
+                Text = "Update Username",
+                Location = new Point(0, 370),
+                Size = new Size(150, 40),
+                FlatStyle = FlatStyle.Flat,
+                BackColor = Color.LightSeaGreen,
+                ForeColor = Color.White,
+                Font = new Font("Segoe UI", 10.5F, FontStyle.Bold),
+                Cursor = Cursors.Hand
+            };
+            btnUpdateUsername.FlatAppearance.BorderSize = 0;
+            btnUpdateUsername.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnUpdateUsername.Width, btnUpdateUsername.Height, 15, 15));
             btnUpdateUsername.Click += BtnUpdateUsername_Click;
 
             // Password Section
-            Label lblCurrentPassword = new Label();
-            lblCurrentPassword.Text = "Current Password";
-            lblCurrentPassword.Location = new Point(20, 290);
-            lblCurrentPassword.Font = new Font("Segoe UI", 12, FontStyle.Regular);
+            Label lblCurrentPassword = new Label
+            {
+                Text = "Current Password",
+                Location = new Point(0, 430),
+                Font = new Font("Segoe UI Semibold", 12F),
+                ForeColor = Color.Black,
+                AutoSize = true,
+                Padding = new Padding(0, 10, 0, 5)
+            };
 
-            txtCurrentPassword = new TextBox();
-            txtCurrentPassword.Location = new Point(20, 320);
-            txtCurrentPassword.Size = new Size(200, 30);
-            txtCurrentPassword.UseSystemPasswordChar = true;
-            txtCurrentPassword.Font = new Font("Segoe UI", 11);
+            // Current Password TextBox with container
+            Panel currentPasswordContainer = new Panel
+            {
+                Size = new Size(300, 45),
+                Location = new Point(0, 470),
+                BackColor = Color.FromArgb(240, 242, 245)
+            };
+            currentPasswordContainer.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, currentPasswordContainer.Width, currentPasswordContainer.Height, 15, 15));
 
-            Label lblNewPassword = new Label();
-            lblNewPassword.Text = "New Password";
-            lblNewPassword.Location = new Point(20, 360);
-            lblNewPassword.Font = new Font("Segoe UI", 12, FontStyle.Regular);
+            txtCurrentPassword = new TextBox
+            {
+                Location = new Point(8, 12),
+                Size = new Size(284, 30),
+                BorderStyle = BorderStyle.None,
+                Font = new Font("Segoe UI", 12),
+                BackColor = Color.FromArgb(240, 242, 245),
+                UseSystemPasswordChar = true
+            };
+            currentPasswordContainer.Controls.Add(txtCurrentPassword);
 
-            txtNewPassword = new TextBox();
-            txtNewPassword.Location = new Point(20, 390);
-            txtNewPassword.Size = new Size(200, 30);
-            txtNewPassword.UseSystemPasswordChar = true;
-            txtNewPassword.Font = new Font("Segoe UI", 11);
+            Label lblNewPassword = new Label
+            {
+                Text = "New Password",
+                Location = new Point(0, 530),
+                Font = new Font("Segoe UI Semibold", 12F),
+                ForeColor = Color.Black,
+                AutoSize = true,
+                Padding = new Padding(0, 10, 0, 5)
+            };
 
-            Button btnChangePassword = new Button();
-            btnChangePassword.Text = "Change Password";
-            btnChangePassword.Location = new Point(20, 430);
-            btnChangePassword.Size = new Size(120, 30);
-            btnChangePassword.Font = new Font("Segoe UI", 10);
+            // New Password TextBox with container
+            Panel newPasswordContainer = new Panel
+            {
+                Size = new Size(300, 45),
+                Location = new Point(0, 570),
+                BackColor = Color.FromArgb(240, 242, 245)
+            };
+            newPasswordContainer.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, newPasswordContainer.Width, newPasswordContainer.Height, 15, 15));
+
+            txtNewPassword = new TextBox
+            {
+                Location = new Point(8, 12),
+                Size = new Size(284, 30),
+                BorderStyle = BorderStyle.None,
+                Font = new Font("Segoe UI", 12),
+                BackColor = Color.FromArgb(240, 242, 245),
+                UseSystemPasswordChar = true
+            };
+            newPasswordContainer.Controls.Add(txtNewPassword);
+
+            btnChangePassword = new Button
+            {
+                Text = "Change Password",
+                Location = new Point(0, 630),
+                Size = new Size(150, 40),
+                FlatStyle = FlatStyle.Flat,
+                BackColor = Color.LightSeaGreen,
+                ForeColor = Color.White,
+                Font = new Font("Segoe UI", 10.5F, FontStyle.Bold),
+                Cursor = Cursors.Hand
+            };
+            btnChangePassword.FlatAppearance.BorderSize = 0;
+            btnChangePassword.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnChangePassword.Width, btnChangePassword.Height, 15, 15));
             btnChangePassword.Click += BtnChangePassword_Click;
 
-            Controls.AddRange(new Control[] {
-                lblProfilePicture, currentPicture, btnChangePicture,
-                lblUsername, txtUsername, btnUpdateUsername,
-                lblCurrentPassword, txtCurrentPassword,
-                lblNewPassword, txtNewPassword, btnChangePassword
-            });
+            // Add hover effects for buttons
+            AddButtonHoverEffects(btnChangePicture);
+            AddButtonHoverEffects(btnUpdateUsername);
+            AddButtonHoverEffects(btnChangePassword);
 
-            // Apply modern styling to buttons
-            foreach (Control control in Controls)
-            {
-                if (control is Button button)
-                {
-                    StyleButton(button);
-                }
-            }
+            // Add focus effects for textboxes
+            AddTextBoxFocusEffects(txtUsername, usernameContainer);
+            AddTextBoxFocusEffects(txtCurrentPassword, currentPasswordContainer);
+            AddTextBoxFocusEffects(txtNewPassword, newPasswordContainer);
+
+            // Add all controls to the main panel
+            mainPanel.Controls.AddRange(new Control[] {
+        lblProfilePicture,
+        pictureContainer,
+        btnChangePicture,
+        lblUsername,
+        usernameContainer,
+        btnUpdateUsername,
+        lblCurrentPassword,
+        currentPasswordContainer,
+        lblNewPassword,
+        newPasswordContainer,
+        btnChangePassword
+    });
         }
 
-        private void StyleButton(Button button)
+        private void AddButtonHoverEffects(Button button)
         {
-            button.FlatStyle = FlatStyle.Flat;
-            button.FlatAppearance.BorderSize = 0;
-            button.BackColor = Color.FromArgb(26, 170, 159);
-            button.ForeColor = Color.White;
-            button.Cursor = Cursors.Hand;
+            button.MouseEnter += (s, e) => button.BackColor = Color.FromArgb(0, 150, 150);
+            button.MouseLeave += (s, e) => button.BackColor = Color.LightSeaGreen;
+        }
 
-            button.MouseEnter += (s, e) => button.BackColor = Color.FromArgb(22, 145, 136);
-            button.MouseLeave += (s, e) => button.BackColor = Color.FromArgb(26, 170, 159);
+        private void AddTextBoxFocusEffects(TextBox textBox, Panel container)
+        {
+            textBox.GotFocus += (s, e) => {
+                container.BackColor = Color.FromArgb(235, 237, 240);
+                textBox.BackColor = Color.FromArgb(235, 237, 240);
+            };
+
+            textBox.LostFocus += (s, e) => {
+                container.BackColor = Color.FromArgb(240, 242, 245);
+                textBox.BackColor = Color.FromArgb(240, 242, 245);
+            };
         }
 
         public void refreshData()
