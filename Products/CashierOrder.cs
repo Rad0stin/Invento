@@ -1,26 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data.SqlClient;
-using System.Data.SqlTypes;
-using System.Diagnostics;
+using System.Drawing;
 using System.Drawing.Printing;
-using System.Drawing.Drawing2D;
+using System.Windows.Forms;
 
 namespace Invento
 {
     public partial class CashierOrder : UserControl
     {
         SqlConnection connect = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Radostin\Documents\invento.mdf;Integrated Security=True;Connect Timeout=30;");
+
         public CashierOrder()
         {
             InitializeComponent();
+
+            OrderDesing.ApplyProductStyle(this);
 
             displayAllAvailableProducts();
 
@@ -30,6 +26,282 @@ namespace Invento
 
             displayTotalPrice();
         }
+
+        public class OrderDesing
+        {
+            private static readonly Color PrimaryColor = Color.LightSeaGreen;
+            private static readonly Color BackgroundColor = Color.FromArgb(245, 247, 250);
+            private static readonly Color TextBoxColor = Color.FromArgb(240, 242, 245);
+            private static readonly Color HeaderColor = Color.LightSeaGreen;
+            private static readonly Color AlternateRowColor = Color.FromArgb(240, 248, 248);
+            private static readonly Color BorderColor = Color.FromArgb(200, 223, 223);
+            private static readonly Color TextColor = Color.Black;
+
+            public static void ApplyProductStyle(CashierOrder productsControl)
+            {
+                // Style all TextBoxes
+                StyleTextBox(productsControl.cashierOrder_amount);
+
+                // Style ComboBoxes
+                StyleComboBox(productsControl.cashierOrder_category);
+                StyleComboBox(productsControl.cashierOrder_prodID);
+
+                // Style all buttons
+                StyleButton(productsControl.cashierOrder_addBtn, "Add");
+                StyleButton(productsControl.cashierOrder_removeBtn, "Remove");
+                StyleButton(productsControl.cashierOrder_clearBtn, "Clear");
+                StyleButton(productsControl.cashierOrder_payOrders, "Pay Orders");
+                StyleButton(productsControl.cashierOrder_receipt, "Receipt");
+                StyleDataGridView(productsControl.dataGridView1);
+                StyleDataGridView(productsControl.dataGridView2);
+                StyleNumericUpDown(productsControl.cashierOrder_qty);
+            }
+
+            private static void StyleDataGridView(DataGridView dgv)
+            {
+                // Enable double buffering using reflection
+                typeof(DataGridView).InvokeMember(
+                    "DoubleBuffered",
+                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.SetProperty,
+                    null,
+                    dgv,
+                    new object[] { true });
+
+                // Basic properties
+                dgv.BackgroundColor = BackgroundColor;
+                dgv.BorderStyle = BorderStyle.None;
+                dgv.CellBorderStyle = DataGridViewCellBorderStyle.Single;
+                dgv.EnableHeadersVisualStyles = false;
+                dgv.GridColor = BorderColor;
+                dgv.RowHeadersVisible = false;
+
+                // Enable scrollbars
+                dgv.ScrollBars = ScrollBars.Both;
+                dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None; // Disable auto-size to allow horizontal scroll
+
+                // Column header style
+                dgv.ColumnHeadersDefaultCellStyle.BackColor = HeaderColor;
+                dgv.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+                dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI Semibold", 10.5f);
+                dgv.ColumnHeadersDefaultCellStyle.Padding = new Padding(8, 4, 8, 4);
+                dgv.ColumnHeadersDefaultCellStyle.WrapMode = DataGridViewTriState.False;
+                dgv.ColumnHeadersHeight = 35;
+                dgv.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+
+                // Row styles
+                dgv.DefaultCellStyle.BackColor = Color.White;
+                dgv.DefaultCellStyle.ForeColor = TextColor;
+                dgv.DefaultCellStyle.Font = new Font("Segoe UI", 9.5f);
+                dgv.DefaultCellStyle.Padding = new Padding(5, 2, 5, 2);
+                dgv.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
+                dgv.AlternatingRowsDefaultCellStyle.BackColor = AlternateRowColor;
+
+                // Selection style
+                dgv.DefaultCellStyle.SelectionBackColor = Color.FromArgb(180, 220, 220);
+                dgv.DefaultCellStyle.SelectionForeColor = TextColor;
+
+                // Row height and column width
+                dgv.RowTemplate.Height = 30;
+
+                // Set minimum column widths to prevent text truncation
+                foreach (DataGridViewColumn column in dgv.Columns)
+                {
+                    column.MinimumWidth = 80; // Minimum width for all columns
+
+                    // Adjust specific column widths based on content type
+                    switch (column.Name.ToLower())
+                    {
+                        case "id":
+                            column.Width = 60;
+                            break;
+                        case "prodid":
+                        case "category":
+                        case "status":
+                            column.Width = 100;
+                            break;
+                        case "prodname":
+                            column.Width = 150;
+                            break;
+                        case "imagepath":
+                            column.Width = 200;
+                            break;
+                        case "date":
+                            column.Width = 120;
+                            break;
+                        default:
+                            column.Width = 100;
+                            break;
+                    }
+                }
+
+                // Other UI improvements
+                dgv.AllowUserToResizeRows = false;
+                dgv.AllowUserToResizeColumns = true;
+                dgv.AllowUserToOrderColumns = true;
+                dgv.MultiSelect = false;
+                dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                dgv.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
+
+                // Set minimum size for horizontal scrollbar to appear
+                dgv.MinimumSize = new Size(200, 0);
+
+                // Optional: Clean up any existing event handlers
+                dgv.Resize -= DataGridView_Resize;
+                dgv.Resize += DataGridView_Resize;
+            }
+
+            private static void DataGridView_Resize(object sender, EventArgs e)
+            {
+                if (sender is DataGridView dgv)
+                {
+                    // Ensure horizontal scrollbar appears when needed
+                    int totalColumnWidth = 0;
+                    foreach (DataGridViewColumn col in dgv.Columns)
+                    {
+                        totalColumnWidth += col.Width;
+                    }
+
+                    if (totalColumnWidth > dgv.Width)
+                    {
+                        dgv.ScrollBars = ScrollBars.Both;
+                    }
+                }
+            }
+
+
+            private static void StyleNumericUpDown(NumericUpDown numericUpDown)
+            {
+                Panel container = new Panel
+                {
+                    Size = new Size(numericUpDown.Width, numericUpDown.Height + 10),
+                    Location = new Point(numericUpDown.Location.X, numericUpDown.Location.Y - 5),
+                    BackColor = TextBoxColor
+                };
+
+                if (numericUpDown.Parent is Panel parentPanel)
+                {
+                    parentPanel.Controls.Add(container);
+                    container.BringToFront();
+                    numericUpDown.Parent = container;
+                    numericUpDown.Location = new Point(8, 5);
+                    numericUpDown.Width = container.Width - 16;
+                }
+
+                // Style the NumericUpDown
+                numericUpDown.BackColor = TextBoxColor;
+                numericUpDown.ForeColor = TextColor;
+                numericUpDown.Font = new Font("Segoe UI", 12);
+                numericUpDown.BorderStyle = BorderStyle.None;
+
+                // Round the container corners
+                container.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, container.Width, container.Height, 15, 15));
+
+                // Focus effects
+                numericUpDown.GotFocus += (s, e) =>
+                {
+                    container.BackColor = Color.FromArgb(235, 237, 240);
+                    numericUpDown.BackColor = Color.FromArgb(235, 237, 240);
+                };
+
+                numericUpDown.LostFocus += (s, e) =>
+                {
+                    container.BackColor = TextBoxColor;
+                    numericUpDown.BackColor = TextBoxColor;
+                };
+            }
+
+            private static void StyleTextBox(TextBox textBox)
+            {
+                Panel container = new Panel
+                {
+                    Size = new Size(textBox.Width, textBox.Height + 10),
+                    Location = new Point(textBox.Location.X, textBox.Location.Y - 5),
+                    BackColor = TextBoxColor
+                };
+
+                if (textBox.Parent is Panel parentPanel)
+                {
+                    parentPanel.Controls.Add(container);
+                    container.BringToFront();
+                    textBox.Parent = container;
+                    textBox.Location = new Point(8, 5);
+                    textBox.Width = container.Width - 16;
+                }
+
+                container.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, container.Width, container.Height, 15, 15));
+                textBox.BackColor = TextBoxColor;
+                textBox.ForeColor = TextColor;
+                textBox.BorderStyle = BorderStyle.None;
+                textBox.Font = new Font("Segoe UI", 12);
+
+                // TextBox focus effects
+                textBox.GotFocus += (s, e) =>
+                {
+                    container.BackColor = Color.FromArgb(235, 237, 240);
+                    textBox.BackColor = Color.FromArgb(235, 237, 240);
+                };
+
+                textBox.LostFocus += (s, e) =>
+                {
+                    container.BackColor = TextBoxColor;
+                    textBox.BackColor = TextBoxColor;
+                };
+            }
+
+            private static void StyleComboBox(ComboBox comboBox)
+            {
+                Panel container = new Panel
+                {
+                    Size = new Size(comboBox.Width, comboBox.Height + 10),
+                    Location = new Point(comboBox.Location.X, comboBox.Location.Y - 5),
+                    BackColor = TextBoxColor
+                };
+
+                if (comboBox.Parent is Panel parentPanel)
+                {
+                    parentPanel.Controls.Add(container);
+                    container.BringToFront();
+                    comboBox.Parent = container;
+                    comboBox.Location = new Point(8, 5);
+                    comboBox.Width = container.Width - 16;
+                }
+
+                container.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, container.Width, container.Height, 15, 15));
+                comboBox.BackColor = TextBoxColor;
+                comboBox.ForeColor = TextColor;
+                comboBox.Font = new Font("Segoe UI", 12);
+                comboBox.FlatStyle = FlatStyle.Flat;
+            }
+
+            private static void StyleButton(Button button, string type)
+            {
+                button.FlatStyle = FlatStyle.Flat;
+                button.ForeColor = Color.White;
+                button.BackColor = PrimaryColor;
+                button.Font = new Font("Segoe UI", 10.5F, FontStyle.Bold);
+                button.Cursor = Cursors.Hand;
+                button.FlatAppearance.BorderSize = 0;
+                button.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, button.Width, button.Height, 15, 15));
+                button.Padding = new Padding(10, 0, 10, 0);
+
+                // Add hover effect
+                button.MouseEnter += (s, e) =>
+                {
+                    button.BackColor = Color.FromArgb(0, 150, 150); // Darker shade of PrimaryColor
+                };
+
+                button.MouseLeave += (s, e) =>
+                {
+                    button.BackColor = PrimaryColor;
+                };
+            }
+
+            [System.Runtime.InteropServices.DllImport("Gdi32.dll")]
+            private static extern IntPtr CreateRoundRectRgn(int nLeftRect, int nTopRect,
+                int nBottomRect, int nRightRect, int nWidthEllipse, int nHeightEllipse);
+        }
+
+
 
         public void refreshData()
         {
@@ -235,8 +507,8 @@ namespace Invento
             }
         }
 
-       
-       private void cashierOrder_addBtn_Click(object sender, EventArgs e)
+
+        private void cashierOrder_addBtn_Click(object sender, EventArgs e)
         {
             IDGenerator();
 
