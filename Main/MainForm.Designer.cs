@@ -257,8 +257,8 @@
             this.pictureBoxProfile.Image = global::Invento.Properties.Resources.user;
             this.pictureBoxProfile.Location = new System.Drawing.Point(56, 6);
             this.pictureBoxProfile.Name = "pictureBoxProfile";
-            this.pictureBoxProfile.Size = new System.Drawing.Size(103, 99);
-            this.pictureBoxProfile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxProfile.Size = new System.Drawing.Size(110, 110);
+            this.pictureBoxProfile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBoxProfile.TabIndex = 8;
             this.pictureBoxProfile.TabStop = false;
             // 

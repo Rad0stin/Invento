@@ -65,6 +65,7 @@ namespace Invento
                     close.BackColor = Color.Firebrick;
                 };
             }
+            RoundPictureBox(pictureBoxProfile);
         }
 
         private void StyleNavigationButton(Button button)
@@ -121,6 +122,26 @@ namespace Invento
                 };
                 button.MouseLeave += (s, e) => {
                     button.BackColor = Color.FromArgb(26, 170, 159);
+                };
+            }
+        }
+
+        private void RoundPictureBox(PictureBox pictureBox)
+        {
+            if (pictureBox != null)
+            {
+                // Ensure the PictureBox is square
+                int size = Math.Min(pictureBox.Width, pictureBox.Height);
+                pictureBox.Size = new Size(size, size);
+
+                // Create a circular region for the PictureBox
+                pictureBox.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, size, size, size, size));
+
+                // Ensure the PictureBox resizes correctly
+                pictureBox.SizeChanged += (s, e) => {
+                    int newSize = Math.Min(pictureBox.Width, pictureBox.Height);
+                    pictureBox.Size = new Size(newSize, newSize);
+                    pictureBox.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, newSize, newSize, newSize, newSize));
                 };
             }
         }

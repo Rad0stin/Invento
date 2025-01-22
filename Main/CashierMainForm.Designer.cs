@@ -42,11 +42,11 @@
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBoxProfile = new System.Windows.Forms.PictureBox();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.settings1 = new Invento.Settings();
-            this.cashierOrder1 = new Invento.CashierOrder();
-            this.cashierCustomersForm1 = new Invento.CashierCustomersForm();
-            this.adminAddProducts1 = new Invento.AdminAddProducts();
             this.adminDashboard1 = new Invento.AdminDashboard();
+            this.adminAddProducts1 = new Invento.AdminAddProducts();
+            this.cashierCustomersForm1 = new Invento.CashierCustomersForm();
+            this.cashierOrder1 = new Invento.CashierOrder();
+            this.settings1 = new Invento.Settings();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).BeginInit();
@@ -115,7 +115,7 @@
             this.settings_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.settings_btn.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.settings_btn.ForeColor = System.Drawing.Color.White;
-            this.settings_btn.Location = new System.Drawing.Point(16, 409);
+            this.settings_btn.Location = new System.Drawing.Point(16, 423);
             this.settings_btn.Name = "settings_btn";
             this.settings_btn.Size = new System.Drawing.Size(192, 33);
             this.settings_btn.TabIndex = 17;
@@ -132,7 +132,7 @@
             this.order_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.order_btn.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.order_btn.ForeColor = System.Drawing.Color.White;
-            this.order_btn.Location = new System.Drawing.Point(16, 350);
+            this.order_btn.Location = new System.Drawing.Point(16, 360);
             this.order_btn.Name = "order_btn";
             this.order_btn.Size = new System.Drawing.Size(192, 33);
             this.order_btn.TabIndex = 16;
@@ -167,7 +167,7 @@
             this.addProducts_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addProducts_btn.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.addProducts_btn.ForeColor = System.Drawing.Color.White;
-            this.addProducts_btn.Location = new System.Drawing.Point(16, 235);
+            this.addProducts_btn.Location = new System.Drawing.Point(16, 242);
             this.addProducts_btn.Name = "addProducts_btn";
             this.addProducts_btn.Size = new System.Drawing.Size(192, 33);
             this.addProducts_btn.TabIndex = 14;
@@ -184,7 +184,7 @@
             this.customers_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.customers_btn.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.customers_btn.ForeColor = System.Drawing.Color.White;
-            this.customers_btn.Location = new System.Drawing.Point(16, 290);
+            this.customers_btn.Location = new System.Drawing.Point(16, 300);
             this.customers_btn.Name = "customers_btn";
             this.customers_btn.Size = new System.Drawing.Size(192, 33);
             this.customers_btn.TabIndex = 12;
@@ -201,7 +201,7 @@
             this.dashboard_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.dashboard_btn.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dashboard_btn.ForeColor = System.Drawing.Color.White;
-            this.dashboard_btn.Location = new System.Drawing.Point(16, 181);
+            this.dashboard_btn.Location = new System.Drawing.Point(16, 187);
             this.dashboard_btn.Name = "dashboard_btn";
             this.dashboard_btn.Size = new System.Drawing.Size(192, 33);
             this.dashboard_btn.TabIndex = 3;
@@ -214,7 +214,7 @@
             this.user_username.AutoSize = true;
             this.user_username.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.user_username.ForeColor = System.Drawing.Color.White;
-            this.user_username.Location = new System.Drawing.Point(93, 121);
+            this.user_username.Location = new System.Drawing.Point(118, 132);
             this.user_username.Name = "user_username";
             this.user_username.Size = new System.Drawing.Size(42, 20);
             this.user_username.TabIndex = 9;
@@ -225,7 +225,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft YaHei UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(12, 121);
+            this.label2.Location = new System.Drawing.Point(12, 132);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(82, 20);
             this.label2.TabIndex = 2;
@@ -235,9 +235,9 @@
             // 
             this.pictureBoxProfile.BackColor = System.Drawing.Color.Transparent;
             this.pictureBoxProfile.Image = global::Invento.Properties.Resources.user;
-            this.pictureBoxProfile.Location = new System.Drawing.Point(70, 19);
+            this.pictureBoxProfile.Location = new System.Drawing.Point(50, 6);
             this.pictureBoxProfile.Name = "pictureBoxProfile";
-            this.pictureBoxProfile.Size = new System.Drawing.Size(80, 80);
+            this.pictureBoxProfile.Size = new System.Drawing.Size(110, 110);
             this.pictureBoxProfile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxProfile.TabIndex = 8;
             this.pictureBoxProfile.TabStop = false;
@@ -255,27 +255,12 @@
             this.panel3.Size = new System.Drawing.Size(941, 668);
             this.panel3.TabIndex = 3;
             // 
-            // settings1
+            // adminDashboard1
             // 
-            this.settings1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
-            this.settings1.Location = new System.Drawing.Point(3, 0);
-            this.settings1.Name = "settings1";
-            this.settings1.Size = new System.Drawing.Size(934, 668);
-            this.settings1.TabIndex = 0;
-            // 
-            // cashierOrder1
-            // 
-            this.cashierOrder1.Location = new System.Drawing.Point(0, 0);
-            this.cashierOrder1.Name = "cashierOrder1";
-            this.cashierOrder1.Size = new System.Drawing.Size(941, 668);
-            this.cashierOrder1.TabIndex = 1;
-            // 
-            // cashierCustomersForm1
-            // 
-            this.cashierCustomersForm1.Location = new System.Drawing.Point(0, -3);
-            this.cashierCustomersForm1.Name = "cashierCustomersForm1";
-            this.cashierCustomersForm1.Size = new System.Drawing.Size(941, 668);
-            this.cashierCustomersForm1.TabIndex = 2;
+            this.adminDashboard1.Location = new System.Drawing.Point(3, 0);
+            this.adminDashboard1.Name = "adminDashboard1";
+            this.adminDashboard1.Size = new System.Drawing.Size(934, 668);
+            this.adminDashboard1.TabIndex = 4;
             // 
             // adminAddProducts1
             // 
@@ -284,12 +269,27 @@
             this.adminAddProducts1.Size = new System.Drawing.Size(934, 668);
             this.adminAddProducts1.TabIndex = 3;
             // 
-            // adminDashboard1
+            // cashierCustomersForm1
             // 
-            this.adminDashboard1.Location = new System.Drawing.Point(3, 0);
-            this.adminDashboard1.Name = "adminDashboard1";
-            this.adminDashboard1.Size = new System.Drawing.Size(934, 668);
-            this.adminDashboard1.TabIndex = 4;
+            this.cashierCustomersForm1.Location = new System.Drawing.Point(0, -3);
+            this.cashierCustomersForm1.Name = "cashierCustomersForm1";
+            this.cashierCustomersForm1.Size = new System.Drawing.Size(941, 668);
+            this.cashierCustomersForm1.TabIndex = 2;
+            // 
+            // cashierOrder1
+            // 
+            this.cashierOrder1.Location = new System.Drawing.Point(0, 0);
+            this.cashierOrder1.Name = "cashierOrder1";
+            this.cashierOrder1.Size = new System.Drawing.Size(941, 668);
+            this.cashierOrder1.TabIndex = 1;
+            // 
+            // settings1
+            // 
+            this.settings1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
+            this.settings1.Location = new System.Drawing.Point(3, 0);
+            this.settings1.Name = "settings1";
+            this.settings1.Size = new System.Drawing.Size(934, 668);
+            this.settings1.TabIndex = 0;
             // 
             // CashierMainForm
             // 
