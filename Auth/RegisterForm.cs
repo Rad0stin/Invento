@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-
+using BCrypt.Net;
 
 namespace Invento
 {
@@ -340,10 +340,10 @@ namespace Invento
                         }
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    MessageBox.Show("Connection failed: " + ex.Message,
-                        "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Register failed. Please contact Admin",
+                    "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 finally
                 {

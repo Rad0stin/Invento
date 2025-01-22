@@ -25,6 +25,7 @@ namespace Invento
             settings1.SetParentForm(this);
 
             ApplyModernStyle();
+
         }
 
         private void ApplyModernStyle()
@@ -133,7 +134,6 @@ namespace Invento
                 };
             }
         }
-
 
         private void close_Click(object sender, EventArgs e)
         {

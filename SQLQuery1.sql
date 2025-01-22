@@ -8,11 +8,8 @@
  date DATE NULL
 )
 
-INSERT INTO users (username, password, role, status) VALUES('rado', 'test1234', 'Cashier', 'Active')
-
 SELECT * FROM users
 
-INSERT INTO users(username, password, role, status, date) VALUES('admin', 'admin123', 'Admin', 'Active', '2024-09-11')
 
 CREATE TABLE categories 
 (
@@ -81,3 +78,8 @@ WHERE username = 'admin';
 UPDATE users 
 SET password = '$2a$11$BXXGgoY8UnJfkUQ3H0ET8.Q/bL9D9WGHBrRxn4kxuUZxgqoVFkXny'
 WHERE username = 'rado';
+
+
+ALTER TABLE users
+ADD failed_attempts INT DEFAULT 0,
+    lock_time DATETIME NULL;

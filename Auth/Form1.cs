@@ -354,10 +354,10 @@ namespace Invento
                         }
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    MessageBox.Show("Connection failed: " + ex.Message,
-                        "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Login failed. Please check your username and password.",
+                    "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 finally
                 {
@@ -382,7 +382,7 @@ namespace Invento
             }
             catch (Exception)
             {
-                // Silently fail - we don't want to disturb the user login process
+
             }
             }
         }
