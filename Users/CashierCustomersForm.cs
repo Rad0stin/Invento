@@ -3,13 +3,12 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using System.Drawing.Imaging;
 
 namespace Invento
 {
     public partial class CashierCustomersForm : UserControl
     {
-        private BufferedFlowLayoutPanel customersContainer;
+        private FlowLayoutPanel customersContainer;
         private const int CARD_WIDTH = 250;
         private const int CARD_HEIGHT = 180;
         private const int CONTAINER_PADDING = 30;
@@ -26,77 +25,9 @@ namespace Invento
             displayCustomers();
         }
 
-        private class BufferedFlowLayoutPanel : FlowLayoutPanel
-        {
-            private readonly BufferedGraphicsContext context;
-            private BufferedGraphics bufferedGraphics;
-
-            public BufferedFlowLayoutPanel()
-            {
-                this.DoubleBuffered = true;
-                this.SetStyle(
-                    ControlStyles.AllPaintingInWmPaint |
-                    ControlStyles.OptimizedDoubleBuffer |
-                    ControlStyles.UserPaint |
-                    ControlStyles.ResizeRedraw,
-                    true
-                );
-
-                context = BufferedGraphicsManager.Current;
-                context.MaximumBuffer = new Size(Screen.PrimaryScreen.Bounds.Width,
-                                               Screen.PrimaryScreen.Bounds.Height);
-            }
-
-            protected override void OnPaint(PaintEventArgs e)
-            {
-                if (bufferedGraphics == null || bufferedGraphics.Graphics.VisibleClipBounds.Size != Size)
-                {
-                    bufferedGraphics?.Dispose();
-                    bufferedGraphics = context.Allocate(CreateGraphics(), ClientRectangle);
-                }
-
-                bufferedGraphics.Graphics.Clear(BackColor);
-                PaintWithDoubleBuffer(bufferedGraphics.Graphics);
-                bufferedGraphics.Render(e.Graphics);
-            }
-
-            private void PaintWithDoubleBuffer(Graphics g)
-            {
-                base.OnPaint(new PaintEventArgs(g, ClientRectangle));
-            }
-
-            protected override void OnScroll(ScrollEventArgs se)
-            {
-                base.OnScroll(se);
-                if (se.Type == ScrollEventType.EndScroll)
-                {
-                    Invalidate();
-                }
-            }
-
-            protected override CreateParams CreateParams
-            {
-                get
-                {
-                    CreateParams cp = base.CreateParams;
-                    cp.ExStyle |= 0x02000000; // WS_EX_COMPOSITED
-                    return cp;
-                }
-            }
-
-            protected override void Dispose(bool disposing)
-            {
-                if (disposing)
-                {
-                    bufferedGraphics?.Dispose();
-                }
-                base.Dispose(disposing);
-            }
-        }
-
         private void InitializeCustomLayout()
         {
-            customersContainer = new BufferedFlowLayoutPanel
+            customersContainer = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
                 AutoScroll = true,
@@ -117,8 +48,6 @@ namespace Invento
         {
             private readonly int radius = 15;
             private GraphicsPath borderPath;
-            private Region panelRegion;
-            private readonly object lockObject = new object();
 
             public RoundedPanel()
             {
@@ -135,48 +64,32 @@ namespace Invento
             protected override void OnSizeChanged(EventArgs e)
             {
                 base.OnSizeChanged(e);
-                lock (lockObject)
-                {
-                    RecreateRegion();
-                }
+                RecreateRegion();
             }
 
             private void RecreateRegion()
             {
-                using (var path = new GraphicsPath())
-                {
-                    path.AddArc(0, 0, radius, radius, 180, 90);
-                    path.AddArc(Width - radius, 0, radius, radius, 270, 90);
-                    path.AddArc(Width - radius, Height - radius, radius, radius, 0, 90);
-                    path.AddArc(0, Height - radius, radius, radius, 90, 90);
-                    path.CloseFigure();
-
-                    borderPath?.Dispose();
-                    panelRegion?.Dispose();
-
-                    borderPath = path.Clone() as GraphicsPath;
-                    panelRegion = new Region(path);
-                }
-                this.Region = panelRegion;
+                borderPath?.Dispose();
+                borderPath = new GraphicsPath();
+                borderPath.AddArc(0, 0, radius, radius, 180, 90);
+                borderPath.AddArc(Width - radius, 0, radius, radius, 270, 90);
+                borderPath.AddArc(Width - radius, Height - radius, radius, radius, 0, 90);
+                borderPath.AddArc(0, Height - radius, radius, radius, 90, 90);
+                borderPath.CloseFigure();
+                this.Region = new Region(borderPath);
             }
 
             protected override void OnPaint(PaintEventArgs e)
             {
-                using (var bitmap = new Bitmap(Width, Height))
-                using (var g = Graphics.FromImage(bitmap))
+                e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                e.Graphics.Clear(BackColor);
+
+                if (borderPath != null)
                 {
-                    g.SmoothingMode = SmoothingMode.AntiAlias;
-                    g.Clear(BackColor);
-
-                    if (borderPath != null)
+                    using (var pen = new Pen(Color.FromArgb(230, 230, 230), 1))
                     {
-                        using (var pen = new Pen(Color.FromArgb(230, 230, 230), 1))
-                        {
-                            g.DrawPath(pen, borderPath);
-                        }
+                        e.Graphics.DrawPath(pen, borderPath);
                     }
-
-                    e.Graphics.DrawImage(bitmap, 0, 0);
                 }
             }
 
@@ -184,11 +97,7 @@ namespace Invento
             {
                 if (disposing)
                 {
-                    lock (lockObject)
-                    {
-                        borderPath?.Dispose();
-                        panelRegion?.Dispose();
-                    }
+                    borderPath?.Dispose();
                 }
                 base.Dispose(disposing);
             }
