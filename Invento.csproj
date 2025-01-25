@@ -98,10 +98,10 @@
     <Compile Include="Products\AdminAddProducts.Designer.cs">
       <DependentUpon>AdminAddProducts.cs</DependentUpon>
     </Compile>
-    <Compile Include="Settings.cs">
+    <Compile Include="Settings- Form\Settings.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Settings.Designer.cs">
+    <Compile Include="Settings- Form\Settings.Designer.cs">
       <DependentUpon>Settings.cs</DependentUpon>
     </Compile>
     <Compile Include="Users\AdminAddUser.cs">
@@ -164,7 +164,7 @@
     <EmbeddedResource Include="Products\AdminAddProducts.resx">
       <DependentUpon>AdminAddProducts.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Settings.resx">
+    <EmbeddedResource Include="Settings- Form\Settings.resx">
       <DependentUpon>Settings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Users\AdminAddUser.resx">

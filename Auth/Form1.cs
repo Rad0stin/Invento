@@ -38,7 +38,7 @@ namespace Invento
             // Form properties
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.CenterScreen;
-            this.BackColor = primaryColor;  
+            this.BackColor = primaryColor;
 
             if (this.Controls.Count > 0 && this.Controls[0] is Panel mainPanel)
             {
@@ -229,11 +229,11 @@ namespace Invento
         [System.Runtime.InteropServices.DllImport("Gdi32.dll")]
         private static extern IntPtr CreateRoundRectRgn(int nLeftRect, int nTopRect,
             int nRightRect, int nBottomRect, int nWidthEllipse, int nHeightEllipse);
-    
 
-    private void close_Click(object sender, EventArgs e)
+
+        private void close_Click(object sender, EventArgs e)
         {
-          Application.Exit();
+            Application.Exit();
         }
 
         private void register_label_Click(object sender, EventArgs e)
@@ -384,6 +384,6 @@ namespace Invento
             {
 
             }
-            }
         }
     }
+}
