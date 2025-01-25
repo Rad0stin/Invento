@@ -58,11 +58,13 @@ namespace Invento
             };
             Controls.Add(mainPanel);
 
-            // Profile Picture Section
+            // Profile Picture Section (Moved further to the right)
+            int profilePictureX = 50; // Adjust this value to move the profile picture further to the right
+
             Label lblProfilePicture = new Label
             {
                 Text = "Profile Picture",
-                Location = new Point(0, 0),
+                Location = new Point(profilePictureX, 0),
                 Font = new Font("Segoe UI Semibold", 12F),
                 ForeColor = Color.Black,
                 AutoSize = true,
@@ -72,7 +74,7 @@ namespace Invento
             currentPicture = new PictureBox
             {
                 Size = new Size(150, 150),
-                Location = new Point(0, 50),
+                Location = new Point(profilePictureX, 50),
                 SizeMode = PictureBoxSizeMode.Zoom,
                 BackColor = Color.White
             };
@@ -92,7 +94,7 @@ namespace Invento
             btnChangePicture = new Button
             {
                 Text = "Change Picture",
-                Location = new Point(0, 210),
+                Location = new Point(profilePictureX, 210),
                 Size = new Size(150, 40),
                 FlatStyle = FlatStyle.Flat,
                 BackColor = Color.LightSeaGreen,
@@ -104,11 +106,13 @@ namespace Invento
             btnChangePicture.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnChangePicture.Width, btnChangePicture.Height, 15, 15));
             btnChangePicture.Click += BtnChangePicture_Click;
 
-            // Username Section
+            // Username Section (Middle)
+            int middleX = profilePictureX + 200; // Adjust this value to control the spacing between sections
+
             Label lblUsername = new Label
             {
                 Text = "Username",
-                Location = new Point(0, 270),
+                Location = new Point(middleX, 0),
                 Font = new Font("Segoe UI Semibold", 12F),
                 ForeColor = Color.Black,
                 AutoSize = true,
@@ -119,7 +123,7 @@ namespace Invento
             Panel usernameContainer = new Panel
             {
                 Size = new Size(300, 45),
-                Location = new Point(0, 310),
+                Location = new Point(middleX, 40),
                 BackColor = Color.FromArgb(240, 242, 245)
             };
             usernameContainer.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, usernameContainer.Width, usernameContainer.Height, 15, 15));
@@ -137,7 +141,7 @@ namespace Invento
             btnUpdateUsername = new Button
             {
                 Text = "Update Username",
-                Location = new Point(0, 370),
+                Location = new Point(middleX, 100),
                 Size = new Size(150, 40),
                 FlatStyle = FlatStyle.Flat,
                 BackColor = Color.LightSeaGreen,
@@ -149,11 +153,13 @@ namespace Invento
             btnUpdateUsername.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnUpdateUsername.Width, btnUpdateUsername.Height, 15, 15));
             btnUpdateUsername.Click += BtnUpdateUsername_Click;
 
-            // Password Section
+            // Password Section (Right Side)
+            int rightSideX = middleX + 350; // Adjust this value to control the spacing between sections
+
             Label lblCurrentPassword = new Label
             {
                 Text = "Current Password",
-                Location = new Point(0, 430),
+                Location = new Point(rightSideX, 0),
                 Font = new Font("Segoe UI Semibold", 12F),
                 ForeColor = Color.Black,
                 AutoSize = true,
@@ -164,7 +170,7 @@ namespace Invento
             Panel currentPasswordContainer = new Panel
             {
                 Size = new Size(300, 45),
-                Location = new Point(0, 470),
+                Location = new Point(rightSideX, 40),
                 BackColor = Color.FromArgb(240, 242, 245)
             };
             currentPasswordContainer.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, currentPasswordContainer.Width, currentPasswordContainer.Height, 15, 15));
@@ -183,7 +189,7 @@ namespace Invento
             Label lblNewPassword = new Label
             {
                 Text = "New Password",
-                Location = new Point(0, 530),
+                Location = new Point(rightSideX, 100),
                 Font = new Font("Segoe UI Semibold", 12F),
                 ForeColor = Color.Black,
                 AutoSize = true,
@@ -194,7 +200,7 @@ namespace Invento
             Panel newPasswordContainer = new Panel
             {
                 Size = new Size(300, 45),
-                Location = new Point(0, 570),
+                Location = new Point(rightSideX, 140),
                 BackColor = Color.FromArgb(240, 242, 245)
             };
             newPasswordContainer.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, newPasswordContainer.Width, newPasswordContainer.Height, 15, 15));
@@ -213,7 +219,7 @@ namespace Invento
             btnChangePassword = new Button
             {
                 Text = "Change Password",
-                Location = new Point(0, 630),
+                Location = new Point(rightSideX, 200),
                 Size = new Size(150, 40),
                 FlatStyle = FlatStyle.Flat,
                 BackColor = Color.LightSeaGreen,
