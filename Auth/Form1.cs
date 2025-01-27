@@ -17,6 +17,13 @@ namespace Invento
 {
     public partial class Form1 : Form
     {
+        private Dictionary<string, int> loginAttempts = new Dictionary<string, int>();
+        private Dictionary<string, DateTime> lockoutTimes = new Dictionary<string, DateTime>();
+        private const int ATTEMPT_LIMIT_TIMEOUT = 10;
+        private const int ATTEMPT_LIMIT_DEACTIVATE = 20;
+        private const int LOCKOUT_DURATION_MINUTES = 1;
+
+
         public static string username;
 
         SqlConnection connect = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Radostin\Documents\invento.mdf;Integrated Security=True;Connect Timeout=30;");
@@ -269,13 +276,18 @@ namespace Invento
                 return;
             }
 
+            // Check login attempts before proceeding
+            if (!CheckLoginAttempts(login_username.Text.Trim()))
+            {
+                return;
+            }
+
             if (checkConnection())
             {
                 try
                 {
                     connect.Open();
 
-                    // First get the stored password and status for the user
                     string selectData = "SELECT password, status, role FROM users WHERE username = @usern";
 
                     using (SqlCommand cmd = new SqlCommand(selectData, connect))
@@ -290,7 +302,6 @@ namespace Invento
                                 string status = reader["status"].ToString();
                                 string role = reader["role"].ToString();
 
-                                // Check if status is Active
                                 if (status != "Active")
                                 {
                                     MessageBox.Show("Your account is not active. Please contact administrator.",
@@ -298,7 +309,6 @@ namespace Invento
                                     return;
                                 }
 
-                                // Check if the password is already hashed (starts with $2a$ or $2b$)
                                 bool passwordMatches;
                                 if (storedPassword.StartsWith("$2a$") || storedPassword.StartsWith("$2b$"))
                                 {
@@ -308,16 +318,12 @@ namespace Invento
                                     }
                                     catch (Exception)
                                     {
-                                        // If verification fails, try direct comparison (for legacy passwords)
                                         passwordMatches = (login_password.Text.Trim() == storedPassword);
                                     }
                                 }
                                 else
                                 {
-                                    // For non-hashed passwords, do direct comparison
                                     passwordMatches = (login_password.Text.Trim() == storedPassword);
-
-                                    // Optionally, update to hashed password
                                     if (passwordMatches)
                                     {
                                         UpdateToHashedPassword(login_username.Text.Trim(), login_password.Text.Trim());
@@ -326,6 +332,9 @@ namespace Invento
 
                                 if (passwordMatches)
                                 {
+                                    // Reset login attempts on successful login
+                                    ResetLoginAttempts(login_username.Text.Trim());
+
                                     username = login_username.Text.Trim();
                                     if (role == "Admin")
                                     {
@@ -363,6 +372,96 @@ namespace Invento
                 {
                     connect.Close();
                 }
+            }
+        }
+
+        // Add this method to check and update login attempts
+        private bool CheckLoginAttempts(string username)
+        {
+            if (!loginAttempts.ContainsKey(username))
+            {
+                loginAttempts[username] = 0;
+            }
+
+            loginAttempts[username]++;
+
+            // Check if account should be deactivated
+            if (loginAttempts[username] >= ATTEMPT_LIMIT_DEACTIVATE)
+            {
+                DeactivateAccount(username);
+                MessageBox.Show("Your account has been deactivated due to too many failed login attempts. Please contact an administrator.",
+                    "Account Deactivated", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            // Check if this is exactly the 10th attempt
+            else if (loginAttempts[username] == ATTEMPT_LIMIT_TIMEOUT)
+            {
+                lockoutTimes[username] = DateTime.Now.AddMinutes(LOCKOUT_DURATION_MINUTES);
+                MessageBox.Show($"Too many failed attempts. Your account is locked for {LOCKOUT_DURATION_MINUTES} minute.",
+                    "Account Locked", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            // Check if user is still in timeout from their 10th attempt
+            else if (loginAttempts[username] > ATTEMPT_LIMIT_TIMEOUT && lockoutTimes.ContainsKey(username))
+            {
+                if (DateTime.Now < lockoutTimes[username])
+                {
+                    TimeSpan remainingTime = lockoutTimes[username] - DateTime.Now;
+                    MessageBox.Show($"Account is temporarily locked. Please try again in {remainingTime.Minutes} minutes and {remainingTime.Seconds} seconds.",
+                        "Account Locked", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
+                }
+                else
+                {
+                    // Remove the lockout time once it's expired
+                    lockoutTimes.Remove(username);
+                }
+            }
+
+            return true;
+        }
+
+        // Add this method to deactivate the account
+        private void DeactivateAccount(string username)
+        {
+            try
+            {
+                if (connect.State == ConnectionState.Closed)
+                {
+                    connect.Open();
+                }
+
+                string updateQuery = "UPDATE users SET status = 'Inactive' WHERE username = @username";
+                using (SqlCommand cmd = new SqlCommand(updateQuery, connect))
+                {
+                    cmd.Parameters.AddWithValue("@username", username);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error deactivating account: " + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (connect.State == ConnectionState.Open)
+                {
+                    connect.Close();
+                }
+            }
+        }
+
+        // Add this method to reset login attempts on successful login
+        private void ResetLoginAttempts(string username)
+        {
+            if (loginAttempts.ContainsKey(username))
+            {
+                loginAttempts.Remove(username);
+            }
+            if (lockoutTimes.ContainsKey(username))
+            {
+                lockoutTimes.Remove(username);
             }
         }
 
