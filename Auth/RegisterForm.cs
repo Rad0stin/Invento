@@ -259,6 +259,16 @@ namespace Invento
             this.Hide();
         }
 
+        private bool IsFirstUser(SqlConnection connection)
+        {
+            string query = "SELECT COUNT(*) FROM users";
+            using (SqlCommand cmd = new SqlCommand(query, connection))
+            {
+                int userCount = (int)cmd.ExecuteScalar();
+                return userCount == 0;
+            }
+        }
+
         private void register_btn_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(register_username.Text) ||
@@ -305,6 +315,9 @@ namespace Invento
                         {
                             try
                             {
+                                // Check if this is the first user - using the same connection
+                                bool isFirstUser = IsFirstUser(connect);
+
                                 // Generate a salt and hash the password
                                 string hashedPassword = BCrypt.Net.BCrypt.HashPassword(
                                     register_password.Text.Trim(),
@@ -312,19 +325,21 @@ namespace Invento
                                 );
 
                                 string insertData = @"INSERT INTO users (username, password, role, status, date) 
-                                               VALUES (@usern, @pass, @role, @status, @date)";
+                                           VALUES (@usern, @pass, @role, @status, @date)";
 
                                 using (SqlCommand insertD = new SqlCommand(insertData, connect))
                                 {
                                     insertD.Parameters.AddWithValue("@usern", register_username.Text.Trim());
                                     insertD.Parameters.AddWithValue("@pass", hashedPassword);
-                                    insertD.Parameters.AddWithValue("@role", "Cashier");
-                                    insertD.Parameters.AddWithValue("@status", "Approval");
+                                    insertD.Parameters.AddWithValue("@role", isFirstUser ? "Admin" : "Cashier");
+                                    insertD.Parameters.AddWithValue("@status", isFirstUser ? "Active" : "Approval");
                                     insertD.Parameters.AddWithValue("@date", DateTime.Today);
 
                                     insertD.ExecuteNonQuery();
 
-                                    MessageBox.Show("Registered Successfully!",
+                                    MessageBox.Show(isFirstUser ?
+                                        "Registered Successfully as Admin!" :
+                                        "Registered Successfully!",
                                         "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                                     Form1 loginform = new Form1();
