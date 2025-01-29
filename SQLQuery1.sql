@@ -6,7 +6,7 @@
  role VARCHAR(MAX) NULL,
  status VARCHAR(MAX) NULL,
  date DATE NULL,
- profile_picture NVARCHAR(MAX) NULL
+ profile_picture varbinary(MAX) NULL
 )
 
 

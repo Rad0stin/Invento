@@ -421,7 +421,7 @@ namespace Invento
             return true;
         }
 
-        // Add this method to deactivate the account
+        // method to deactivate the account
         private void DeactivateAccount(string username)
         {
             try
@@ -452,7 +452,7 @@ namespace Invento
             }
         }
 
-        // Add this method to reset login attempts on successful login
+        // method to reset login attempts on successful login
         private void ResetLoginAttempts(string username)
         {
             if (loginAttempts.ContainsKey(username))
