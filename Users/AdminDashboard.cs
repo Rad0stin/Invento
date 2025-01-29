@@ -228,21 +228,19 @@ namespace Invento
             }
         }
 
-        public void displayTodaysIncome() 
+        public void displayTodaysIncome()
         {
             if (checkConnection())
             {
                 try
                 {
                     connect.Open();
-
                     string selectData = "SELECT SUM(total_price) FROM customers WHERE order_date = @date";
 
                     using (SqlCommand cmd = new SqlCommand(selectData, connect))
                     {
                         DateTime today = DateTime.Today;
                         string getToday = today.ToString("yyyy-MM-dd");
-
                         cmd.Parameters.AddWithValue("@date", getToday);
 
                         SqlDataReader reader = cmd.ExecuteReader();
@@ -250,19 +248,23 @@ namespace Invento
                         if (reader.Read())
                         {
                             object value = reader[0];
-
-                            if (value != DBNull.Value) 
+                            if (value != DBNull.Value)
                             {
-                                int count = Convert.ToInt32(reader[0]);
+                                decimal count = Convert.ToDecimal(value);
                                 dashboard_TI.Text = "$" + count.ToString("0.00");
                             }
-                            reader.Close();
+                            else
+                            {
+                                dashboard_TI.Text = "$0.00";
+                            }
                         }
+                        reader.Close();
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Connection failed: " + ex, "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Connection failed: " + ex, "Error Message",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 finally
                 {
@@ -271,32 +273,39 @@ namespace Invento
             }
         }
 
-        public void displayTotalIncome() 
+        public void displayTotalIncome()
         {
             if (checkConnection())
             {
                 try
                 {
                     connect.Open();
-
                     string selectData = "SELECT SUM(total_price) FROM customers";
 
                     using (SqlCommand cmd = new SqlCommand(selectData, connect))
                     {
-
                         SqlDataReader reader = cmd.ExecuteReader();
 
                         if (reader.Read())
-                        {    
-                           int count = Convert.ToInt32(reader[0]);
-                           dashboard_totalIncome.Text = "$" + count.ToString("0.00");
+                        {
+                            object value = reader[0];
+                            if (value != DBNull.Value)
+                            {
+                                decimal count = Convert.ToDecimal(value); 
+                                dashboard_totalIncome.Text = "$" + count.ToString("0.00");
+                            }
+                            else
+                            {
+                                dashboard_totalIncome.Text = "$0.00"; 
+                            }
                         }
                         reader.Close();
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Connection failed: " + ex, "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Connection failed: " + ex, "Error Message",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 finally
                 {

@@ -295,22 +295,31 @@ namespace Invento
                         {
                             txtUsername.Text = reader["username"].ToString();
 
-                            if (!reader.IsDBNull(reader.GetOrdinal("profile_picture")))
+                            int profilePictureOrdinal = reader.GetOrdinal("profile_picture");
+                            if (!reader.IsDBNull(profilePictureOrdinal))
                             {
-                                byte[] imageData = (byte[])reader["profile_picture"];
-                                using (var ms = new MemoryStream(imageData))
+                                try
                                 {
-                                    Image image = Image.FromStream(ms);
-
-                                    // Update Settings profile picture
-                                    if (currentPicture.Image != null)
+                                    byte[] imageData = (byte[])reader.GetValue(profilePictureOrdinal);
+                                    using (var ms = new MemoryStream(imageData))
                                     {
-                                        currentPicture.Image.Dispose();
-                                    }
-                                    currentPicture.Image = new Bitmap(image);
+                                        Image image = Image.FromStream(ms);
 
-                                    // Update parent form profile picture based on form type
-                                    UpdateParentFormPicture(new Bitmap(image));
+                                        // Update Settings profile picture
+                                        if (currentPicture.Image != null)
+                                        {
+                                            currentPicture.Image.Dispose();
+                                        }
+                                        currentPicture.Image = new Bitmap(image);
+
+                                        // Update parent form profile picture
+                                        UpdateParentFormPicture(new Bitmap(image));
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    MessageBox.Show($"Error loading profile picture: {ex.Message}",
+                                        "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 }
                             }
                         }
