@@ -683,6 +683,8 @@ namespace Invento
             }
             displayOrders();
             displayTotalPrice();
+            cashierOrder_totalPrice.Text = "";
+            cashierOrder_amount.Text = "";
         }
 
         private int prodID = 0;

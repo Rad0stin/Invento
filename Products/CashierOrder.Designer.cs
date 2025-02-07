@@ -230,9 +230,8 @@
             this.cashierOrder_price.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cashierOrder_price.Location = new System.Drawing.Point(140, 155);
             this.cashierOrder_price.Name = "cashierOrder_price";
-            this.cashierOrder_price.Size = new System.Drawing.Size(83, 21);
+            this.cashierOrder_price.Size = new System.Drawing.Size(0, 21);
             this.cashierOrder_price.TabIndex = 7;
-            this.cashierOrder_price.Text = "Category:";
             // 
             // label7
             // 
@@ -250,9 +249,8 @@
             this.cashierOrder_prodName.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cashierOrder_prodName.Location = new System.Drawing.Point(140, 102);
             this.cashierOrder_prodName.Name = "cashierOrder_prodName";
-            this.cashierOrder_prodName.Size = new System.Drawing.Size(83, 21);
+            this.cashierOrder_prodName.Size = new System.Drawing.Size(0, 21);
             this.cashierOrder_prodName.TabIndex = 5;
-            this.cashierOrder_prodName.Text = "Category:";
             // 
             // label4
             // 
