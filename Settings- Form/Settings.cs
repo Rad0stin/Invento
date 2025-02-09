@@ -2,8 +2,8 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Windows.Forms;
 using System.IO;
+using System.Windows.Forms;
 
 namespace Invento
 {
@@ -11,6 +11,7 @@ namespace Invento
     public partial class Settings : UserControl
     {
         SqlConnection connect = new SqlConnection(@"Data Source=35.233.55.91;Initial Catalog=invento;User ID=sqlserver;Password=Rado1234@;");
+
         private Form parentForm;
         private PictureBox currentPicture;
         private TextBox txtUsername;
@@ -48,7 +49,6 @@ namespace Invento
 
         private void SetupCustomControls()
         {
-            // Create a main container panel with padding and scroll
             Panel mainPanel = new Panel
             {
                 Dock = DockStyle.Fill,
@@ -58,8 +58,7 @@ namespace Invento
             };
             Controls.Add(mainPanel);
 
-            // Profile Picture Section (Moved further to the right)
-            int profilePictureX = 50; // Adjust this value to move the profile picture further to the right
+            int profilePictureX = 50;
 
             Label lblProfilePicture = new Label
             {
@@ -79,7 +78,7 @@ namespace Invento
                 BackColor = Color.White
             };
 
-            // Create rounded container for profile picture
+
             Panel pictureContainer = new Panel
             {
                 Size = new Size(currentPicture.Width, currentPicture.Height),
@@ -106,8 +105,8 @@ namespace Invento
             btnChangePicture.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnChangePicture.Width, btnChangePicture.Height, 15, 15));
             btnChangePicture.Click += BtnChangePicture_Click;
 
-            // Username Section (Middle)
-            int middleX = profilePictureX + 200; // Adjust this value to control the spacing between sections
+
+            int middleX = profilePictureX + 200;
 
             Label lblUsername = new Label
             {
@@ -119,7 +118,7 @@ namespace Invento
                 Padding = new Padding(0, 10, 0, 5)
             };
 
-            // Username TextBox with container
+
             Panel usernameContainer = new Panel
             {
                 Size = new Size(300, 45),
@@ -153,8 +152,8 @@ namespace Invento
             btnUpdateUsername.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnUpdateUsername.Width, btnUpdateUsername.Height, 15, 15));
             btnUpdateUsername.Click += BtnUpdateUsername_Click;
 
-            // Password Section (Right Side)
-            int rightSideX = middleX + 350; // Adjust this value to control the spacing between sections
+
+            int rightSideX = middleX + 350;
 
             Label lblCurrentPassword = new Label
             {
@@ -166,7 +165,7 @@ namespace Invento
                 Padding = new Padding(0, 10, 0, 5)
             };
 
-            // Current Password TextBox with container
+
             Panel currentPasswordContainer = new Panel
             {
                 Size = new Size(300, 45),
@@ -196,7 +195,7 @@ namespace Invento
                 Padding = new Padding(0, 10, 0, 5)
             };
 
-            // New Password TextBox with container
+
             Panel newPasswordContainer = new Panel
             {
                 Size = new Size(300, 45),
@@ -231,17 +230,17 @@ namespace Invento
             btnChangePassword.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnChangePassword.Width, btnChangePassword.Height, 15, 15));
             btnChangePassword.Click += BtnChangePassword_Click;
 
-            // Add hover effects for buttons
+
             AddButtonHoverEffects(btnChangePicture);
             AddButtonHoverEffects(btnUpdateUsername);
             AddButtonHoverEffects(btnChangePassword);
 
-            // Add focus effects for textboxes
+
             AddTextBoxFocusEffects(txtUsername, usernameContainer);
             AddTextBoxFocusEffects(txtCurrentPassword, currentPasswordContainer);
             AddTextBoxFocusEffects(txtNewPassword, newPasswordContainer);
 
-            // Add all controls to the main panel
+
             mainPanel.Controls.AddRange(new Control[] {
         lblProfilePicture,
         pictureContainer,
@@ -265,12 +264,14 @@ namespace Invento
 
         private void AddTextBoxFocusEffects(TextBox textBox, Panel container)
         {
-            textBox.GotFocus += (s, e) => {
+            textBox.GotFocus += (s, e) =>
+            {
                 container.BackColor = Color.FromArgb(235, 237, 240);
                 textBox.BackColor = Color.FromArgb(235, 237, 240);
             };
 
-            textBox.LostFocus += (s, e) => {
+            textBox.LostFocus += (s, e) =>
+            {
                 container.BackColor = Color.FromArgb(240, 242, 245);
                 textBox.BackColor = Color.FromArgb(240, 242, 245);
             };

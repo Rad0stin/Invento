@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data.SqlClient;
-using BCrypt.Net;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace Invento
 {
@@ -23,12 +18,10 @@ namespace Invento
             AdminUserStyle.ApplyUserStyle(this);
 
             displayAllUsersData();
-
         }
 
         public class AdminUserStyle
         {
-            // Color scheme - matching AdminCategoriesStyle
             private static readonly Color PrimaryColor = Color.LightSeaGreen;
             private static readonly Color BackgroundColor = Color.FromArgb(245, 247, 250);
             private static readonly Color TextBoxColor = Color.FromArgb(240, 242, 245);
@@ -39,7 +32,6 @@ namespace Invento
 
             public static void ApplyUserStyle(AdminAddUser userControl)
             {
-                // Style the Users DataGridView
                 var dgv = userControl.dataGridView1;
                 dgv.BorderStyle = BorderStyle.None;
                 dgv.BackgroundColor = Color.White;
@@ -49,7 +41,6 @@ namespace Invento
                 dgv.RowHeadersVisible = false;
                 dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
-                // Header styling
                 dgv.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
                 dgv.ColumnHeadersDefaultCellStyle.BackColor = HeaderColor;
                 dgv.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
@@ -58,7 +49,6 @@ namespace Invento
                 dgv.ColumnHeadersHeight = 45;
                 dgv.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 
-                // Cell styling
                 dgv.DefaultCellStyle.BackColor = Color.White;
                 dgv.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
                 dgv.DefaultCellStyle.ForeColor = TextColor;
@@ -66,7 +56,6 @@ namespace Invento
                 dgv.DefaultCellStyle.SelectionBackColor = Color.FromArgb(230, 244, 244);
                 dgv.DefaultCellStyle.SelectionForeColor = TextColor;
 
-                // Alternating row style
                 dgv.AlternatingRowsDefaultCellStyle.BackColor = AlternateRowColor;
                 dgv.AlternatingRowsDefaultCellStyle.Font = new Font("Segoe UI", 10F);
                 dgv.AlternatingRowsDefaultCellStyle.ForeColor = TextColor;
@@ -74,22 +63,19 @@ namespace Invento
                 dgv.AlternatingRowsDefaultCellStyle.SelectionForeColor = TextColor;
                 dgv.RowTemplate.Height = 40;
 
-                // Style all TextBoxes
                 StyleTextBox(userControl.addUsers_username);
                 StyleTextBox(userControl.addUsers_password);
 
-                // Style ComboBoxes
                 StyleComboBox(userControl.addUsers_role);
                 StyleComboBox(userControl.addUsers_status);
 
-                // Style all buttons
                 StyleButton(userControl.addUsers_addBtn, "Add");
                 StyleButton(userControl.addUsers_updateBtn, "Update");
                 StyleButton(userControl.addUsers_removeBtn, "Remove");
                 StyleButton(userControl.addUsers_clearBtn, "Clear");
 
-                // Add hover effect for DataGridView
-                dgv.CellMouseEnter += (sender, e) => {
+                dgv.CellMouseEnter += (sender, e) =>
+                {
                     if (e.RowIndex >= 0)
                     {
                         var row = dgv.Rows[e.RowIndex];
@@ -97,7 +83,8 @@ namespace Invento
                     }
                 };
 
-                dgv.CellMouseLeave += (sender, e) => {
+                dgv.CellMouseLeave += (sender, e) =>
+                {
                     if (e.RowIndex >= 0)
                     {
                         var row = dgv.Rows[e.RowIndex];
@@ -132,13 +119,14 @@ namespace Invento
                 textBox.BorderStyle = BorderStyle.None;
                 textBox.Font = new Font("Segoe UI", 12);
 
-                // TextBox focus effects
-                textBox.GotFocus += (s, e) => {
+                textBox.GotFocus += (s, e) =>
+                {
                     container.BackColor = Color.FromArgb(235, 237, 240);
                     textBox.BackColor = Color.FromArgb(235, 237, 240);
                 };
 
-                textBox.LostFocus += (s, e) => {
+                textBox.LostFocus += (s, e) =>
+                {
                     container.BackColor = TextBoxColor;
                     textBox.BackColor = TextBoxColor;
                 };
@@ -180,12 +168,13 @@ namespace Invento
                 button.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, button.Width, button.Height, 15, 15));
                 button.Padding = new Padding(10, 0, 10, 0);
 
-                // Add hover effect
-                button.MouseEnter += (s, e) => {
-                    button.BackColor = Color.FromArgb(0, 150, 150); // Darker shade of PrimaryColor
+                button.MouseEnter += (s, e) =>
+                {
+                    button.BackColor = Color.FromArgb(0, 150, 150);
                 };
 
-                button.MouseLeave += (s, e) => {
+                button.MouseLeave += (s, e) =>
+                {
                     button.BackColor = PrimaryColor;
                 };
             }
@@ -214,79 +203,102 @@ namespace Invento
             dataGridView1.DataSource = listData;
         }
 
+        private bool IsUsernameAvailable(string username, int? excludeUserId = null)
+        {
+            try
+            {
+                using (SqlCommand cmd = new SqlCommand("SELECT id FROM users WHERE username = @username", connect))
+                {
+                    cmd.Parameters.AddWithValue("@username", username.Trim());
+
+                    if (connect.State == ConnectionState.Closed)
+                        connect.Open();
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            if (excludeUserId.HasValue)
+                            {
+                                int existingId = reader.GetInt32(0);
+                                if (existingId != excludeUserId.Value)
+                                    return false;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+                return true;
+            }
+            finally
+            {
+                if (connect.State == ConnectionState.Open)
+                    connect.Close();
+            }
+        }
+
         private void addUsers_addBtn_Click(object sender, EventArgs e)
         {
             if (addUsers_username.Text == "" || addUsers_password.Text == "" || addUsers_role.SelectedIndex == -1
                 || addUsers_status.SelectedIndex == -1)
             {
                 MessageBox.Show("Empty Fields", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
-            else
+            if (addUsers_password.Text.Trim().Length < 8)
             {
-                if (checkConnection())
+                MessageBox.Show("Password must be at least 8 characters long",
+                    "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (!IsUsernameAvailable(addUsers_username.Text))
+            {
+                MessageBox.Show($"Username '{addUsers_username.Text.Trim()}' is already in use",
+                    "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (checkConnection())
+            {
+                try
                 {
-                    try
+                    connect.Open();
+
+                    string hashedPassword = BCrypt.Net.BCrypt.HashPassword(
+                        addUsers_password.Text.Trim(),
+                        BCrypt.Net.BCrypt.GenerateSalt(12)
+                    );
+
+                    string insertData = "INSERT INTO users (username, password, role, status, date) VALUES(@usern, @pass, @role, @status, @date)";
+                    using (SqlCommand insertD = new SqlCommand(insertData, connect))
                     {
-                        connect.Open();
+                        insertD.Parameters.AddWithValue("@usern", addUsers_username.Text.Trim());
+                        insertD.Parameters.AddWithValue("@pass", hashedPassword);
+                        insertD.Parameters.AddWithValue("@role", addUsers_role.SelectedItem.ToString());
+                        insertD.Parameters.AddWithValue("@status", addUsers_status.SelectedItem.ToString());
+                        insertD.Parameters.AddWithValue("@date", DateTime.Today);
 
-                        string checkUsername = "SELECT * FROM users WHERE username = @usern";
+                        insertD.ExecuteNonQuery();
+                        clearFields();
+                        displayAllUsersData();
 
-                        using (SqlCommand cmd = new SqlCommand(checkUsername, connect))
-                        {
-                            cmd.Parameters.AddWithValue("@usern", addUsers_username.Text.Trim());
-
-                            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                            DataTable table = new DataTable();
-                            adapter.Fill(table);
-
-                            if (table.Rows.Count > 0)
-                            {
-                                MessageBox.Show(addUsers_username.Text.Trim()
-                                    + " is already used", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-                            else if (addUsers_password.Text.Length < 8)
-                            {
-                                MessageBox.Show("Password must be at least 8 characters long",
-                                    "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-                            else
-                            {
-                                // Hash the password before storing
-                                string hashedPassword = BCrypt.Net.BCrypt.HashPassword(
-                                    addUsers_password.Text.Trim(),
-                                    BCrypt.Net.BCrypt.GenerateSalt(12)
-                                );
-
-                                string insertData = "INSERT INTO users (username, password, role, status, date) VALUES(@usern, @pass, @role, @status, @date)";
-                                using (SqlCommand insertD = new SqlCommand(insertData, connect))
-                                {
-                                    insertD.Parameters.AddWithValue("@usern", addUsers_username.Text.Trim());
-                                    insertD.Parameters.AddWithValue("@pass", hashedPassword);
-                                    insertD.Parameters.AddWithValue("@role", addUsers_role.SelectedItem.ToString());
-                                    insertD.Parameters.AddWithValue("@status", addUsers_status.SelectedItem.ToString());
-                                    insertD.Parameters.AddWithValue("@date", DateTime.Today);
-
-                                    insertD.ExecuteNonQuery();
-                                    clearFields();
-                                    displayAllUsersData();
-
-                                    MessageBox.Show("Added Successfully", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                }
-                            }
-                        }
+                        MessageBox.Show("Added Successfully", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-                    catch (SqlException ex)
-                    {
-                        MessageBox.Show($"SQL Error: {ex.Message}\nError Number: {ex.Number}\nError State: {ex.State}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"General Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    finally
-                    {
-                        connect.Close();
-                    }
+                }
+                catch (SqlException ex)
+                {
+                    MessageBox.Show($"SQL Error: {ex.Message}\nError Number: {ex.Number}\nError State: {ex.State}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"General Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    connect.Close();
                 }
             }
         }
@@ -321,79 +333,80 @@ namespace Invento
                 || addUsers_status.SelectedIndex == -1)
             {
                 MessageBox.Show("Empty Fields", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
-            else
+            if (addUsers_password.Text.Trim().Length < 8)
             {
-                if (MessageBox.Show("Are you sure you want to update user Id: " + getID + "?", "Confirmation Message"
-                   , MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                MessageBox.Show("Password must be at least 8 characters long",
+                    "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (!IsUsernameAvailable(addUsers_username.Text, getID))
+            {
+                MessageBox.Show($"Username '{addUsers_username.Text.Trim()}' is already in use by another user",
+                    "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (MessageBox.Show("Are you sure you want to update user Id: " + getID + "?", "Confirmation Message"
+               , MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                if (checkConnection())
                 {
-                    if (checkConnection())
+                    try
                     {
-                        try
+                        connect.Open();
+
+                        string currentPassword = "";
+                        using (SqlCommand getPass = new SqlCommand("SELECT password FROM users WHERE id = @id", connect))
                         {
-                            connect.Open();
-
-                            // Check if the password has been changed
-                            string currentPassword = "";
-                            using (SqlCommand getPass = new SqlCommand("SELECT password FROM users WHERE id = @id", connect))
-                            {
-                                getPass.Parameters.AddWithValue("@id", getID);
-                                currentPassword = getPass.ExecuteScalar()?.ToString() ?? "";
-                            }
-
-                            string newPassword = addUsers_password.Text.Trim();
-                            bool isPasswordChanged = currentPassword != newPassword;
-
-                            // If password changed, validate length and hash it
-                            if (isPasswordChanged)
-                            {
-                                if (newPassword.Length < 8)
-                                {
-                                    MessageBox.Show("Password must be at least 8 characters long",
-                                        "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                    return;
-                                }
-
-                                newPassword = BCrypt.Net.BCrypt.HashPassword(
-                                    newPassword,
-                                    BCrypt.Net.BCrypt.GenerateSalt(12)
-                                );
-                            }
-                            else
-                            {
-                                // If password wasn't changed, use the existing hash
-                                newPassword = currentPassword;
-                            }
-
-                            string updateData = "UPDATE users SET username = @usern, password = @pass, role = @role, status = @status WHERE id = @id";
-
-                            using (SqlCommand updateD = new SqlCommand(updateData, connect))
-                            {
-                                updateD.Parameters.AddWithValue("@usern", addUsers_username.Text.Trim());
-                                updateD.Parameters.AddWithValue("@pass", newPassword);
-                                updateD.Parameters.AddWithValue("@role", addUsers_role.SelectedItem);
-                                updateD.Parameters.AddWithValue("@status", addUsers_status.SelectedItem);
-                                updateD.Parameters.AddWithValue("@id", getID);
-
-                                updateD.ExecuteNonQuery();
-                                clearFields();
-                                displayAllUsersData();
-
-                                MessageBox.Show("Updated successfully!", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            }
+                            getPass.Parameters.AddWithValue("@id", getID);
+                            currentPassword = getPass.ExecuteScalar()?.ToString() ?? "";
                         }
-                        catch (SqlException ex)
+
+                        string newPassword = addUsers_password.Text.Trim();
+                        bool isPasswordChanged = currentPassword != newPassword;
+
+                        if (isPasswordChanged)
                         {
-                            MessageBox.Show($"SQL Error: {ex.Message}\nError Number: {ex.Number}\nError State: {ex.State}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            newPassword = BCrypt.Net.BCrypt.HashPassword(
+                                newPassword,
+                                BCrypt.Net.BCrypt.GenerateSalt(12)
+                            );
                         }
-                        catch (Exception ex)
+                        else
                         {
-                            MessageBox.Show($"General Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            newPassword = currentPassword;
                         }
-                        finally
+
+                        string updateData = "UPDATE users SET username = @usern, password = @pass, role = @role, status = @status WHERE id = @id";
+
+                        using (SqlCommand updateD = new SqlCommand(updateData, connect))
                         {
-                            connect.Close();
+                            updateD.Parameters.AddWithValue("@usern", addUsers_username.Text.Trim());
+                            updateD.Parameters.AddWithValue("@pass", newPassword);
+                            updateD.Parameters.AddWithValue("@role", addUsers_role.SelectedItem);
+                            updateD.Parameters.AddWithValue("@status", addUsers_status.SelectedItem);
+                            updateD.Parameters.AddWithValue("@id", getID);
+
+                            updateD.ExecuteNonQuery();
+                            clearFields();
+                            displayAllUsersData();
+
+                            MessageBox.Show("Updated successfully!", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
+                    }
+                    catch (SqlException ex)
+                    {
+                        MessageBox.Show($"SQL Error: {ex.Message}\nError Number: {ex.Number}\nError State: {ex.State}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"General Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    finally
+                    {
+                        connect.Close();
                     }
                 }
             }
@@ -444,7 +457,7 @@ namespace Invento
                             {
                                 updateD.Parameters.AddWithValue("@id", getID);
                                 updateD.ExecuteNonQuery();
-                                
+
                                 clearFields();
                                 displayAllUsersData();
 
@@ -453,12 +466,10 @@ namespace Invento
                         }
                         catch (SqlException ex)
                         {
-                            // Handle the specific SQL exception
                             MessageBox.Show($"SQL Error: {ex.Message}\nError Number: {ex.Number}\nError State: {ex.State}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                         catch (Exception ex)
                         {
-                            // Handle any other general exceptions
                             MessageBox.Show($"General Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                         finally

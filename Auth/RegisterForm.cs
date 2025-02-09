@@ -11,13 +11,14 @@ namespace Invento
     public partial class RegisterForm : Form
     {
 
-        private Color primaryColor = Color.LightSeaGreen;  // Bright purple
-        private Color backgroundColor = Color.FromArgb(245, 247, 250);  // Slightly darker background
+        private Color primaryColor = Color.LightSeaGreen;  
+        private Color backgroundColor = Color.FromArgb(245, 247, 250); 
         private Color textBoxColor = Color.White;
         private Color placeholderColor = Color.FromArgb(160, 160, 160);
         private Color iconColor = Color.FromArgb(100, 88, 255);
 
         SqlConnection connect = new SqlConnection(@"Data Source=35.233.55.91;Initial Catalog=invento;User ID=sqlserver;Password=Rado1234@;");
+
         public RegisterForm()
         {
             InitializeComponent();
@@ -27,12 +28,10 @@ namespace Invento
 
         private void ApplyModernStyle()
         {
-            // Form properties
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.CenterScreen;
             this.BackColor = primaryColor;
 
-            // Style close button
             if (close != null) 
             {
                 StyleCloseButton(close);
@@ -43,7 +42,6 @@ namespace Invento
                 mainPanel.BackColor = Color.White;
                 mainPanel.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, mainPanel.Width, mainPanel.Height, 20, 20));
 
-                // Style the avatar
                 if (pictureBox1 != null)
                 {
                     pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
@@ -51,12 +49,10 @@ namespace Invento
                     pictureBox1.Location = new Point((mainPanel.Width - pictureBox1.Width) / 2, 20);
                 }
 
-                // Style input icons
                 StyleIcon(pictureBox2, "username_icon.png", register_username);
                 StyleIcon(pictureBox3, "password_icon.png", register_password);
                 StyleIcon(pictureBox4, "password_icon.png", register_cPassword);
 
-                // Style Labels
                 foreach (Control control in mainPanel.Controls)
                 {
                     if (control is Label label)
@@ -65,21 +61,17 @@ namespace Invento
                     }
                 }
 
-                // Style TextBoxes
                 StyleTextBox(register_username, "Username");
                 StyleTextBox(register_password, "Password");
                 StyleTextBox(register_cPassword, "Confirm Password");
 
-                // Style the Register Button
                 StyleButton(register_btn);
 
-                // Style the Show Password CheckBox
                 if (register_showPass != null)
                 {
                     StyleCheckBox(register_showPass);
                 }
 
-                // Style Login Label and adjust its position
                 if (login_label != null)
                 {
                     StyleClickableLabel(login_label);
@@ -89,8 +81,6 @@ namespace Invento
                     );
                 }
             }
-
-            // Add form shadow and rounded corners
             this.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, this.Width, this.Height, 20, 20));
         }
 
@@ -108,7 +98,6 @@ namespace Invento
             label.Cursor = Cursors.Hand;
             label.BackColor = Color.Transparent;
 
-            // Add hover effect
             label.MouseEnter += (s, e) => label.ForeColor = Color.FromArgb(19, 141, 117);
             label.MouseLeave += (s, e) => label.ForeColor = primaryColor;
         }
@@ -187,19 +176,17 @@ namespace Invento
         {
             closeButton.FlatStyle = FlatStyle.Flat;
             closeButton.FlatAppearance.BorderSize = 0;
-            closeButton.BackColor = Color.FromArgb(240, 242, 245);  // Light background
-            closeButton.ForeColor = Color.FromArgb(100, 100, 100);  // Gray text
-            closeButton.Text = "×";  // Use multiplication sign as close symbol
+            closeButton.BackColor = Color.FromArgb(240, 242, 245);  
+            closeButton.ForeColor = Color.FromArgb(100, 100, 100);  
+            closeButton.Text = "×"; 
             closeButton.Font = new Font("Arial", 14, FontStyle.Bold);
             closeButton.Size = new Size(30, 30);
             closeButton.Cursor = Cursors.Hand;
 
-            // Round corners
             closeButton.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, closeButton.Width, closeButton.Height, 15, 15));
 
-            // Hover effects
             closeButton.MouseEnter += (s, e) => {
-                closeButton.BackColor = Color.FromArgb(220, 53, 69);  // Red on hover
+                closeButton.BackColor = Color.FromArgb(220, 53, 69); 
                 closeButton.ForeColor = Color.White;
             };
             closeButton.MouseLeave += (s, e) => {
@@ -227,18 +214,15 @@ namespace Invento
 
         private void StyleCheckBox(CheckBox checkBox)
         {
-            // Simple styling without custom painting
             checkBox.FlatStyle = FlatStyle.Standard;
             checkBox.ForeColor = Color.FromArgb(80, 80, 80);
             checkBox.Font = new Font("Segoe UI", 11, FontStyle.Regular);
             checkBox.BackColor = Color.Transparent;
             checkBox.Cursor = Cursors.Hand;
 
-            // Use default Windows styling
             checkBox.Appearance = Appearance.Normal;
             checkBox.UseVisualStyleBackColor = true;
 
-            // Add hover effect
             checkBox.MouseEnter += (s, e) => checkBox.ForeColor = Color.FromArgb(19, 141, 117);
             checkBox.MouseLeave += (s, e) => checkBox.ForeColor = Color.FromArgb(80, 80, 80);
         }
@@ -315,10 +299,8 @@ namespace Invento
                         {
                             try
                             {
-                                // Check if this is the first user - using the same connection
                                 bool isFirstUser = IsFirstUser(connect);
 
-                                // Generate a salt and hash the password
                                 string hashedPassword = BCrypt.Net.BCrypt.HashPassword(
                                     register_password.Text.Trim(),
                                     BCrypt.Net.BCrypt.GenerateSalt(12)
