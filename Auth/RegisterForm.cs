@@ -17,7 +17,7 @@ namespace Invento
         private Color placeholderColor = Color.FromArgb(160, 160, 160);
         private Color iconColor = Color.FromArgb(100, 88, 255);
 
-        SqlConnection connect = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Radostin\Documents\invento.mdf;Integrated Security=True;Connect Timeout=30");
+        SqlConnection connect = new SqlConnection(@"Data Source=35.233.55.91;Initial Catalog=invento;User ID=sqlserver;Password=Rado1234@;");
         public RegisterForm()
         {
             InitializeComponent();

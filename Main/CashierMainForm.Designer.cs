@@ -37,12 +37,10 @@
             this.logout_btn = new System.Windows.Forms.Button();
             this.addProducts_btn = new System.Windows.Forms.Button();
             this.customers_btn = new System.Windows.Forms.Button();
-            this.dashboard_btn = new System.Windows.Forms.Button();
             this.user_username = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBoxProfile = new System.Windows.Forms.PictureBox();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.adminDashboard1 = new Invento.AdminDashboard();
             this.adminAddProducts1 = new Invento.AdminAddProducts();
             this.cashierCustomersForm1 = new Invento.CashierCustomersForm();
             this.cashierOrder1 = new Invento.CashierOrder();
@@ -96,7 +94,6 @@
             this.panel2.Controls.Add(this.logout_btn);
             this.panel2.Controls.Add(this.addProducts_btn);
             this.panel2.Controls.Add(this.customers_btn);
-            this.panel2.Controls.Add(this.dashboard_btn);
             this.panel2.Controls.Add(this.user_username);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.pictureBoxProfile);
@@ -192,23 +189,6 @@
             this.customers_btn.UseVisualStyleBackColor = true;
             this.customers_btn.Click += new System.EventHandler(this.customers_btn_Click);
             // 
-            // dashboard_btn
-            // 
-            this.dashboard_btn.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.dashboard_btn.FlatAppearance.BorderSize = 0;
-            this.dashboard_btn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.MediumTurquoise;
-            this.dashboard_btn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumTurquoise;
-            this.dashboard_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.dashboard_btn.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dashboard_btn.ForeColor = System.Drawing.Color.White;
-            this.dashboard_btn.Location = new System.Drawing.Point(16, 187);
-            this.dashboard_btn.Name = "dashboard_btn";
-            this.dashboard_btn.Size = new System.Drawing.Size(192, 33);
-            this.dashboard_btn.TabIndex = 3;
-            this.dashboard_btn.Text = "Dashboard";
-            this.dashboard_btn.UseVisualStyleBackColor = true;
-            this.dashboard_btn.Click += new System.EventHandler(this.dashboard_btn_Click);
-            // 
             // user_username
             // 
             this.user_username.AutoSize = true;
@@ -244,7 +224,6 @@
             // 
             // panel3
             // 
-            this.panel3.Controls.Add(this.adminDashboard1);
             this.panel3.Controls.Add(this.adminAddProducts1);
             this.panel3.Controls.Add(this.cashierCustomersForm1);
             this.panel3.Controls.Add(this.cashierOrder1);
@@ -254,13 +233,6 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(941, 668);
             this.panel3.TabIndex = 3;
-            // 
-            // adminDashboard1
-            // 
-            this.adminDashboard1.Location = new System.Drawing.Point(3, 0);
-            this.adminDashboard1.Name = "adminDashboard1";
-            this.adminDashboard1.Size = new System.Drawing.Size(934, 668);
-            this.adminDashboard1.TabIndex = 4;
             // 
             // adminAddProducts1
             // 
@@ -323,13 +295,11 @@
         private System.Windows.Forms.Button logout_btn;
         private System.Windows.Forms.Button addProducts_btn;
         private System.Windows.Forms.Button customers_btn;
-        private System.Windows.Forms.Button dashboard_btn;
         public System.Windows.Forms.Label user_username;
         private System.Windows.Forms.Label label2;
         public System.Windows.Forms.PictureBox pictureBoxProfile;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Button settings_btn;
-        private AdminDashboard adminDashboard1;
         private AdminAddProducts adminAddProducts1;
         private CashierCustomersForm cashierCustomersForm1;
         private CashierOrder cashierOrder1;

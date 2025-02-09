@@ -37,7 +37,6 @@ namespace Invento
             this.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, this.Width, this.Height, 20, 20));
 
             // Style all navigation buttons
-            StyleNavigationButton(dashboard_btn);
             StyleNavigationButton(addProducts_btn);
             StyleNavigationButton(customers_btn);
             StyleNavigationButton(order_btn);
@@ -166,26 +165,13 @@ namespace Invento
             }
         }
 
-        private void dashboard_btn_Click(object sender, EventArgs e)
-        {
-            adminDashboard1.Visible = true;
-            adminAddProducts1.Visible = false;
-            cashierCustomersForm1.Visible = false;
-            cashierOrder1.Visible = false;
-
-            AdminDashboard adform = adminDashboard1 as AdminDashboard;
-            if (adform != null)
-            {
-                adform.refreshData();
-            }
-        }
 
         private void addProducts_btn_Click(object sender, EventArgs e)
         {
-            adminDashboard1.Visible = false;
             adminAddProducts1.Visible = true;
             cashierCustomersForm1.Visible = false;
             cashierOrder1.Visible = false;
+            settings1.Visible = false;
 
             AdminAddProducts aapform = adminAddProducts1 as AdminAddProducts;
             if (aapform != null)
@@ -196,10 +182,10 @@ namespace Invento
 
         private void customers_btn_Click(object sender, EventArgs e)
         {
-            adminDashboard1.Visible = false;
             adminAddProducts1.Visible = false;
             cashierCustomersForm1.Visible = true;
             cashierOrder1.Visible = false;
+            settings1.Visible = false;
 
             CashierCustomersForm ccfform = cashierCustomersForm1 as CashierCustomersForm;
             if (ccfform != null)
@@ -210,10 +196,10 @@ namespace Invento
 
         private void order_btn_Click(object sender, EventArgs e)
         {
-            adminDashboard1.Visible = false;
             adminAddProducts1.Visible = false;
             cashierCustomersForm1.Visible = false;
             cashierOrder1.Visible = true;
+            settings1.Visible = false;
 
             CashierOrder coform = cashierOrder1 as CashierOrder;
             if (coform != null)
@@ -223,7 +209,6 @@ namespace Invento
         }
         private void settings_btn_Click_1(object sender, EventArgs e)
         {
-            adminDashboard1.Visible = false;
             adminAddProducts1.Visible = false;
             cashierCustomersForm1.Visible = false;
             cashierOrder1.Visible = false;

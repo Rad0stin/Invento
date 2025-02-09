@@ -10,7 +10,7 @@ namespace Invento
 
     public partial class Settings : UserControl
     {
-        SqlConnection connect = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Radostin\Documents\invento.mdf;Integrated Security=True;Connect Timeout=30;");
+        SqlConnection connect = new SqlConnection(@"Data Source=35.233.55.91;Initial Catalog=invento;User ID=sqlserver;Password=Rado1234@;");
         private Form parentForm;
         private PictureBox currentPicture;
         private TextBox txtUsername;
@@ -305,14 +305,12 @@ namespace Invento
                                     {
                                         Image image = Image.FromStream(ms);
 
-                                        // Update Settings profile picture
                                         if (currentPicture.Image != null)
                                         {
                                             currentPicture.Image.Dispose();
                                         }
                                         currentPicture.Image = new Bitmap(image);
 
-                                        // Update parent form profile picture
                                         UpdateParentFormPicture(new Bitmap(image));
                                     }
                                 }
@@ -410,7 +408,6 @@ namespace Invento
 
             PictureBox profilePicture = null;
 
-            // Determine which form we're dealing with and get the appropriate PictureBox
             if (parentForm is MainForm mainForm)
             {
                 profilePicture = mainForm.pictureBoxProfile;
@@ -478,7 +475,6 @@ namespace Invento
                         MessageBox.Show("Username updated successfully!",
                             "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        // Update username label in parent form
                         if (parentForm is MainForm mainForm && mainForm.user_username != null)
                         {
                             mainForm.user_username.Text = txtUsername.Text.Trim();
@@ -512,6 +508,12 @@ namespace Invento
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            if (txtNewPassword.Text.Length < 8)
+            {
+                MessageBox.Show("New password must be at least 8 characters long",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             try
             {
@@ -537,24 +539,33 @@ namespace Invento
                             "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
-                }
 
-                string hashedNewPassword = BCrypt.Net.BCrypt.HashPassword(txtNewPassword.Text.Trim(),
-                    BCrypt.Net.BCrypt.GenerateSalt(12));
-
-                using (SqlCommand updateCmd = new SqlCommand("UPDATE users SET password = @password WHERE username = @username", connect))
-                {
-                    updateCmd.Parameters.AddWithValue("@password", hashedNewPassword);
-                    updateCmd.Parameters.AddWithValue("@username", Form1.username);
-
-                    int result = updateCmd.ExecuteNonQuery();
-                    if (result > 0)
+                    if (BCrypt.Net.BCrypt.Verify(txtNewPassword.Text.Trim(), storedPassword))
                     {
-                        MessageBox.Show("Password updated successfully!",
-                            "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("New password must be different from current password",
+                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
 
-                        txtCurrentPassword.Clear();
-                        txtNewPassword.Clear();
+                    string hashedNewPassword = BCrypt.Net.BCrypt.HashPassword(
+                        txtNewPassword.Text.Trim(),
+                        BCrypt.Net.BCrypt.GenerateSalt(12)
+                    );
+
+                    using (SqlCommand updateCmd = new SqlCommand("UPDATE users SET password = @password WHERE username = @username", connect))
+                    {
+                        updateCmd.Parameters.AddWithValue("@password", hashedNewPassword);
+                        updateCmd.Parameters.AddWithValue("@username", Form1.username);
+
+                        int result = updateCmd.ExecuteNonQuery();
+                        if (result > 0)
+                        {
+                            MessageBox.Show("Password updated successfully!",
+                                "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            txtCurrentPassword.Clear();
+                            txtNewPassword.Clear();
+                        }
                     }
                 }
             }

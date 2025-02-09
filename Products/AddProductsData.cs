@@ -23,7 +23,7 @@ namespace Invento
         {
             List<AddProductsData> listData = new List<AddProductsData>();
 
-            using (SqlConnection connect = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Radostin\Documents\invento.mdf;Integrated Security=True;Connect Timeout=30;"))
+            using (SqlConnection connect = new SqlConnection(@"Data Source=35.233.55.91;Initial Catalog=invento;User ID=sqlserver;Password=Rado1234@;"))
             {
                 connect.Open();
 
@@ -57,7 +57,7 @@ namespace Invento
         {
             List<AddProductsData> listData = new List<AddProductsData>();
 
-            using (SqlConnection connect = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Radostin\Documents\invento.mdf;Integrated Security=True;Connect Timeout=30;"))
+            using (SqlConnection connect = new SqlConnection(@"Data Source=35.233.55.91;Initial Catalog=invento;User ID=sqlserver;Password=Rado1234@;"))
             {
                 connect.Open();
 
