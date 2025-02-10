@@ -26,7 +26,7 @@ namespace Invento
 
         public static string username;
 
-        SqlConnection connect = new SqlConnection(@"Data Source=35.233.55.91;Initial Catalog=invento;User ID=sqlserver;Password=Rado1234@;");
+        SqlConnection connect = new SqlConnection(@"Data Source=34.38.88.153;Initial Catalog=invento;User ID=sqlserver;Password=Rado1234@;");
         public Form1()
         {
             InitializeComponent();
@@ -42,7 +42,6 @@ namespace Invento
 
         private void ApplyModernStyle()
         {
-            // Form properties
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.CenterScreen;
             this.BackColor = primaryColor;
@@ -52,7 +51,6 @@ namespace Invento
                 mainPanel.BackColor = Color.White;
                 mainPanel.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, mainPanel.Width, mainPanel.Height, 20, 20));
 
-                // Style Labels
                 foreach (Control control in mainPanel.Controls)
                 {
                     if (control is Label label)
@@ -61,13 +59,12 @@ namespace Invento
                         {
                             StyleClickableLabel(label);
                         }
-                        else if (label == label2)  // "Don't have account?" label
+                        else if (label == label2)  
                         {
-                            // Apply simple black styling without hover effects
                             label.ForeColor = Color.Black;
                             label.Font = new Font("Segoe UI", 11, FontStyle.Regular);
                             label.BackColor = Color.Transparent;
-                            label.Cursor = Cursors.Default;  // Regular cursor instead of hand
+                            label.Cursor = Cursors.Default;  
                         }
                         else
                         {
@@ -76,21 +73,16 @@ namespace Invento
                     }
                 }
 
-                // Style TextBoxes
                 StyleTextBox(login_username, "Username");
                 StyleTextBox(login_password, "Password");
 
-                // Style the Login Button
                 StyleLoginButton(login_btn);
 
-                // Style the Show Password CheckBox
                 StyleCheckBox(login_showPass);
 
-                // Style Close Button
                 StyleCloseButton(close);
             }
 
-            // Add form shadow and rounded corners
             this.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, this.Width, this.Height, 20, 20));
         }
 
@@ -108,12 +100,9 @@ namespace Invento
             label.Cursor = Cursors.Hand;
             label.BackColor = Color.Transparent;
 
-            // Add hover effect
             label.MouseEnter += (s, e) => label.ForeColor = Color.FromArgb(19, 141, 117);
             label.MouseLeave += (s, e) => label.ForeColor = primaryColor;
         }
-
-
 
         private void StyleTextBox(TextBox textBox, string placeholder)
         {
@@ -138,7 +127,6 @@ namespace Invento
 
                 container.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, container.Width, container.Height, 15, 15));
 
-                // Add shadow effect
                 container.Paint += (s, e) =>
                 {
                     using (var path = new GraphicsPath())
@@ -158,7 +146,6 @@ namespace Invento
                 textBox.BorderStyle = BorderStyle.None;
                 textBox.Font = new Font("Segoe UI", 11);
 
-                // Focus effects
                 textBox.GotFocus += (s, e) =>
                 {
                     container.BackColor = Color.FromArgb(235, 237, 240);
@@ -185,7 +172,6 @@ namespace Invento
                 button.FlatAppearance.BorderSize = 0;
                 button.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, button.Width, button.Height, 15, 15));
 
-                // Hover effects
                 button.MouseEnter += (s, e) => button.BackColor = Color.FromArgb(19, 141, 117);
                 button.MouseLeave += (s, e) => button.BackColor = primaryColor;
             }
@@ -199,11 +185,9 @@ namespace Invento
             checkBox.BackColor = Color.Transparent;
             checkBox.Cursor = Cursors.Hand;
 
-            // Use default Windows styling
             checkBox.Appearance = Appearance.Normal;
             checkBox.UseVisualStyleBackColor = true;
 
-            // Add hover effect
             checkBox.MouseEnter += (s, e) => checkBox.ForeColor = primaryColor;
             checkBox.MouseLeave += (s, e) => checkBox.ForeColor = Color.FromArgb(80, 80, 80);
         }
@@ -219,10 +203,8 @@ namespace Invento
             closeButton.Size = new Size(30, 30);
             closeButton.Cursor = Cursors.Hand;
 
-            // Round corners
             closeButton.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, closeButton.Width, closeButton.Height, 15, 15));
 
-            // Hover effects
             closeButton.MouseEnter += (s, e) => {
                 closeButton.BackColor = Color.FromArgb(220, 53, 69);
                 closeButton.ForeColor = Color.White;
@@ -275,8 +257,6 @@ namespace Invento
                     "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
-            // Check login attempts before proceeding
             if (!CheckLoginAttempts(login_username.Text.Trim()))
             {
                 return;
@@ -331,8 +311,7 @@ namespace Invento
                                 }
 
                                 if (passwordMatches)
-                                {
-                                    // Reset login attempts on successful login
+                                {                         
                                     ResetLoginAttempts(login_username.Text.Trim());
 
                                     username = login_username.Text.Trim();
@@ -374,8 +353,6 @@ namespace Invento
                 }
             }
         }
-
-        // Add this method to check and update login attempts
         private bool CheckLoginAttempts(string username)
         {
             if (!loginAttempts.ContainsKey(username))
@@ -385,7 +362,6 @@ namespace Invento
 
             loginAttempts[username]++;
 
-            // Check if account should be deactivated
             if (loginAttempts[username] >= ATTEMPT_LIMIT_DEACTIVATE)
             {
                 DeactivateAccount(username);
@@ -393,7 +369,6 @@ namespace Invento
                     "Account Deactivated", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
-            // Check if this is exactly the 10th attempt
             else if (loginAttempts[username] == ATTEMPT_LIMIT_TIMEOUT)
             {
                 lockoutTimes[username] = DateTime.Now.AddMinutes(LOCKOUT_DURATION_MINUTES);
@@ -401,7 +376,6 @@ namespace Invento
                     "Account Locked", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
-            // Check if user is still in timeout from their 10th attempt
             else if (loginAttempts[username] > ATTEMPT_LIMIT_TIMEOUT && lockoutTimes.ContainsKey(username))
             {
                 if (DateTime.Now < lockoutTimes[username])
@@ -413,7 +387,6 @@ namespace Invento
                 }
                 else
                 {
-                    // Remove the lockout time once it's expired
                     lockoutTimes.Remove(username);
                 }
             }
@@ -421,7 +394,6 @@ namespace Invento
             return true;
         }
 
-        // method to deactivate the account
         private void DeactivateAccount(string username)
         {
             try
@@ -452,7 +424,6 @@ namespace Invento
             }
         }
 
-        // method to reset login attempts on successful login
         private void ResetLoginAttempts(string username)
         {
             if (loginAttempts.ContainsKey(username))

@@ -10,7 +10,7 @@ namespace Invento
 
     public partial class Settings : UserControl
     {
-        SqlConnection connect = new SqlConnection(@"Data Source=35.233.55.91;Initial Catalog=invento;User ID=sqlserver;Password=Rado1234@;");
+        SqlConnection connect = new SqlConnection(@"Data Source=34.38.88.153;Initial Catalog=invento;User ID=sqlserver;Password=Rado1234@;");
 
         private Form parentForm;
         private PictureBox currentPicture;
@@ -462,15 +462,39 @@ namespace Invento
                 return;
             }
 
+            string newUsername = txtUsername.Text.Trim();
+
+            if (newUsername == Form1.username)
+            {
+                MessageBox.Show("New username must be different from current username",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             try
             {
-                using (SqlCommand cmd = new SqlCommand("UPDATE users SET username = @username WHERE username = @currentUsername", connect))
-                {
-                    connect.Open();
-                    cmd.Parameters.AddWithValue("@username", txtUsername.Text.Trim());
-                    cmd.Parameters.AddWithValue("@currentUsername", Form1.username);
+                connect.Open();
 
-                    int result = cmd.ExecuteNonQuery();
+                using (SqlCommand checkCmd = new SqlCommand("SELECT COUNT(*) FROM users WHERE username = @username AND username != @currentUsername", connect))
+                {
+                    checkCmd.Parameters.AddWithValue("@username", newUsername);
+                    checkCmd.Parameters.AddWithValue("@currentUsername", Form1.username);
+
+                    int count = (int)checkCmd.ExecuteScalar();
+                    if (count > 0)
+                    {
+                        MessageBox.Show("This username is already in use. Please choose a different username.",
+                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+
+                using (SqlCommand updateCmd = new SqlCommand("UPDATE users SET username = @username WHERE username = @currentUsername", connect))
+                {
+                    updateCmd.Parameters.AddWithValue("@username", newUsername);
+                    updateCmd.Parameters.AddWithValue("@currentUsername", Form1.username);
+
+                    int result = updateCmd.ExecuteNonQuery();
                     if (result > 0)
                     {
                         MessageBox.Show("Username updated successfully!",
@@ -478,14 +502,14 @@ namespace Invento
 
                         if (parentForm is MainForm mainForm && mainForm.user_username != null)
                         {
-                            mainForm.user_username.Text = txtUsername.Text.Trim();
+                            mainForm.user_username.Text = newUsername;
                         }
                         else if (parentForm is CashierMainForm cashierForm && cashierForm.user_username != null)
                         {
-                            cashierForm.user_username.Text = txtUsername.Text.Trim();
+                            cashierForm.user_username.Text = newUsername;
                         }
 
-                        Form1.username = txtUsername.Text.Trim();
+                        Form1.username = newUsername;
                     }
                 }
             }

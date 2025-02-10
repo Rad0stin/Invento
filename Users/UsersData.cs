@@ -21,7 +21,7 @@ namespace Invento
         {
             List<UsersData> listData = new List<UsersData>();
 
-            using (SqlConnection connect = new SqlConnection(@"Data Source=35.233.55.91;Initial Catalog=invento;User ID=sqlserver;Password=Rado1234@;")) 
+            using (SqlConnection connect = new SqlConnection(@"Data Source=34.38.88.153;Initial Catalog=invento;User ID=sqlserver;Password=Rado1234@;")) 
             {
                 connect.Open();
 

@@ -11,7 +11,7 @@ namespace Invento
 {
     class CustomersData
     {
-        SqlConnection connect = new SqlConnection(@"Data Source=35.233.55.91;Initial Catalog=invento;User ID=sqlserver;Password=Rado1234@;");
+        SqlConnection connect = new SqlConnection(@"Data Source=34.38.88.153;Initial Catalog=invento;User ID=sqlserver;Password=Rado1234@;");
         public string CustomerID { set; get; }
         public string TotalPice { set; get; }
         public string Amount { set; get; }
