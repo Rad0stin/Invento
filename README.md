@@ -53,7 +53,11 @@ Assets: Ресурси като изображения и икони.
 Ако желаете да допринесете към развитието на Invento:
 
 Направете форк на репозиторията.
+
 Създайте нов клон: git checkout -b feature-branch-name.
+
 Направете вашите промени и комитнете: git commit -m 'Add some feature'.
+
 Пушнете промените: git push origin feature-branch-name.
+
 Създайте Pull Request в оригиналния репозитория.
