@@ -5,7 +5,7 @@ VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Invento", "Invento.csproj", "{9D286705-0A35-4534-A418-D8EA191E3AC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoTests", "InventoTests\InventoTests.csproj", "{993DB7CB-EEDA-4125-B7A0-B1795DC6FAED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InventoTests", "InventoTests\InventoTests.csproj", "{993DB7CB-EEDA-4125-B7A0-B1795DC6FAED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -58,7 +58,6 @@ namespace Invento
                 dgv.DefaultCellStyle.SelectionBackColor = Color.FromArgb(230, 244, 244);
                 dgv.DefaultCellStyle.SelectionForeColor = TextColor;
 
-                // Alternating row style
                 dgv.AlternatingRowsDefaultCellStyle.BackColor = AlternateRowColor;
                 dgv.AlternatingRowsDefaultCellStyle.Font = new Font("Segoe UI", 10F);
                 dgv.AlternatingRowsDefaultCellStyle.ForeColor = TextColor;
@@ -66,27 +65,22 @@ namespace Invento
                 dgv.AlternatingRowsDefaultCellStyle.SelectionForeColor = TextColor;
                 dgv.RowTemplate.Height = 40;
 
-                // Style all TextBoxes
                 StyleTextBox(productsControl.addProducts_prodID);
                 StyleTextBox(productsControl.addProducts_prodName);
                 StyleTextBox(productsControl.addProducts_price);
                 StyleTextBox(productsControl.addProducts_stock);
 
-                // Style ComboBoxes
                 StyleComboBox(productsControl.addProducts_category);
                 StyleComboBox(productsControl.addProducts_status);
 
-                // Style PictureBox (ImageView)
                 StylePictureBox(productsControl.addProducts_imageView);
 
-                // Style all buttons
                 StyleButton(productsControl.addProducts_addBtn, "Add");
                 StyleButton(productsControl.addProducts_updateBtn, "Update");
                 StyleButton(productsControl.addProducts_removeBtn, "Remove");
                 StyleButton(productsControl.addProducts_clearBtn, "Clear");
                 StyleButton(productsControl.addProducts_importBtn, "Import");
 
-                // Add hover effect for DataGridView
                 dgv.CellMouseEnter += (sender, e) => {
                     if (e.RowIndex >= 0)
                     {

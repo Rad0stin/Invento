@@ -21,9 +21,8 @@ namespace Invento
         public string QTY { set; get; }
         public string TotalPrice { set; get; }
 
-        private static int currentCustomerId = -1; // Store the current session's customer ID
+        private static int currentCustomerId = -1; 
 
-        // Method to set the current customer ID
         public static void SetCurrentCustomerId(int id)
         {
             currentCustomerId = id;
@@ -38,7 +37,6 @@ namespace Invento
                 {
                     connect.Open();
 
-                    // Only get orders for the current session's customer ID
                     string selectData = "SELECT * FROM orders WHERE customer_id = @cID";
                     using (SqlCommand cmd = new SqlCommand(selectData, connect))
                     {
