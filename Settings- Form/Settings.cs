@@ -226,6 +226,42 @@ namespace Invento
                 Font = new Font("Segoe UI", 10.5F, FontStyle.Bold),
                 Cursor = Cursors.Hand
             };
+
+            int deleteAccountY = btnChangePassword.Bottom + 50;
+
+            Label lblDeleteAccount = new Label
+            {
+                Text = "Delete Account",
+                Location = new Point(rightSideX, deleteAccountY),
+                Font = new Font("Segoe UI Semibold", 12F),
+                ForeColor = Color.Black,
+                AutoSize = true,
+                Padding = new Padding(0, 10, 0, 5)
+            };
+
+            Button btnDeleteAccount = new Button
+            {
+                Text = "Delete Account",
+                Location = new Point(rightSideX, deleteAccountY + 40),
+                Size = new Size(150, 40),
+                FlatStyle = FlatStyle.Flat,
+                BackColor = Color.Crimson,  
+                ForeColor = Color.White,
+                Font = new Font("Segoe UI", 10.5F, FontStyle.Bold),
+                Cursor = Cursors.Hand
+            };
+            btnDeleteAccount.FlatAppearance.BorderSize = 0;
+            btnDeleteAccount.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnDeleteAccount.Width, btnDeleteAccount.Height, 15, 15));
+            btnDeleteAccount.Click += BtnDeleteAccount_Click;
+
+            btnDeleteAccount.MouseEnter += (s, e) => btnDeleteAccount.BackColor = Color.FromArgb(180, 20, 50);
+            btnDeleteAccount.MouseLeave += (s, e) => btnDeleteAccount.BackColor = Color.Crimson;
+
+            mainPanel.Controls.AddRange(new Control[] {
+                lblDeleteAccount,
+                btnDeleteAccount
+            });
+
             btnChangePassword.FlatAppearance.BorderSize = 0;
             btnChangePassword.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btnChangePassword.Width, btnChangePassword.Height, 15, 15));
             btnChangePassword.Click += BtnChangePassword_Click;
@@ -602,6 +638,91 @@ namespace Invento
             finally
             {
                 connect.Close();
+            }
+        }
+
+        private void BtnDeleteAccount_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to delete your account? This action cannot be undone.",
+                "Delete Account Confirmation",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning) == DialogResult.Yes)
+            {
+                using (var passwordConfirmForm = new Form())
+                {
+                    passwordConfirmForm.Text = "Confirm Password";
+                    passwordConfirmForm.Size = new Size(300, 150);
+                    passwordConfirmForm.StartPosition = FormStartPosition.CenterParent;
+                    passwordConfirmForm.FormBorderStyle = FormBorderStyle.FixedDialog;
+                    passwordConfirmForm.MaximizeBox = false;
+                    passwordConfirmForm.MinimizeBox = false;
+
+                    var txtPassword = new TextBox
+                    {
+                        Location = new Point(20, 20),
+                        Size = new Size(240, 30),
+                        UseSystemPasswordChar = true,
+                        Font = new Font("Segoe UI", 12)
+                    };
+
+                    var btnConfirm = new Button
+                    {
+                        Text = "Confirm",
+                        Location = new Point(100, 60),
+                        Size = new Size(80, 30),
+                        DialogResult = DialogResult.OK
+                    };
+
+                    passwordConfirmForm.Controls.AddRange(new Control[] { txtPassword, btnConfirm });
+                    passwordConfirmForm.AcceptButton = btnConfirm;
+
+                    if (passwordConfirmForm.ShowDialog() == DialogResult.OK)
+                    {
+                        try
+                        {
+                            connect.Open();
+                            using (SqlCommand verifyCmd = new SqlCommand("SELECT password FROM users WHERE username = @username", connect))
+                            {
+                                verifyCmd.Parameters.AddWithValue("@username", Form1.username);
+                                string storedPassword = verifyCmd.ExecuteScalar()?.ToString();
+
+                                bool passwordMatches;
+                                if (storedPassword.StartsWith("$2a$") || storedPassword.StartsWith("$2b$"))
+                                {
+                                    passwordMatches = BCrypt.Net.BCrypt.Verify(txtPassword.Text.Trim(), storedPassword);
+                                }
+                                else
+                                {
+                                    passwordMatches = (txtPassword.Text.Trim() == storedPassword);
+                                }
+
+                                if (!passwordMatches)
+                                {
+                                    MessageBox.Show("Incorrect password", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
+                                }
+
+                                using (SqlCommand deleteCmd = new SqlCommand("DELETE FROM users WHERE username = @username", connect))
+                                {
+                                    deleteCmd.Parameters.AddWithValue("@username", Form1.username);
+                                    deleteCmd.ExecuteNonQuery();
+
+                                    MessageBox.Show("Account deleted successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                                    Application.Restart();
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error deleting account: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        finally
+                        {
+                            connect.Close();
+                        }
+                    }
+                }
             }
         }
     }

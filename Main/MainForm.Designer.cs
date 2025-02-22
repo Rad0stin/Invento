@@ -140,7 +140,7 @@
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(192, 33);
             this.button6.TabIndex = 15;
-            this.button6.Text = "LogOut";
+            this.button6.Text = "Sign Out";
             this.button6.UseVisualStyleBackColor = false;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 

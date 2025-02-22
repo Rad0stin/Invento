@@ -32,6 +32,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.close = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.addCategories_btn = new System.Windows.Forms.Button();
             this.settings_btn = new System.Windows.Forms.Button();
             this.order_btn = new System.Windows.Forms.Button();
             this.logout_btn = new System.Windows.Forms.Button();
@@ -41,7 +42,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBoxProfile = new System.Windows.Forms.PictureBox();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.addCategories_btn = new System.Windows.Forms.Button();
             this.adminAddCategories1 = new Invento.AdminAddCategories();
             this.adminAddProducts1 = new Invento.AdminAddProducts();
             this.cashierCustomersForm1 = new Invento.CashierCustomersForm();
@@ -106,6 +106,23 @@
             this.panel2.Size = new System.Drawing.Size(240, 668);
             this.panel2.TabIndex = 2;
             // 
+            // addCategories_btn
+            // 
+            this.addCategories_btn.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.addCategories_btn.FlatAppearance.BorderSize = 0;
+            this.addCategories_btn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.MediumTurquoise;
+            this.addCategories_btn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumTurquoise;
+            this.addCategories_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.addCategories_btn.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.addCategories_btn.ForeColor = System.Drawing.Color.White;
+            this.addCategories_btn.Location = new System.Drawing.Point(16, 203);
+            this.addCategories_btn.Name = "addCategories_btn";
+            this.addCategories_btn.Size = new System.Drawing.Size(192, 33);
+            this.addCategories_btn.TabIndex = 18;
+            this.addCategories_btn.Text = "Categories";
+            this.addCategories_btn.UseVisualStyleBackColor = true;
+            this.addCategories_btn.Click += new System.EventHandler(this.addCategories_btn_Click);
+            // 
             // settings_btn
             // 
             this.settings_btn.FlatAppearance.BorderColor = System.Drawing.Color.Black;
@@ -154,7 +171,7 @@
             this.logout_btn.Name = "logout_btn";
             this.logout_btn.Size = new System.Drawing.Size(192, 33);
             this.logout_btn.TabIndex = 15;
-            this.logout_btn.Text = "LogOut";
+            this.logout_btn.Text = "Sign Out";
             this.logout_btn.UseVisualStyleBackColor = false;
             this.logout_btn.Click += new System.EventHandler(this.logout_btn_Click);
             // 
@@ -237,23 +254,6 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(941, 668);
             this.panel3.TabIndex = 3;
-            // 
-            // addCategories_btn
-            // 
-            this.addCategories_btn.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.addCategories_btn.FlatAppearance.BorderSize = 0;
-            this.addCategories_btn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.MediumTurquoise;
-            this.addCategories_btn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumTurquoise;
-            this.addCategories_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.addCategories_btn.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addCategories_btn.ForeColor = System.Drawing.Color.White;
-            this.addCategories_btn.Location = new System.Drawing.Point(16, 203);
-            this.addCategories_btn.Name = "addCategories_btn";
-            this.addCategories_btn.Size = new System.Drawing.Size(192, 33);
-            this.addCategories_btn.TabIndex = 18;
-            this.addCategories_btn.Text = "Categories";
-            this.addCategories_btn.UseVisualStyleBackColor = true;
-            this.addCategories_btn.Click += new System.EventHandler(this.addCategories_btn_Click);
             // 
             // adminAddCategories1
             // 
