@@ -44,7 +44,7 @@
             this.panel1.Controls.Add(this.txtCaptcha);
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Location = new System.Drawing.Point(8, 6);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(210, 247);
             this.panel1.TabIndex = 0;
@@ -52,7 +52,7 @@
             // btnRefresh
             // 
             this.btnRefresh.Location = new System.Drawing.Point(158, 26);
-            this.btnRefresh.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnRefresh.Margin = new System.Windows.Forms.Padding(2);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(22, 20);
             this.btnRefresh.TabIndex = 3;
@@ -62,9 +62,9 @@
             // btnVerify
             // 
             this.btnVerify.Location = new System.Drawing.Point(30, 150);
-            this.btnVerify.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnVerify.Margin = new System.Windows.Forms.Padding(2);
             this.btnVerify.Name = "btnVerify";
-            this.btnVerify.Size = new System.Drawing.Size(150, 26);
+            this.btnVerify.Size = new System.Drawing.Size(150, 35);
             this.btnVerify.TabIndex = 2;
             this.btnVerify.Text = "Verify";
             this.btnVerify.Click += new System.EventHandler(this.btnVerify_Click);
@@ -72,7 +72,7 @@
             // txtCaptcha
             // 
             this.txtCaptcha.Location = new System.Drawing.Point(30, 117);
-            this.txtCaptcha.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtCaptcha.Margin = new System.Windows.Forms.Padding(2);
             this.txtCaptcha.Name = "txtCaptcha";
             this.txtCaptcha.Size = new System.Drawing.Size(151, 20);
             this.txtCaptcha.TabIndex = 1;
@@ -80,7 +80,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Location = new System.Drawing.Point(30, 52);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(150, 52);
             this.pictureBox1.TabIndex = 0;
@@ -93,7 +93,7 @@
             this.ClientSize = new System.Drawing.Size(225, 260);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Captcha";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Captcha Verification";

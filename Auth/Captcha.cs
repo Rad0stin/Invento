@@ -106,11 +106,20 @@ namespace Invento
                 );
             }
 
+            Font captchaFont = new Font("Arial", 24, FontStyle.Bold | FontStyle.Italic);
+            SizeF textSize = graphics.MeasureString(captchaText, captchaFont);
+
+            float x = (bitmap.Width - textSize.Width) / 2;
+            float y = Math.Max(10, (bitmap.Height - textSize.Height) / 2);
+
+            x += random.Next(-10, 10);
+            y += random.Next(-5, 5);
+
             graphics.DrawString(
                 captchaText,
-                new Font("Arial", 24, FontStyle.Bold | FontStyle.Italic),
+                captchaFont,
                 new SolidBrush(Color.FromArgb(80, 80, 80)),
-                new Point(20, 20)
+                new PointF(x, y)
             );
 
             pictureBox1.Image = bitmap;
