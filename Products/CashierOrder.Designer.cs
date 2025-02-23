@@ -403,9 +403,8 @@
             this.cashierOrder_change.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cashierOrder_change.Location = new System.Drawing.Point(195, 467);
             this.cashierOrder_change.Name = "cashierOrder_change";
-            this.cashierOrder_change.Size = new System.Drawing.Size(41, 21);
+            this.cashierOrder_change.Size = new System.Drawing.Size(0, 21);
             this.cashierOrder_change.TabIndex = 26;
-            this.cashierOrder_change.Text = "0.00";
             // 
             // cashierOrder_amount
             // 

@@ -579,6 +579,9 @@ namespace Invento
             }
             displayOrders();
             displayTotalPrice();
+            clearFields();
+            cashierOrder_amount.Text = "";
+            cashierOrder_change.Text = "";
         }
 
         private int idGen;
@@ -796,8 +799,10 @@ namespace Invento
                     float getAmount = Convert.ToSingle(cashierOrder_amount.Text);
                     float getChange = (getAmount - totalPrice);
 
-                    if (getChange <= -1)
+                    if (getAmount < totalPrice)
                     {
+                        MessageBox.Show("Insufficient funds! Please enter an amount equal to or greater than the total price.",
+                            "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         cashierOrder_amount.Text = "";
                         cashierOrder_change.Text = "";
                     }
