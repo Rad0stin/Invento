@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Windows.Forms;
 
+
 namespace Invento
 {
     public partial class AdminAddUser : UserControl
